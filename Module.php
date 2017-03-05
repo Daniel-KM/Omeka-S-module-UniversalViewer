@@ -38,6 +38,7 @@ use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
+use UniversalViewer\Form\ConfigForm;
 
 class Module extends AbstractModule
 {
@@ -214,41 +215,13 @@ class Module extends AbstractModule
     public function getConfigForm(PhpRenderer $renderer)
     {
         $serviceLocator = $this->getServiceLocator();
-        $settings = $serviceLocator->get('Omeka\Settings');
-        $translator = $serviceLocator->get('MvcTranslator');
-        $api = $serviceLocator->get('Omeka\ApiManager');
+        $formElementManager = $serviceLocator->get('FormElementManager');
+        $form = $formElementManager->get(ConfigForm::class);
 
-        // Use the true properties, not the internal ids (see PropertySelect()).
-        $properties = [];
-        $response = $api->search('vocabularies');
-        foreach ($response->getContent() as $vocabulary) {
-            $options = [];
-            foreach ($vocabulary->properties() as $property) {
-                $options[] = [
-                    'label' => $property->label(),
-                    'value' => $property->term(),
-                ];
-            }
-            if (!$options) {
-                continue;
-            }
-            $properties[] = [
-                'label' => $vocabulary->label(),
-                'options' => $options,
-            ];
-        }
-
-        $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
-        $module = $moduleManager->getModule('IiifServer');
-        $iiifServerIsActive = $module && $module->getState() == 'active';
-
-        $vars = array(
-            'settings' => $settings,
-            't' => $translator,
-            'properties' => $properties,
-            'iiifServerIsActive' => $iiifServerIsActive,
-        );
-        return $renderer->render('config-form', $vars);
+        // Currently, Omeka S doesn't allow to display fieldsets in config form.
+        $vars = [];
+        $vars['form'] = $form;
+        return $renderer->render('admin/universal-viewer/config-form.phtml', $vars);
     }
 
     public function handleConfigForm(AbstractController $controller)
@@ -257,8 +230,17 @@ class Module extends AbstractModule
         $settings = $serviceLocator->get('Omeka\Settings');
 
         $params = $controller->getRequest()->getPost();
+        // Manage fieldsets of params automatically (only used for the view).
         foreach ($params as $name => $value) {
-            $settings->set($name, $value);
+            if (isset($this->settings[$name])) {
+                $settings->set($name, $value);
+            } elseif (is_array($value)) {
+                foreach ($value as $subname => $subvalue) {
+                    if (isset($this->settings[$subname])) {
+                        $settings->set($subname, $subvalue);
+                    }
+                }
+            }
         }
     }
 

@@ -10,6 +10,11 @@ return [
             'UniversalViewer\Controller\Player' => 'UniversalViewer\Controller\PlayerController',
         ],
     ],
+    'form_elements' => [
+        'factories' => [
+            'UniversalViewer\Form\ConfigForm' => 'UniversalViewer\Service\Form\ConfigFormFactory',
+        ],
+    ],
     'router' => [
         'routes' => [
             'universalviewer_player' => [
