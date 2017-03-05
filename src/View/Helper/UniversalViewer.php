@@ -51,18 +51,30 @@ class UniversalViewer extends AbstractHelper
      */
     public function __invoke($resource, $options = array())
     {
+        static $iiifServerIsActive;
+
         if (empty($resource)) {
-            return $this;
+            return '';
+        }
+
+        // If the manifest is not provided in metadata, point to the manifest
+        // created from Omeka files only when the Iiif Server is installed.
+        if (is_null($iiifServerIsActive)) {
+            $iiifServerIsActive = $this->moduleIsActive('IiifServer');
         }
 
         // Prepare the url of the manifest for a dynamic collection.
         if (is_array($resource)) {
+            if (!$iiifServerIsActive) {
+                return '';
+            }
+
             $identifier = $this->buildIdentifierForList($resource);
-            $route = 'universalviewer_presentation_collection_list';
+            $route = 'iiifserver_presentation_collection_list';
             $urlManifest = $this->view->url($route, array(
                 'id' => $identifier,
             ));
-            $urlManifest = $this->view->uvForceHttpsIfRequired($urlManifest);
+            $urlManifest = $this->view->iiifForceHttpsIfRequired($urlManifest);
             return $this->render($urlManifest, $options);
         }
 
@@ -72,16 +84,22 @@ class UniversalViewer extends AbstractHelper
             return '';
         }
 
-        // Determine if we should get the manifest from a field in the metadata.
+        // Determine the url of the manifest from a field in the metadata.
         $urlManifest = '';
         $manifestProperty = $this->view->setting('universalviewer_manifest_property');
         if ($manifestProperty) {
             $urlManifest = $resource->value($manifestProperty);
             if ($urlManifest) {
+                // Manage the case where the url is saved as an uri or a text.
+                $urlManifest = $urlManifest->uri() ?: $urlManifest->value();
                 return $this->render($urlManifest, $options);
             }
-            // If manifest not provided in metadata, point to manifest created
-            // from Omeka files.
+        }
+
+        // If the manifest is not provided in metadata, point to the manifest
+        // created from Omeka files if Iiif Server is installed.
+        if (!$this->moduleIsActive('IiifServer')) {
+            return '';
         }
 
         // Some specific checks.
@@ -92,21 +110,21 @@ class UniversalViewer extends AbstractHelper
                     // return $this->view->translate('This item has no files and is not displayable.');
                     return '';
                 }
-                $route = 'universalviewer_presentation_item';
+                $route = 'iiifserver_presentation_item';
                 break;
             case 'item_sets':
                 if ($resource->itemCount() == 0) {
                     // return $this->view->translate('This collection has no item and is not displayable.');
                     return '';
                 }
-                $route = 'universalviewer_presentation_collection';
+                $route = 'iiifserver_presentation_collection';
                 break;
         }
 
         $urlManifest = $this->view->url($route, array(
             'id' => $resource->id(),
         ));
-        $urlManifest = $this->view->uvForceHttpsIfRequired($urlManifest);
+        $urlManifest = $this->view->iiifForceHttpsIfRequired($urlManifest);
 
         return $this->render($urlManifest, $options);
     }
@@ -119,7 +137,7 @@ class UniversalViewer extends AbstractHelper
      * than the collection itself.
      * In all cases the order of records is kept.
      *
-     * @todo Merge with UniversalViewer\View\Helper\IiifCollectionList::buildIdentifierForList()
+     * @todo Use IiifServer\View\Helper\IiifCollectionList::buildIdentifierForList()
      *
      * @param array $resources
      * @return string
@@ -185,5 +203,20 @@ class UniversalViewer extends AbstractHelper
         $html .= sprintf('<script type="text/javascript" id="embedUV" src="%s"></script>', $urlJs);
         $html .= '<script type="text/javascript">/* wordpress fix */</script>';
         return $html;
+    }
+
+    /**
+     * Helper to check if the IiifServer is installed.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    protected function moduleIsActive($name)
+    {
+        $serviceLocator = @$this->getView()->getHelperPluginManager()->getServiceLocator();
+        $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
+        $module = $moduleManager->getModule($name);
+        $moduIeIsActive = $module && $module->getState() == 'active';
+        return $moduIeIsActive;
     }
 }
