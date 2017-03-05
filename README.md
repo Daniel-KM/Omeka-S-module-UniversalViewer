@@ -118,10 +118,18 @@ Notes
 
 
 Bugs
------------
+----
 
 - When an item set contains non image items, the left panel with the index is
   displayed only when the first item contains an image.
+
+Warning
+-------
+
+Use it at your own risk.
+
+It's always recommended to backup your files and database regularly so you can
+roll back if needed.
 
 
 Troubleshooting
