@@ -1,3 +1,37 @@
+<fieldset id="fieldset-iiifserver-manifest">
+    <legend><?php echo $t->translate('IIIF Manifests'); ?></legend>
+    <p class="explanation">
+        <?php echo $t->translate('The module uses an url to fetch data and medias to display.'); ?>
+        <?php if ($iiifServerIsActive): ?>
+        <?php echo $t->translate('The IIIF Server is active, so when no url is set, the viewer will use the standard routes.'); ?>
+        <?php else: ?>
+        <?php echo $t->translate('The IIIF Server is not active, so when no url is set, the viewer won’t be displayed.'); ?>
+        <?php endif; ?>
+    </p>
+    <div class="field">
+        <?php
+        $select = new Zend\Form\Element\Select('universalviewer_manifest_property');
+        $select
+            ->setLabel($t->translate('Manifest Property'))
+            ->setAttribute('id', 'universalviewer_manifest_property')
+            ->setValue($settings->get('universalviewer_manifest_property'))
+            ->setEmptyOption($t->translate('Select a property...'))
+            ->setValueOptions($properties);
+        ?>
+        <div class="field-meta">
+            <?php echo $this->formLabel($select); ?>
+            <a class="expand" href="#"></a>
+            <div class="collapsible">
+                <div class="field-description">
+                    <?php echo $t->translate('The property supplying the manifest URL for the viewer, for example "dcterms:hasFormat".'); ?>
+                </div>
+            </div>
+        </div>
+        <div class="inputs">
+            <?php echo $this->formSelect($select); ?>
+        </div>
+    </div>
+</fieldset>
 <fieldset id="fieldset-universalviewer-embed">
     <legend><?php echo $t->translate('Integration of the viewer'); ?></legend>
     <p class="explanation">
@@ -32,12 +66,18 @@
             <?php echo $this->formCheckbox($checkbox); ?>
         </div>
     </div>
+    <p class="explanation">
+        <?php if (!$iiifServerIsActive): ?>
+        <?php echo $t->translate('The IIIF Server is not active, so the Universal Viewer can’t display lists.'); ?>
+        <?php endif; ?>
+    </p>
     <div class="field">
         <?php
             $checkbox = new Zend\Form\Element\Checkbox('universalviewer_append_item_set_browse');
             $checkbox->setLabel($t->translate('Append to "Item set browse"'));
             $checkbox->setAttribute('id', 'universalviewer_append_item_set_browse');
             $checkbox->setValue($settings->get('universalviewer_append_item_set_browse'));
+            $checkbox->setAttribute('disabled', !$iiifServerIsActive);
         ?>
         <div class="field-meta">
             <?php echo $this->formLabel($checkbox); ?>
@@ -52,6 +92,7 @@
             $checkbox->setLabel($t->translate('Append to "Item browse"'));
             $checkbox->setAttribute('id', 'universalviewer_append_item_browse');
             $checkbox->setValue($settings->get('universalviewer_append_item_browse'));
+            $checkbox->setAttribute('disabled', !$iiifServerIsActive);
         ?>
         <div class="field-meta">
             <?php echo $this->formLabel($checkbox); ?>

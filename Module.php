@@ -35,22 +35,15 @@ use Omeka\Module\Exception\ModuleCannotInstallException;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Mvc\Controller\AbstractController;
+use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
-use Zend\Mvc\MvcEvent;
-use Omeka\Mvc\Controller\Plugin\Messenger;
 
 class Module extends AbstractModule
 {
 
-    protected $_settings = array(
-        'universalviewer_manifest_description_property' => 'dcterms:bibliographicCitation',
-        'universalviewer_manifest_attribution_property' => '',
-        'universalviewer_manifest_attribution_default' => 'Provided by Example Organization',
-        'universalviewer_manifest_license_property' => 'dcterms:license',
-        'universalviewer_manifest_license_default' => 'http://www.example.org/license.html',
-        'universalviewer_manifest_logo_default' => '',
-        'universalviewer_alternative_manifest_property' => '',
+    protected $settings = array(
+        'universalviewer_manifest_property' => '',
         'universalviewer_append_item_set_show' => true,
         'universalviewer_append_item_show' => true,
         'universalviewer_append_item_set_browse' => false,
@@ -58,10 +51,12 @@ class Module extends AbstractModule
         'universalviewer_class' => '',
         'universalviewer_style' => 'background-color: #000; height: 600px;',
         'universalviewer_locale' => 'en-GB:English (GB),fr:French',
-        'universalviewer_iiif_creator' => 'Auto',
-        'universalviewer_iiif_max_size' => 10000000,
-        'universalviewer_force_https' => false,
     );
+
+    public function getConfig()
+    {
+        return include __DIR__ . '/config/module.config.php';
+    }
 
     public function onBootstrap(MvcEvent $event)
     {
@@ -69,28 +64,19 @@ class Module extends AbstractModule
 
         $acl = $this->getServiceLocator()->get('Omeka\Acl');
         $acl->allow(null, 'UniversalViewer\Controller\Player');
-        $acl->allow(null, 'UniversalViewer\Controller\Presentation');
-        $acl->allow(null, 'UniversalViewer\Controller\Image');
-        $acl->allow(null, 'UniversalViewer\Controller\Media');
     }
 
     public function install(ServiceLocatorInterface $serviceLocator)
     {
+        $settings = $serviceLocator->get('Omeka\Settings');
         $t = $serviceLocator->get('MvcTranslator');
-
-        $processors = $this->_getProcessors($serviceLocator);
-        if (count($processors) == 1) {
-            throw new ModuleCannotInstallException($t->translate('At least one graphic processor (GD or ImageMagick) is required to use the UniversalViewer.')); // @translate
-        }
 
         $js = __DIR__ . '/asset/js/uv/lib/embed.js';
         if (!file_exists($js)) {
             throw new ModuleCannotInstallException($t->translate('UniversalViewer library should be installed. See module’s installation documentation.')); // @translate
         }
 
-        $settings = $serviceLocator->get('Omeka\Settings');
-
-        foreach ($this->_settings as $name => $value) {
+        foreach ($this->settings as $name => $value) {
             $settings->set($name, $value);
         }
     }
@@ -99,36 +85,35 @@ class Module extends AbstractModule
     {
         $settings = $serviceLocator->get('Omeka\Settings');
 
-        foreach ($this->_settings as $name => $value) {
+        foreach ($this->settings as $name => $value) {
             $settings->delete($name);
         }
     }
 
     public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
     {
-        //fix the double json encoding that was stored
         if (version_compare($oldVersion, '3.4.1', '<')) {
             $settings = $serviceLocator->get('Omeka\Settings');
 
             $settings->set('universalviewer_manifest_description_property',
-                $this->_settings['universalviewer_manifest_description_property']);
+                $this->settings['universalviewer_manifest_description_property']);
 
             $settings->set('universalviewer_manifest_attribution_property',
-                $this->_settings['universalviewer_manifest_attribution_property']);
+                $this->settings['universalviewer_manifest_attribution_property']);
 
             $settings->set('universalviewer_manifest_attribution_default',
                 $settings->get('universalviewer_attribution'));
             $settings->delete('universalviewer_attribution');
 
             $settings->set('universalviewer_manifest_license_property',
-                $this->_settings['universalviewer_manifest_license_property']);
+                $this->settings['universalviewer_manifest_license_property']);
 
             $settings->set('universalviewer_manifest_license_default',
                 $settings->get('universalviewer_licence'));
             $settings->delete('universalviewer_licence');
 
             $settings->set('universalviewer_manifest_logo_default',
-                $this->_settings['universalviewer_manifest_logo_default']);
+                $this->settings['universalviewer_manifest_logo_default']);
 
             $settings->set('universalviewer_append_item_set_show',
                 $settings->get('universalviewer_append_collections_show'));
@@ -139,12 +124,12 @@ class Module extends AbstractModule
             $settings->delete('universalviewer_append_items_show');
 
             $settings->set('universalviewer_append_item_set_browse',
-                $this->_settings['universalviewer_append_item_set_browse']);
+                $this->settings['universalviewer_append_item_set_browse']);
 
             $settings->set('universalviewer_append_item_browse',
-                $this->_settings['universalviewer_append_item_browse']);
+                $this->settings['universalviewer_append_item_browse']);
 
-            $style = $this->_settings['universalviewer_style'];
+            $style = $this->settings['universalviewer_style'];
             $width = $settings->get('universalviewer_width') ?: '';
             if (!empty($width)) {
                 $width = ' width:' . $width . ';';
@@ -162,16 +147,54 @@ class Module extends AbstractModule
                 $settings->get('universalviewer_max_dynamic_size'));
             $settings->delete('universalviewer_max_dynamic_size');
         }
+
+        if (version_compare($oldVersion, '3.5', '<=')
+            && version_compare($newVersion, '3.5', '>=')
+        ) {
+            $settings = $serviceLocator->get('Omeka\Settings');
+
+            $settings->set('universalviewer_manifest_property',
+                $settings->get('universalviewer_alternative_manifest_property'));
+
+            $oldSettings = [
+                'universalviewer_manifest_description_property',
+                'universalviewer_manifest_attribution_property',
+                'universalviewer_manifest_attribution_default',
+                'universalviewer_manifest_license_property',
+                'universalviewer_manifest_license_default',
+                'universalviewer_manifest_logo_default',
+                'universalviewer_alternative_manifest_property',
+                'universalviewer_iiif_creator',
+                'universalviewer_iiif_max_size',
+                'universalviewer_force_https',
+                // Normally already removed.
+                'universalviewer_attribution',
+                'universalviewer_licence',
+                'universalviewer_append_collections_show',
+                'universalviewer_append_items_show',
+                'universalviewer_width',
+                'universalviewer_height',
+                'universalviewer_max_dynamic_size',
+            ];
+            foreach ($oldSettings as $name) {
+                $settings->delete($name);
+            }
+        }
     }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
         $serviceLocator = $this->getServiceLocator();
         $settings = $serviceLocator->get('Omeka\Settings');
+        $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
+        $module = $moduleManager->getModule('IiifServer');
 
         // Note: there is no item-set show, but a special case for items browse.
-        if ($settings->get('universalviewer_append_item_set_show')
-            || $settings->get('universalviewer_append_item_browse')
+        if ($module && $module->getState() == 'active'
+            && (
+                $settings->get('universalviewer_append_item_set_show')
+                || $settings->get('universalviewer_append_item_browse')
+            )
         ) {
             $sharedEventManager->attach('Omeka\Controller\Site\Item',
                 'view.browse.after', array($this, 'displayUniversalViewer'));
@@ -188,32 +211,42 @@ class Module extends AbstractModule
         }
     }
 
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
-
     public function getConfigForm(PhpRenderer $renderer)
     {
         $serviceLocator = $this->getServiceLocator();
         $settings = $serviceLocator->get('Omeka\Settings');
         $translator = $serviceLocator->get('MvcTranslator');
+        $api = $serviceLocator->get('Omeka\ApiManager');
 
-        $messenger = new Messenger();
-        $processors = $this->_getProcessors();
-
-        if (count($processors) == 1) {
-            $messenger->addError($translator->translate('Warning: No graphic library is installed: Universaliewer can’t work.')); // @translate
+        // Use the true properties, not the internal ids (see PropertySelect()).
+        $properties = [];
+        $response = $api->search('vocabularies');
+        foreach ($response->getContent() as $vocabulary) {
+            $options = [];
+            foreach ($vocabulary->properties() as $property) {
+                $options[] = [
+                    'label' => $property->label(),
+                    'value' => $property->term(),
+                ];
+            }
+            if (!$options) {
+                continue;
+            }
+            $properties[] = [
+                'label' => $vocabulary->label(),
+                'options' => $options,
+            ];
         }
 
-        if (!isset($processors['Imagick'])) {
-            $messenger->addWarning($translator->translate('Warning: Imagick is not installed: Only standard images (jpg, png, gif and webp) will be processed.')); // @translate
-        }
+        $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
+        $module = $moduleManager->getModule('IiifServer');
+        $iiifServerIsActive = $module && $module->getState() == 'active';
 
         $vars = array(
             'settings' => $settings,
             't' => $translator,
-            'processors' => $processors,
+            'properties' => $properties,
+            'iiifServerIsActive' => $iiifServerIsActive,
         );
         return $renderer->render('config-form', $vars);
     }
@@ -234,40 +267,22 @@ class Module extends AbstractModule
         $serviceLocator = $this->getServiceLocator();
         $settings = $serviceLocator->get('Omeka\Settings');
 
+        $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
+        $module = $moduleManager->getModule('IiifServer');
+
         $view = $event->getTarget();
         if ($settings->get('universalviewer_append_item_set_browse') && isset($view->itemSets)) {
-            echo $view->universalViewer($view->itemSets);
+            if ($module && $module->getState() == 'active') {
+                echo $view->universalViewer($view->itemSets);
+            }
         } elseif ($settings->get('universalviewer_append_item_set_show') && isset($view->itemSet)) {
-            echo $view->universalViewer($view->itemSet);
+            if ($module && $module->getState() == 'active') {
+                echo $view->universalViewer($view->itemSet);
+            }
         } elseif ($settings->get('universalviewer_append_item_browse') && isset($view->items)) {
             echo $view->universalViewer($view->items);
         } elseif ($settings->get('universalviewer_append_item_show') && isset($view->item)) {
             echo $view->universalViewer($view->item);
         }
-    }
-
-    /**
-     * Check and return the list of available processors.
-     *
-     * @return array Associative array of available processors.
-     */
-    protected function _getProcessors(ServiceLocatorInterface $serviceLocator = null)
-    {
-        if ($serviceLocator === null) {
-            $serviceLocator = $this->getServiceLocator();
-        }
-        $translator = $serviceLocator->get('MvcTranslator');
-
-        $processors = array(
-            'Auto' => $translator->translate('Automatic'),
-        );
-        if (extension_loaded('gd')) {
-            $processors['GD'] = 'GD';
-        }
-        if (extension_loaded('imagick')) {
-            $processors['Imagick'] = 'ImageMagick';
-        }
-
-        return $processors;
     }
 }

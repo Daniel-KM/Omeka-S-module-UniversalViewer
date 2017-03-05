@@ -74,7 +74,7 @@ class UniversalViewer extends AbstractHelper
 
         // Determine if we should get the manifest from a field in the metadata.
         $urlManifest = '';
-        $manifestProperty = $this->view->setting('universalviewer_alternative_manifest_property');
+        $manifestProperty = $this->view->setting('universalviewer_manifest_property');
         if ($manifestProperty) {
             $urlManifest = $resource->value($manifestProperty);
             if ($urlManifest) {
