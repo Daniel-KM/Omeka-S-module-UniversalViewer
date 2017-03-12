@@ -31,6 +31,7 @@
 namespace UniversalViewer\View\Helper;
 
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
+use Omeka\Module\Manager as ModuleManager;
 use Zend\View\Helper\AbstractHelper;
 
 class UniversalViewer extends AbstractHelper
@@ -216,7 +217,7 @@ class UniversalViewer extends AbstractHelper
         $serviceLocator = @$this->getView()->getHelperPluginManager()->getServiceLocator();
         $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
         $module = $moduleManager->getModule($name);
-        $moduIeIsActive = $module && $module->getState() == 'active';
+        $moduIeIsActive = $module && $module->getState() == ModuleManager::STATE_ACTIVE;
         return $moduIeIsActive;
     }
 }

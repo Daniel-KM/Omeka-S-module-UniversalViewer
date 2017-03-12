@@ -1,6 +1,7 @@
 <?php
 namespace UniversalViewer\Service\Form;
 
+use Omeka\Module\Manager as ModuleManager;
 use UniversalViewer\Form\ConfigForm;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
@@ -14,7 +15,7 @@ class ConfigFormFactory implements FactoryInterface
 
         $moduleManager = $container->get('Omeka\ModuleManager');
         $module = $moduleManager->getModule('IiifServer');
-        $iiifServerIsActive = $module && $module->getState() == 'active';
+        $iiifServerIsActive = $module && $module->getState() == ModuleManager::STATE_ACTIVE;
 
         $form = new ConfigForm;
         $form->setSettings($settings);

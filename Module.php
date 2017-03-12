@@ -32,6 +32,7 @@ namespace UniversalViewer;
 
 use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
+use Omeka\Module\Manager as ModuleManager;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Mvc\Controller\AbstractController;
@@ -191,7 +192,7 @@ class Module extends AbstractModule
         $module = $moduleManager->getModule('IiifServer');
 
         // Note: there is no item-set show, but a special case for items browse.
-        if ($module && $module->getState() == 'active'
+        if ($module && $module->getState() == ModuleManager::STATE_ACTIVE
             && (
                 $settings->get('universalviewer_append_item_set_show')
                 || $settings->get('universalviewer_append_item_browse')
@@ -254,11 +255,11 @@ class Module extends AbstractModule
 
         $view = $event->getTarget();
         if ($settings->get('universalviewer_append_item_set_browse') && isset($view->itemSets)) {
-            if ($module && $module->getState() == 'active') {
+            if ($module && $module->getState() == ModuleManager::STATE_ACTIVE) {
                 echo $view->universalViewer($view->itemSets);
             }
         } elseif ($settings->get('universalviewer_append_item_set_show') && isset($view->itemSet)) {
-            if ($module && $module->getState() == 'active') {
+            if ($module && $module->getState() == ModuleManager::STATE_ACTIVE) {
                 echo $view->universalViewer($view->itemSet);
             }
         } elseif ($settings->get('universalviewer_append_item_browse') && isset($view->items)) {
