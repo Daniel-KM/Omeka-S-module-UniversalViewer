@@ -72,9 +72,11 @@ class UniversalViewer extends AbstractHelper
 
             $identifier = $this->buildIdentifierForList($resource);
             $route = 'iiifserver_presentation_collection_list';
-            $urlManifest = $this->view->url($route, array(
-                'id' => $identifier,
-            ));
+            $urlManifest = $this->view->url(
+                $route,
+                ['id' => $identifier],
+                ['force_canonical' => true]
+            );
             $urlManifest = $this->view->iiifForceHttpsIfRequired($urlManifest);
             return $this->render($urlManifest, $options);
         }
@@ -122,9 +124,10 @@ class UniversalViewer extends AbstractHelper
                 break;
         }
 
-        $urlManifest = $this->view->url($route, array(
-            'id' => $resource->id(),
-        ));
+        $urlManifest = $this->view->url($route,
+            ['id' => $resource->id()],
+            ['force_canonical' => true]
+        );
         $urlManifest = $this->view->iiifForceHttpsIfRequired($urlManifest);
 
         return $this->render($urlManifest, $options);
