@@ -1,6 +1,6 @@
 {
   "name": "universalviewer4omekas",
-  "version": "1.0.0",
+  "version": "3.5.1",
   "description": "Universal Viewer (module for Omeka S)",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Daniel-KM/omeka-s-module-UniversalViewer"
+    "url": "git+https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer"
   },
-  "author": "",
-  "license": "MIT",
+  "author": "Daniel Berthereau",
+  "license": "CeCILL v2.1",
   "bugs": {
-    "url": "https://github.com/Daniel-KM/omeka-s-module-UniversalViewer/issues"
+    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/issues"
   },
-  "homepage": "https://github.com/Daniel-KM/omeka-s-module-UniversalViewer#readme",
+  "homepage": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer#readme",
   "devDependencies": {
     "async": "^2.1.4",
     "del": "^2.2.2",
