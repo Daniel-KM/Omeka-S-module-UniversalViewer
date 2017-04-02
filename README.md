@@ -54,11 +54,17 @@ See below the notes for more info.
 * Javascript library "UniversalViewer"
 
 Since version 2.2.1, the distribution release of the javascript library [UniversalViewer]
-is included in the folder `asset/js/uv/`. If you want a more
-recent release, clone the last [distribution] in the same directory. "nodejs",
-other packages and any other files are not needed, because only the viewer is
-used: the IIIF server is provided directly by the module itself. A gulp script
-is provided too.
+is included in the folder `asset/js/uv/`.
+
+If you want a more recent release, clone the last [distribution] in the same
+directory. "nodejs", other packages and any other files are not needed, because
+only the viewer is used: the IIIF server is provided directly by the module
+itself. Or in command line, from the root of the module:
+
+```
+    npm install
+    gulp
+```
 
 * Adaptation of the Universal Viewer config
 
