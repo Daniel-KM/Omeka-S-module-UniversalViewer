@@ -1,6 +1,6 @@
 {
   "name": "universalviewer4omekas",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "Universal Viewer (module for Omeka S)",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer"
   },
   "author": "Daniel Berthereau",
-  "license": "CeCILL v2.1",
+  "license": "CECILL-2.1",
   "bugs": {
     "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/issues"
   },
