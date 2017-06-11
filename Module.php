@@ -39,7 +39,7 @@ use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
-use UniversalViewer\Form\ConfigForm;
+use UniversalViewer\Form\Config as ConfigForm;
 
 class Module extends AbstractModule
 {
@@ -222,7 +222,7 @@ class Module extends AbstractModule
         // Allow to display fieldsets in config form.
         $vars = [];
         $vars['form'] = $form;
-        return $renderer->render('admin/universal-viewer/config-form.phtml', $vars);
+        return $renderer->render('universal-viewer/module/config.phtml', $vars);
     }
 
     public function handleConfigForm(AbstractController $controller)

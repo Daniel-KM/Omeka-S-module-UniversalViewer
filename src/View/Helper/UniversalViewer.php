@@ -194,7 +194,7 @@ class UniversalViewer extends AbstractHelper
 
         // Default configuration file.
         $config = empty($args['config'])
-            ? $this->view->basePath('/modules/UniversalViewer/view/public/universal-viewer/config.json')
+            ? $this->view->basePath('/modules/UniversalViewer/view/universal-viewer/site/universal-viewer/config.json')
             : $args['config'];
         $urlJs = $this->view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer');
 

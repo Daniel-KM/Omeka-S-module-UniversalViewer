@@ -1,18 +1,20 @@
 <?php
+namespace UniversalViewer;
+
 return [
     'block_layouts' => [
         'invokables' => [
-            'universalViewer' => 'UniversalViewer\Site\BlockLayout\UniversalViewer',
+            'universalViewer' => Site\BlockLayout\UniversalViewer::class,
         ],
     ],
     'controllers' => [
         'invokables' => [
-            'UniversalViewer\Controller\Player' => 'UniversalViewer\Controller\PlayerController',
+            'UniversalViewer\Controller\Player' => Controller\PlayerController::class,
         ],
     ],
     'form_elements' => [
         'factories' => [
-            'UniversalViewer\Form\ConfigForm' => 'UniversalViewer\Service\Form\ConfigFormFactory',
+            'UniversalViewer\Form\ConfigForm' => Service\Form\ConfigFormFactory::class,
         ],
     ],
     'router' => [
@@ -60,7 +62,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'universalViewer' => 'UniversalViewer\View\Helper\UniversalViewer',
+            'universalViewer' => View\Helper\UniversalViewer::class,
         ],
     ],
     'translator' => [

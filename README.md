@@ -76,7 +76,7 @@ The next times:
 * Adaptation of the Universal Viewer config
 
 To customize the configuration of the module, create a directory `universal-folder`
-in your theme and copy the file `modules/UniversalViewer/view/public/universal-viewer/config.json`
+in your theme and copy the file `modules/UniversalViewer/view/universal-viewer/site/universal-viewer/config.json`
 inside it: `themes/My_Theme/view/omeka/site/universal-viewer/config.json`.
 
 Details of the config options can be found on the [wiki] and tested [online].
