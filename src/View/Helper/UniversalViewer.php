@@ -36,7 +36,6 @@ use Zend\View\Helper\AbstractHelper;
 
 class UniversalViewer extends AbstractHelper
 {
-
     /**
      * Get the Universal Viewer for the provided resource.
      *
@@ -50,7 +49,7 @@ class UniversalViewer extends AbstractHelper
      *   - (string) config
      * @return string. The html string corresponding to the UniversalViewer.
      */
-    public function __invoke($resource, $options = array())
+    public function __invoke($resource, $options = [])
     {
         static $iiifServerIsActive;
 
@@ -83,7 +82,7 @@ class UniversalViewer extends AbstractHelper
 
         // Prepare the url for the manifest of a record after additional checks.
         $resourceName = $resource->resourceName();
-        if (!in_array($resourceName, array('items', 'item_sets'))) {
+        if (!in_array($resourceName, ['items', 'item_sets'])) {
             return '';
         }
 
@@ -148,7 +147,7 @@ class UniversalViewer extends AbstractHelper
      */
     protected function buildIdentifierForList($resources)
     {
-        $identifiers = array();
+        $identifiers = [];
         foreach ($resources as $resource) {
             $identifiers[] = $resource->id();
         }
@@ -169,7 +168,7 @@ class UniversalViewer extends AbstractHelper
      * @param array $options
      * @return string
      */
-    protected function render($urlManifest, $options = array())
+    protected function render($urlManifest, $options = [])
     {
         $class = isset($options['class'])
             ? $options['class']
@@ -213,7 +212,7 @@ class UniversalViewer extends AbstractHelper
      * Helper to check if the IiifServer is installed.
      *
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     protected function moduleIsActive($name)
     {

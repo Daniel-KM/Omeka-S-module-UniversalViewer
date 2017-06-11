@@ -54,7 +54,7 @@ class PlayerController extends AbstractActionController
         }
 
         // Map iiif resources with Omeka Classic and Omeka S records.
-        $matchingResources = array(
+        $matchingResources = [
             'item' => 'items',
             'items' => 'items',
             'item-set' => 'item_sets',
@@ -63,7 +63,7 @@ class PlayerController extends AbstractActionController
             'item_sets' => 'item_sets',
             'collection' => 'item_sets',
             'collections' => 'item_sets',
-        );
+        ];
         $resourceName = $this->params('resourcename');
         if (!isset($matchingResources[$resourceName])) {
             throw new NotFoundException;

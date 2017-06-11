@@ -2,8 +2,6 @@
 
 namespace UniversalViewerTest\Controller;
 
-use UniversalViewerTest\Controller\UniversalViewerControllerTestCase;
-
 class PlayerControllerTest extends UniversalViewerControllerTestCase
 {
     public function testIndexActionCanBeAccessed()

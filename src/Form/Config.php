@@ -7,7 +7,6 @@ use Zend\Form\Form;
 
 class Config extends Form
 {
-
     protected $api;
     protected $settings;
     protected $iiifServerIsActive;
@@ -188,7 +187,7 @@ class Config extends Form
     }
 
     /**
-     * @param boolean $iiifServerIsActive
+     * @param bool $iiifServerIsActive
      */
     public function setIiifServerIsActive($iiifServerIsActive)
     {
@@ -196,7 +195,7 @@ class Config extends Form
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIiifServerIsActive()
     {

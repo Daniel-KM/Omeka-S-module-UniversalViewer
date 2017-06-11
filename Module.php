@@ -43,8 +43,7 @@ use UniversalViewer\Form\Config as ConfigForm;
 
 class Module extends AbstractModule
 {
-
-    protected $settings = array(
+    protected $settings = [
         'universalviewer_manifest_property' => '',
         'universalviewer_append_item_set_show' => true,
         'universalviewer_append_item_show' => true,
@@ -53,7 +52,7 @@ class Module extends AbstractModule
         'universalviewer_class' => '',
         'universalviewer_style' => 'background-color: #000; height: 600px;',
         'universalviewer_locale' => 'en-GB:English (GB),fr:French',
-    );
+    ];
 
     public function getConfig()
     {
@@ -199,17 +198,17 @@ class Module extends AbstractModule
             )
         ) {
             $sharedEventManager->attach('Omeka\Controller\Site\Item',
-                'view.browse.after', array($this, 'displayUniversalViewer'));
+                'view.browse.after', [$this, 'displayUniversalViewer']);
         }
 
         if ($settings->get('universalviewer_append_item_show')) {
             $sharedEventManager->attach('Omeka\Controller\Site\Item',
-                'view.show.after', array($this, 'displayUniversalViewer'));
+                'view.show.after', [$this, 'displayUniversalViewer']);
         }
 
         if ($settings->get('universalviewer_append_item_set_browse')) {
             $sharedEventManager->attach('Omeka\Controller\Site\ItemSet',
-                'view.browse.after', array($this, 'displayUniversalViewer'));
+                'view.browse.after', [$this, 'displayUniversalViewer']);
         }
     }
 
