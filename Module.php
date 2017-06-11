@@ -73,7 +73,7 @@ class Module extends AbstractModule
         $settings = $serviceLocator->get('Omeka\Settings');
         $t = $serviceLocator->get('MvcTranslator');
 
-        $js = __DIR__ . '/asset/js/uv/lib/embed.js';
+        $js = __DIR__ . '/asset/vendor/uv/lib/embed.js';
         if (!file_exists($js)) {
             throw new ModuleCannotInstallException($t->translate('UniversalViewer library should be installed. See module’s installation documentation.')); // @translate
         }
@@ -219,7 +219,7 @@ class Module extends AbstractModule
         $formElementManager = $serviceLocator->get('FormElementManager');
         $form = $formElementManager->get(ConfigForm::class);
 
-        // Currently, Omeka S doesn't allow to display fieldsets in config form.
+        // Allow to display fieldsets in config form.
         $vars = [];
         $vars['form'] = $form;
         return $renderer->render('admin/universal-viewer/config-form.phtml', $vars);

@@ -1,4 +1,4 @@
 node_modules
 debug.log
 composer.lock
-vendor
+/vendor

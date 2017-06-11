@@ -11,19 +11,19 @@ gulp.task('sync', function(cb) {
     async.series([
         function (next) {
             gulp.src(['node_modules/universalviewer/dist/uv-*/**'])
-            .pipe(gulp.dest('asset/js/'))
+            .pipe(gulp.dest('asset/vendor/'))
             .on('end', next);
         }
     ], cb);
 });
 
 gulp.task('clean', function(cb) {
-    return del('asset/js/uv');
+    return del('asset/vendor/uv');
 });
 
 gulp.task('rename', function(cb) {
-    var file = glob.sync('asset/js/uv-*/');
-    fs.renameSync(file[0], 'asset/js/uv/');
+    var file = glob.sync('asset/vendor/uv-*/');
+    fs.renameSync(file[0], 'asset/vendor/uv/');
     cb();
 });
 
