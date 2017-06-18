@@ -14,7 +14,7 @@ return [
     ],
     'form_elements' => [
         'factories' => [
-            'UniversalViewer\Form\ConfigForm' => Service\Form\ConfigFormFactory::class,
+            'UniversalViewer\Form\Config' => Service\Form\ConfigFactory::class,
         ],
     ],
     'router' => [

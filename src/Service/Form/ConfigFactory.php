@@ -2,11 +2,11 @@
 namespace UniversalViewer\Service\Form;
 
 use Omeka\Module\Manager as ModuleManager;
-use UniversalViewer\Form\ConfigForm;
+use UniversalViewer\Form\Config as ConfigForm;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
-class ConfigFormFactory implements FactoryInterface
+class ConfigFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
