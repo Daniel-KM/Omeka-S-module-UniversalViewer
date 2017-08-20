@@ -31,13 +31,14 @@
 namespace UniversalViewer\View\Helper;
 
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
+use Omeka\Site\Theme\Theme;
 use Zend\View\Helper\AbstractHelper;
 
 class UniversalViewer extends AbstractHelper
 {
     /**
      * These options are used only when the player is called outside of a site
-     * or when the site settings are not set.  They can be bypassed by options
+     * or when the site settings are not set. They can be bypassed by options
      * passed to the helper.
      *
      * @var array
@@ -47,6 +48,21 @@ class UniversalViewer extends AbstractHelper
         'style' => 'background-color: #000; height: 600px',
         'locale' => 'en-GB:English (GB),fr:French',
     ];
+
+    /**
+     * @var Theme The current theme, if any
+     */
+    protected $currentTheme;
+
+    /**
+     * Construct the helper.
+     *
+     * @param Theme|null $currentTheme
+     */
+    public function __construct(Theme $currentTheme = null)
+    {
+        $this->currentTheme = $currentTheme;
+    }
 
     /**
      * Get the Universal Viewer for the provided resource.
@@ -211,7 +227,7 @@ class UniversalViewer extends AbstractHelper
 
         $config = isset($options['config'])
             ? $this->basePath($options['config'])
-            : $this->configPath();
+            : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
         $urlJs = $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer');
 
@@ -227,23 +243,28 @@ class UniversalViewer extends AbstractHelper
     }
 
     /**
-     * Get the asset config.json from the theme or the module.
+     * Get an asset path for a site from theme or module (fallback).
      *
-     * @return string
+     * @param string $path
+     * @param string $module
+     * @return string|null
      */
-    protected function configPath()
+    protected function assetPath($path, $module = null)
     {
         $view = $this->getView();
-        $themePath = $view->assetUrl('universal-viewer/config.json');
-        $filepath = '';
-        if ($themePath) {
-            $pattern = '~.*(/themes/[^/]+/asset/universal-viewer/config\.json)~';
-            $assetPath = preg_replace($pattern, '$1', $themePath, 1, $count);
-            if (empty($count) || !file_exists(OMEKA_PATH . $assetPath)) {
-                $themePath = '';
+
+        // Check the path in the theme.
+        if ($this->currentTheme) {
+            $filepath = OMEKA_PATH . '/themes/' . $this->currentTheme->getId() . '/asset/' . $path;
+            if (file_exists($filepath)) {
+                return $view->assetUrl($path);
             }
         }
-        $config = $themePath ?: $view->assetUrl('universal-viewer/config.json', 'UniversalViewer');
-        return $config;
+
+        // As fallback, get the path in the module (the file must exist).
+        if ($module) {
+            $assetPath = $view->assetUrl($path, $module);
+            return $assetPath;
+        }
     }
 }

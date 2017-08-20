@@ -55,7 +55,7 @@ class UniversalViewer extends AbstractBlockLayout
             return 'No item selected'; // @translate
         }
 
-        return $view->partial('universal-viewer/common/block-layout/universal-viewer', [
+        return $view->partial('common/block-layout/universal-viewer', [
             'attachments' => $attachments,
         ]);
     }

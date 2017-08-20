@@ -288,7 +288,7 @@ class Module extends AbstractModule
         // Allow to display fieldsets in config form.
         $vars = [];
         $vars['form'] = $form;
-        return $renderer->render('universal-viewer/module/config.phtml', $vars);
+        return $renderer->render('universal-viewer/module/config', $vars);
     }
 
     public function handleConfigForm(AbstractController $controller)

@@ -2,6 +2,16 @@
 namespace UniversalViewer;
 
 return [
+    'view_manager' => [
+        'template_path_stack' => [
+            OMEKA_PATH . '/modules/UniversalViewer/view',
+        ],
+    ],
+    'view_helpers' => [
+        'factories' => [
+            'universalViewer' => Service\ViewHelper\UniversalViewerFactory::class,
+        ],
+    ],
     'block_layouts' => [
         'invokables' => [
             'universalViewer' => Site\BlockLayout\UniversalViewer::class,
@@ -53,16 +63,6 @@ return [
             //         ],
             //     ],
             // ],
-        ],
-    ],
-    'view_manager' => [
-        'template_path_stack' => [
-            OMEKA_PATH . '/modules/UniversalViewer/view',
-        ],
-    ],
-    'view_helpers' => [
-        'invokables' => [
-            'universalViewer' => View\Helper\UniversalViewer::class,
         ],
     ],
     'translator' => [
