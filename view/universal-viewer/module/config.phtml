@@ -1,14 +1,11 @@
-<?php
-$form->prepare();
-
-$fieldsets = $form->getFieldsets();
-foreach ($fieldsets as $fieldset):
-?>
-<fieldset id="fieldset-universalviewer-<?php echo $fieldset->getAttribute('name'); ?>">
-    <legend><?php echo $fieldset->getLabel(); ?></legend>
-    <p class="explanation">
-        <?php echo $fieldset->getOption('info'); ?>
-    </p>
-    <?php echo $this->formCollection($fieldset, false); ?>
-</fieldset>
-<?php endforeach; ?>
+<?php $form->prepare(); ?>
+<p><?php
+if ($form->getIiifServerIsActive()):
+    echo $this->translate('The IIIF Server is active, so when no url is set, the viewer will use the standard routes.');
+else:
+    echo $this->translate('The IIIF Server is not active, so when no url is set, the viewer won’t be displayed.');
+    echo ' ' . $this->translate('Furthermore, the Universal Viewer can’t display lists of items.');
+endif;
+?></p>
+<p><?php echo $this->translate('The viewer itself can be configured in settings of each site, via the file "config.json" and the helper.'); ?></p>
+<?php echo $this->formCollection($form, false); ?>

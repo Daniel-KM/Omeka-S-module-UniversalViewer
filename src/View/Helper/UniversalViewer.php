@@ -31,11 +31,22 @@
 namespace UniversalViewer\View\Helper;
 
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
-use Omeka\Module\Manager as ModuleManager;
 use Zend\View\Helper\AbstractHelper;
 
 class UniversalViewer extends AbstractHelper
 {
+    /**
+     * These options are used only when the player is called outside of a site.
+     * They can be bypassed by options passed to the helper.
+     *
+     * @var array
+     */
+    protected $noSiteOptions = [
+        'class' => '',
+        'style' => 'background-color: #000; height: 600px',
+        'locale' => 'en-GB:English (GB),fr:French',
+    ];
+
     /**
      * Get the Universal Viewer for the provided resource.
      *
@@ -51,17 +62,15 @@ class UniversalViewer extends AbstractHelper
      */
     public function __invoke($resource, $options = [])
     {
-        static $iiifServerIsActive;
-
         if (empty($resource)) {
             return '';
         }
 
+        $view = $this->getView();
+
         // If the manifest is not provided in metadata, point to the manifest
         // created from Omeka files only when the Iiif Server is installed.
-        if (is_null($iiifServerIsActive)) {
-            $iiifServerIsActive = $this->moduleIsActive('IiifServer');
-        }
+        $iiifServerIsActive = $view->getHelperPluginManager()->has('iiifManifest');
 
         // Prepare the url of the manifest for a dynamic collection.
         if (is_array($resource)) {
@@ -71,12 +80,12 @@ class UniversalViewer extends AbstractHelper
 
             $identifier = $this->buildIdentifierForList($resource);
             $route = 'iiifserver_presentation_collection_list';
-            $urlManifest = $this->view->url(
+            $urlManifest = $view->url(
                 $route,
                 ['id' => $identifier],
                 ['force_canonical' => true]
             );
-            $urlManifest = $this->view->iiifForceHttpsIfRequired($urlManifest);
+            $urlManifest = $view->iiifForceHttpsIfRequired($urlManifest);
             return $this->render($urlManifest, $options);
         }
 
@@ -88,7 +97,7 @@ class UniversalViewer extends AbstractHelper
 
         // Determine the url of the manifest from a field in the metadata.
         $urlManifest = '';
-        $manifestProperty = $this->view->setting('universalviewer_manifest_property');
+        $manifestProperty = $view->setting('universalviewer_manifest_property');
         if ($manifestProperty) {
             $urlManifest = $resource->value($manifestProperty);
             if ($urlManifest) {
@@ -99,8 +108,8 @@ class UniversalViewer extends AbstractHelper
         }
 
         // If the manifest is not provided in metadata, point to the manifest
-        // created from Omeka files if Iiif Server is installed.
-        if (!$this->moduleIsActive('IiifServer')) {
+        // created from Omeka files if the module Iiif Server is enabled.
+        if (!$iiifServerIsActive) {
             return '';
         }
 
@@ -109,25 +118,25 @@ class UniversalViewer extends AbstractHelper
             case 'items':
                 // Currently, an item without files is unprocessable.
                 if (count($resource->media()) == 0) {
-                    // return $this->view->translate('This item has no files and is not displayable.');
+                    // return $view->translate('This item has no files and is not displayable.');
                     return '';
                 }
                 $route = 'iiifserver_presentation_item';
                 break;
             case 'item_sets':
                 if ($resource->itemCount() == 0) {
-                    // return $this->view->translate('This collection has no item and is not displayable.');
+                    // return $view->translate('This collection has no item and is not displayable.');
                     return '';
                 }
                 $route = 'iiifserver_presentation_collection';
                 break;
         }
 
-        $urlManifest = $this->view->url($route,
+        $urlManifest = $view->url($route,
             ['id' => $resource->id()],
             ['force_canonical' => true]
         );
-        $urlManifest = $this->view->iiifForceHttpsIfRequired($urlManifest);
+        $urlManifest = $view->iiifForceHttpsIfRequired($urlManifest);
 
         return $this->render($urlManifest, $options);
     }
@@ -170,32 +179,40 @@ class UniversalViewer extends AbstractHelper
      */
     protected function render($urlManifest, $options = [])
     {
+        $view = $this->view;
+
+        // Check site, because site settings aren’t available outside of a site.
+        $isSite = $view->params()->fromRoute('__SITE__');
+        if (empty($isSite)) {
+            $options += $this->noSiteOptions;
+        }
+
         $class = isset($options['class'])
             ? $options['class']
-            : $this->view->setting('universalviewer_class');
+            : $view->siteSetting('universalviewer_class');
         if (!empty($class)) {
             $class = ' ' . $class;
         }
 
         $locale = isset($options['locale'])
             ? $options['locale']
-            : $this->view->setting('universalviewer_locale');
+            : $view->siteSetting('universalviewer_locale');
         if (!empty($locale)) {
             $locale = ' data-locale="' . $locale . '"';
         }
 
         $style = isset($options['style'])
             ? $options['style']
-            : $this->view->setting('universalviewer_style');
+            : $view->siteSetting('universalviewer_style');
         if (!empty($style)) {
             $style = ' style="' . $style . '"';
         }
 
         // Default configuration file.
         $config = empty($args['config'])
-            ? $this->view->basePath('/modules/UniversalViewer/view/universal-viewer/site/universal-viewer/config.json')
+            ? $view->basePath('/modules/UniversalViewer/view/universal-viewer/site/universal-viewer/config.json')
             : $args['config'];
-        $urlJs = $this->view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer');
+        $urlJs = $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer');
 
         $html = sprintf('<div class="uv%s" data-config="%s" data-uri="%s"%s%s></div>',
             $class,
@@ -206,20 +223,5 @@ class UniversalViewer extends AbstractHelper
         $html .= sprintf('<script type="text/javascript" id="embedUV" src="%s"></script>', $urlJs);
         $html .= '<script type="text/javascript">/* wordpress fix */</script>';
         return $html;
-    }
-
-    /**
-     * Helper to check if the IiifServer is installed.
-     *
-     * @param string $name
-     * @return bool
-     */
-    protected function moduleIsActive($name)
-    {
-        $serviceLocator = @$this->getView()->getHelperPluginManager()->getServiceLocator();
-        $moduleManager = $serviceLocator->get('Omeka\ModuleManager');
-        $module = $moduleManager->getModule($name);
-        $moduIeIsActive = $module && $module->getState() == ModuleManager::STATE_ACTIVE;
-        return $moduIeIsActive;
     }
 }

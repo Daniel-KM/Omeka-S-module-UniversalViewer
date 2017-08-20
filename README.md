@@ -40,14 +40,16 @@ server), install the module [OpenLayersZoom], a module  that convert big images
 like maps and deep paintings, and any other images, into tiles in order to load
 and zoom them instantly.
 
-Some options can be set:
-- Options for the integration of the player can be changed in the config page.
-- Options for the UniversalViewer player can be changed in the json file
-  "config.json": copy and update it in a folder named "universal-viewer" inside
-  the folder of the theme.
-- To use an alternative config for some items, add an option `config` with
-  its url in the array of arguments passed to the viewer (see below), or use a
-  metadata in the field set in the IIIF server config form.
+Only one option can be set in the main config (the manifest property, if any).
+The other can be set differently for each site:
+
+- in site settings for the integration of the player;
+- in the json file "config.json" of UniversalViewer for the player itself: copy
+  and update it in a folder named "universal-viewer" inside the folder of the
+  theme;
+- via the helper: to use an alternative config for some items, add an option
+  `config` with its url in the array of arguments passed to the viewer (see
+  below), or use a metadata in the field set in the IIIF server config form.
 
 See below the notes for more info.
 
@@ -135,6 +137,7 @@ Bugs
 
 - When an item set contains non image items, the left panel with the index is
   displayed only when the first item contains an image.
+
 
 Warning
 -------
