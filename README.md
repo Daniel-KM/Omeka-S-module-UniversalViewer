@@ -45,8 +45,8 @@ The other can be set differently for each site:
 
 - in site settings for the integration of the player;
 - in the json file "config.json" of UniversalViewer for the player itself: copy
-  and update it in a folder named "universal-viewer" inside the folder of the
-  theme;
+  and update it in a folder named "universal-viewer" inside the folder "asset"
+  of the theme;
 - via the helper: to use an alternative config for some items, add an option
   `config` with its url in the array of arguments passed to the viewer (see
   below), or use a metadata in the field set in the IIIF server config form.
@@ -75,12 +75,6 @@ The next times:
     gulp
 ```
 
-* Adaptation of the Universal Viewer config
-
-To customize the configuration of the module, create a directory `universal-folder`
-in your theme and copy the file `modules/UniversalViewer/view/universal-viewer/site/universal-viewer/config.json`
-inside it: `themes/My_Theme/view/omeka/site/universal-viewer/config.json`.
-
 Details of the config options can be found on the [wiki] and tested [online].
 
 
@@ -93,8 +87,8 @@ available by the Universal Viewer.
 The viewer is always available at `http://www.example.com/item-set/{item-set id}/play`
 and `http://www.example.com/item/{item id}/play`. Furthermore, it is
 automatically embedded in "item-set/{id}" and "item/{id}" show and/or browse
-pages. This can be disabled in the config of the module. Finally, a layout is
-available to add the viewer in any standard page.
+pages. This can be disabled in the settings of the site. Finally, a block layout
+is available to add the viewer in any standard page.
 
 To embed the Universal Viewer, just use the helper:
 
@@ -144,8 +138,8 @@ Warning
 
 Use it at your own risk.
 
-It's always recommended to backup your files and database regularly so you can
-roll back if needed.
+It’s always recommended to backup your files and your databases and to check
+your archives regularly so you can roll back if needed.
 
 
 Troubleshooting
@@ -184,7 +178,7 @@ Contact
 
 See documentation on the UniversalViewer and the IIIF on their respective site.
 
-Current maintainers of the plugin:
+Current maintainers of the module:
 * Daniel Berthereau (see [Daniel-KM])
 
 First version of this module was built for [Mines ParisTech].

@@ -208,10 +208,10 @@ class UniversalViewer extends AbstractHelper
             $style = ' style="' . $style . '"';
         }
 
-        // Default configuration file.
-        $config = empty($args['config'])
-            ? $view->basePath('/modules/UniversalViewer/view/universal-viewer/site/universal-viewer/config.json')
-            : $args['config'];
+        $config = isset($options['config'])
+            ? $this->basePath($options['config'])
+            : $this->configPath();
+
         $urlJs = $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer');
 
         $html = sprintf('<div class="uv%s" data-config="%s" data-uri="%s"%s%s></div>',
@@ -223,5 +223,26 @@ class UniversalViewer extends AbstractHelper
         $html .= sprintf('<script type="text/javascript" id="embedUV" src="%s"></script>', $urlJs);
         $html .= '<script type="text/javascript">/* wordpress fix */</script>';
         return $html;
+    }
+
+    /**
+     * Get the asset config.json from the theme or the module.
+     *
+     * @return string
+     */
+    protected function configPath()
+    {
+        $view = $this->getView();
+        $themePath = $view->assetUrl('universal-viewer/config.json');
+        $filepath = '';
+        if ($themePath) {
+            $pattern = '~.*(/themes/[^/]+/asset/universal-viewer/config\.json)~';
+            $assetPath = preg_replace($pattern, '$1', $themePath, 1, $count);
+            if (empty($count) || !file_exists(OMEKA_PATH . $assetPath)) {
+                $themePath = '';
+            }
+        }
+        $config = $themePath ?: $view->assetUrl('universal-viewer/config.json', 'UniversalViewer');
+        return $config;
     }
 }
