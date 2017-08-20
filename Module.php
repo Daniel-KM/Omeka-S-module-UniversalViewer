@@ -75,6 +75,7 @@ class Module extends AbstractModule
     {
         $settings = $serviceLocator->get('Omeka\Settings');
         $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
+        $api = $serviceLocator->get('Omeka\ApiManager');
         $t = $serviceLocator->get('MvcTranslator');
 
         $js = __DIR__ . '/asset/vendor/uv/lib/embed.js';
@@ -87,8 +88,12 @@ class Module extends AbstractModule
         foreach ($this->settings as $name => $value) {
             $settings->set($name, $value);
         }
-        foreach ($this->siteSettings as $name => $value) {
-            $settings->set($name, $value);
+        $sites = $api->search('sites')->getContent();
+        foreach ($sites as $site) {
+            $siteSettings->setTargetId($site->id());
+            foreach ($this->siteSettings as $name => $value) {
+                $siteSettings->set($name, $value);
+            }
         }
     }
 
@@ -237,9 +242,11 @@ class Module extends AbstractModule
             function (Event $event) {
                 $view = $event->getTarget();
                 $siteSettings = $this->getServiceLocator()->get('Omeka\Settings\Site');
-                if ($siteSettings->get('universalviewer_append_item_set_show')) {
+                if ($siteSettings->get('universalviewer_append_item_set_show', $this->siteSettings['universalviewer_append_item_set_show'])) {
                     echo $view->universalViewer($view->itemSet);
-                } elseif ($this->iiifServerIsActive() && $siteSettings->get('universalviewer_append_item_browse')) {
+                } elseif ($this->iiifServerIsActive()
+                    && $siteSettings->get('universalviewer_append_item_browse', $this->siteSettings['universalviewer_append_item_browse'])
+                ) {
                     echo $view->universalViewer($view->items);
                 }
             }
@@ -252,7 +259,7 @@ class Module extends AbstractModule
                 function (Event $event) {
                     $view = $event->getTarget();
                     $siteSettings = $this->getServiceLocator()->get('Omeka\Settings\Site');
-                    if ($siteSettings->get('universalviewer_append_item_set_browse')) {
+                    if ($siteSettings->get('universalviewer_append_item_set_browse', $this->siteSettings['universalviewer_append_item_set_browse'])) {
                         echo $view->universalViewer($view->itemSets);
                     }
                 }
@@ -265,7 +272,7 @@ class Module extends AbstractModule
             function (Event $event) {
                 $view = $event->getTarget();
                 $siteSettings = $this->getServiceLocator()->get('Omeka\Settings\Site');
-                if ($siteSettings->get('universalviewer_append_item_show')) {
+                if ($siteSettings->get('universalviewer_append_item_show', $this->siteSettings['universalviewer_append_item_show'])) {
                     echo $view->universalViewer($view->item);
                 }
             }
@@ -300,7 +307,6 @@ class Module extends AbstractModule
     public function addSiteSettingsFormElements(Event $event)
     {
         $services = $this->getServiceLocator();
-        $settings = $services->get('Omeka\Settings');
         $siteSettings = $services->get('Omeka\Settings\Site');
         $form = $event->getTarget();
 
@@ -320,7 +326,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_set_show',
-                    $settings->get('universalviewer_append_item_set_show')
+                    $this->siteSettings['universalviewer_append_item_set_show']
                 ),
             ],
         ]);
@@ -335,7 +341,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_show',
-                    $settings->get('universalviewer_append_item_show')
+                    $this->siteSettings['universalviewer_append_item_show']
                 ),
             ],
         ]);
@@ -350,7 +356,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_set_browse',
-                    $settings->get('universalviewer_append_item_set_browse')
+                    $this->siteSettings['universalviewer_append_item_set_browse']
                 ),
                 'disabled', !$iiifServerIsActive,
             ],
@@ -366,7 +372,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_browse',
-                    $settings->get('universalviewer_append_item_browse')
+                    $this->siteSettings['universalviewer_append_item_browse']
                 ),
                 'disabled', !$iiifServerIsActive,
             ],
@@ -382,7 +388,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_class',
-                    $settings->get('universalviewer_class')
+                    $this->siteSettings['universalviewer_class']
                 ),
             ],
         ]);
@@ -398,7 +404,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_style',
-                    $settings->get('universalviewer_style')
+                    $this->siteSettings['universalviewer_style']
                 ),
             ],
         ]);
@@ -413,7 +419,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_locale',
-                    $settings->get('universalviewer_locale')
+                    $this->siteSettings['universalviewer_locale']
                 ),
             ],
         ]);

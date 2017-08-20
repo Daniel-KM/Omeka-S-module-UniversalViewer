@@ -36,12 +36,13 @@ use Zend\View\Helper\AbstractHelper;
 class UniversalViewer extends AbstractHelper
 {
     /**
-     * These options are used only when the player is called outside of a site.
-     * They can be bypassed by options passed to the helper.
+     * These options are used only when the player is called outside of a site
+     * or when the site settings are not set.  They can be bypassed by options
+     * passed to the helper.
      *
      * @var array
      */
-    protected $noSiteOptions = [
+    protected $defaultOptions = [
         'class' => '',
         'style' => 'background-color: #000; height: 600px',
         'locale' => 'en-GB:English (GB),fr:French',
@@ -184,28 +185,28 @@ class UniversalViewer extends AbstractHelper
         // Check site, because site settings aren’t available outside of a site.
         $isSite = $view->params()->fromRoute('__SITE__');
         if (empty($isSite)) {
-            $options += $this->noSiteOptions;
+            $options += $this->defaultOptions;
         }
 
         $class = isset($options['class'])
             ? $options['class']
-            : $view->siteSetting('universalviewer_class');
+            : $view->siteSetting('universalviewer_class', $this->defaultOptions['class']);
         if (!empty($class)) {
             $class = ' ' . $class;
         }
 
-        $locale = isset($options['locale'])
-            ? $options['locale']
-            : $view->siteSetting('universalviewer_locale');
-        if (!empty($locale)) {
-            $locale = ' data-locale="' . $locale . '"';
-        }
-
         $style = isset($options['style'])
             ? $options['style']
-            : $view->siteSetting('universalviewer_style');
+            : $view->siteSetting('universalviewer_style', $this->defaultOptions['style']);
         if (!empty($style)) {
             $style = ' style="' . $style . '"';
+        }
+
+        $locale = isset($options['locale'])
+            ? $options['locale']
+            : $view->siteSetting('universalviewer_locale', $this->defaultOptions['locale']);
+        if (!empty($locale)) {
+            $locale = ' data-locale="' . $locale . '"';
         }
 
         $config = isset($options['config'])
