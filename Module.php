@@ -230,8 +230,6 @@ class Module extends AbstractModule
             [$this, 'addSiteSettingsFormElements']
         );
 
-        $iiifServerIsActive = $this->iiifServerIsActive();
-
         // Note: there is no item-set show, but a special case for items browse.
         $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
@@ -241,13 +239,13 @@ class Module extends AbstractModule
                 $siteSettings = $this->getServiceLocator()->get('Omeka\Settings\Site');
                 if ($siteSettings->get('universalviewer_append_item_set_show')) {
                     echo $view->universalViewer($view->itemSet);
-                } elseif ($iiifServerIsActive && $siteSettings->get('universalviewer_append_item_browse')) {
+                } elseif ($this->iiifServerIsActive() && $siteSettings->get('universalviewer_append_item_browse')) {
                     echo $view->universalViewer($view->items);
                 }
             }
         );
 
-        if ($iiifServerIsActive) {
+        if ($this->iiifServerIsActive()) {
             $sharedEventManager->attach(
                 'Omeka\Controller\Site\ItemSet',
                 'view.browse.after',
@@ -425,10 +423,14 @@ class Module extends AbstractModule
 
     protected function iiifServerIsActive()
     {
-        $module = $this->getServiceLocator()
-            ->get('Omeka\ModuleManager')
-            ->getModule('IiifServer');
-        $iiifServerIsActive = $module && $module->getState() === ModuleManager::STATE_ACTIVE;
+        static $iiifServerIsActive;
+
+        if (is_null($iiifServerIsActive)) {
+            $module = $this->getServiceLocator()
+                ->get('Omeka\ModuleManager')
+                ->getModule('IiifServer');
+            $iiifServerIsActive = $module && $module->getState() === ModuleManager::STATE_ACTIVE;
+        }
         return $iiifServerIsActive;
     }
 }
