@@ -102,7 +102,7 @@ class UniversalViewer extends AbstractHelper
                 ['id' => $identifier],
                 ['force_canonical' => true]
             );
-            $urlManifest = $view->iiifForceHttpsIfRequired($urlManifest);
+            $urlManifest = $view->iiifForceBaseUrlIfRequired($urlManifest);
             return $this->render($urlManifest, $options);
         }
 
@@ -153,7 +153,7 @@ class UniversalViewer extends AbstractHelper
             ['id' => $resource->id()],
             ['force_canonical' => true]
         );
-        $urlManifest = $view->iiifForceHttpsIfRequired($urlManifest);
+        $urlManifest = $view->iiifForceBaseUrlIfRequired($urlManifest);
 
         return $this->render($urlManifest, $options);
     }
