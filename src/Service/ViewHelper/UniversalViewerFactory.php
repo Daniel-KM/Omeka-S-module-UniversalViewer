@@ -3,7 +3,6 @@
 namespace UniversalViewer\Service\ViewHelper;
 
 use Interop\Container\ContainerInterface;
-use Omeka\Module\Manager as ModuleManager;
 use UniversalViewer\View\Helper\UniversalViewer;
 use Zend\ServiceManager\Factory\FactoryInterface;
 

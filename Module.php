@@ -88,6 +88,7 @@ class Module extends AbstractModule
         foreach ($this->settings as $name => $value) {
             $settings->set($name, $value);
         }
+
         $sites = $api->search('sites')->getContent();
         foreach ($sites as $site) {
             $siteSettings->setTargetId($site->id());
@@ -296,7 +297,6 @@ class Module extends AbstractModule
         $settings = $this->getServiceLocator()->get('Omeka\Settings');
 
         $params = $controller->getRequest()->getPost();
-        // Manage fieldsets of params automatically (only used for the view).
         foreach ($params as $name => $value) {
             if (isset($this->settings[$name])) {
                 $settings->set($name, $value);
