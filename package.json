@@ -20,8 +20,7 @@
     "async": "^2.6.0",
     "del": "^3.0.0",
     "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
-    "gulp-rename": "^1.2.2",
-    "run-sequence": "^2.2.0"
+    "gulp-rename": "^1.2.2"
   },
   "dependencies": {
     "universalviewer": "github:universalviewer/universalviewer#master"
