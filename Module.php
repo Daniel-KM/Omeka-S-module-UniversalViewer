@@ -33,7 +33,7 @@ namespace UniversalViewer;
 use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Module\Manager as ModuleManager;
-use UniversalViewer\Form\Config as ConfigForm;
+use UniversalViewer\Form\ConfigForm;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Form\Fieldset;
@@ -41,23 +41,11 @@ use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
+use Zend\Form\Element\Text;
+use Zend\Form\Element\Checkbox;
 
 class Module extends AbstractModule
 {
-    protected $settings = [
-        'universalviewer_manifest_property' => '',
-    ];
-
-    protected $siteSettings = [
-        'universalviewer_append_item_set_show' => true,
-        'universalviewer_append_item_show' => true,
-        'universalviewer_append_item_set_browse' => false,
-        'universalviewer_append_item_browse' => false,
-        'universalviewer_class' => '',
-        'universalviewer_style' => 'background-color: #000; height: 600px;',
-        'universalviewer_locale' => 'en-GB:English (GB),fr:French',
-    ];
-
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -85,35 +73,40 @@ class Module extends AbstractModule
                     . ' ' . $t->translate('See module’s installation documentation.')); // @translate
         }
 
-        foreach ($this->settings as $name => $value) {
-            $settings->set($name, $value);
-        }
-
-        $sites = $api->search('sites')->getContent();
-        foreach ($sites as $site) {
-            $siteSettings->setTargetId($site->id());
-            foreach ($this->siteSettings as $name => $value) {
-                $siteSettings->set($name, $value);
-            }
-        }
+        $this->manageSettings($serviceLocator->get('Omeka\Settings'), 'install');
+        $this->manageSiteSettings($serviceLocator, 'install');
     }
 
     public function uninstall(ServiceLocatorInterface $serviceLocator)
     {
-        $settings = $serviceLocator->get('Omeka\Settings');
+        $this->manageSettings($serviceLocator->get('Omeka\Settings'), 'uninstall');
+        $this->manageSiteSettings($serviceLocator, 'uninstall');
+    }
+
+    protected function manageSettings($settings, $process, $key = 'settings')
+    {
+        $config = require __DIR__ . '/config/module.config.php';
+        $defaultSettings = $config[strtolower(__NAMESPACE__)][$key];
+        foreach ($defaultSettings as $name => $value) {
+            switch ($process) {
+                case 'install':
+                    $settings->set($name, $value);
+                    break;
+                case 'uninstall':
+                    $settings->delete($name);
+                    break;
+            }
+        }
+    }
+
+    protected function manageSiteSettings(ServiceLocatorInterface $serviceLocator, $process)
+    {
         $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
         $api = $serviceLocator->get('Omeka\ApiManager');
-
-        foreach ($this->settings as $name => $value) {
-            $settings->delete($name);
-        }
-
         $sites = $api->search('sites')->getContent();
         foreach ($sites as $site) {
             $siteSettings->setTargetId($site->id());
-            foreach ($this->siteSettings as $name => $value) {
-                $siteSettings->delete($name);
-            }
+            $this->manageSettings($siteSettings, $process, 'site_settings');
         }
     }
 
@@ -121,26 +114,29 @@ class Module extends AbstractModule
     {
         if (version_compare($oldVersion, '3.4.1', '<')) {
             $settings = $serviceLocator->get('Omeka\Settings');
+            $config = require __DIR__ . '/config/module.config.php';
+            $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+            $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
 
             $settings->set('universalviewer_manifest_description_property',
-                @$this->settings['universalviewer_manifest_description_property']);
+                @$defaultSettings['universalviewer_manifest_description_property']);
 
             $settings->set('universalviewer_manifest_attribution_property',
-                @$this->settings['universalviewer_manifest_attribution_property']);
+                @$defaultSettings['universalviewer_manifest_attribution_property']);
 
             $settings->set('universalviewer_manifest_attribution_default',
                 $settings->get('universalviewer_attribution'));
             $settings->delete('universalviewer_attribution');
 
             $settings->set('universalviewer_manifest_license_property',
-                @$this->settings['universalviewer_manifest_license_property']);
+                @$defaultSettings['universalviewer_manifest_license_property']);
 
             $settings->set('universalviewer_manifest_license_default',
                 $settings->get('universalviewer_licence'));
             $settings->delete('universalviewer_licence');
 
             $settings->set('universalviewer_manifest_logo_default',
-                @$this->settings['universalviewer_manifest_logo_default']);
+                @$defaultSettings['universalviewer_manifest_logo_default']);
 
             $settings->set('universalviewer_append_item_set_show',
                 $settings->get('universalviewer_append_collections_show'));
@@ -151,12 +147,12 @@ class Module extends AbstractModule
             $settings->delete('universalviewer_append_items_show');
 
             $settings->set('universalviewer_append_item_set_browse',
-                $this->siteSettings['universalviewer_append_item_set_browse']);
+                $defaultSiteSettings['universalviewer_append_item_set_browse']);
 
             $settings->set('universalviewer_append_item_browse',
-                $this->siteSettings['universalviewer_append_item_browse']);
+                $defaultSiteSettings['universalviewer_append_item_browse']);
 
-            $style = $this->siteSettings['universalviewer_style'];
+            $style = $defaultSiteSettings['universalviewer_style'];
             $width = $settings->get('universalviewer_width') ?: '';
             if (!empty($width)) {
                 $width = ' width:' . $width . ';';
@@ -212,17 +208,20 @@ class Module extends AbstractModule
             $settings = $serviceLocator->get('Omeka\Settings');
             $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
             $api = $serviceLocator->get('Omeka\ApiManager');
+            $config = require __DIR__ . '/config/module.config.php';
+            $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+            $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
 
             $sites = $api->search('sites')->getContent();
             foreach ($sites as $site) {
                 $siteSettings->setTargetId($site->id());
-                foreach ($this->siteSettings as $name => $value) {
+                foreach ($defaultSiteSettings as $name => $value) {
                     $value = $settings->get($name);
                     $siteSettings->set($name, $value);
                 }
             }
 
-            foreach ($this->siteSettings as $name => $value) {
+            foreach ($defaultSiteSettings as $name => $value) {
                 $settings->delete($name);
             }
         }
@@ -231,7 +230,7 @@ class Module extends AbstractModule
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
         $sharedEventManager->attach(
-            'Omeka\Form\SiteSettingsForm',
+            \Omeka\Form\SiteSettingsForm::class,
             'form.add_elements',
             [$this, 'addSiteSettingsFormElements']
         );
@@ -253,19 +252,19 @@ class Module extends AbstractModule
             }
         );
 
-        if ($this->iiifServerIsActive()) {
-            $sharedEventManager->attach(
-                'Omeka\Controller\Site\ItemSet',
-                'view.browse.after',
-                function (Event $event) {
+        $sharedEventManager->attach(
+            'Omeka\Controller\Site\ItemSet',
+            'view.browse.after',
+            function (Event $event) {
+                if ($this->iiifServerIsActive()) {
                     $view = $event->getTarget();
                     $siteSettings = $this->getServiceLocator()->get('Omeka\Settings\Site');
                     if ($siteSettings->get('universalviewer_append_item_set_browse', $this->siteSettings['universalviewer_append_item_set_browse'])) {
                         echo $view->universalViewer($view->itemSets);
                     }
                 }
-            );
-        }
+            }
+        );
 
         $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
@@ -282,23 +281,46 @@ class Module extends AbstractModule
 
     public function getConfigForm(PhpRenderer $renderer)
     {
-        $serviceLocator = $this->getServiceLocator();
-        $formElementManager = $serviceLocator->get('FormElementManager');
-        $form = $formElementManager->get(ConfigForm::class);
+        $services = $this->getServiceLocator();
+        $config = $services->get('Config');
+        $settings = $services->get('Omeka\Settings');
+        $formElementManager = $services->get('FormElementManager');
 
-        // Allow to display fieldsets in config form.
-        $vars = [];
-        $vars['form'] = $form;
-        return $renderer->render('universal-viewer/module/config', $vars);
+        $data = [];
+        $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+        foreach ($defaultSettings as $name => $value) {
+            $data[$name] = $settings->get($name);
+        }
+
+        $form = $formElementManager->get(ConfigForm::class);
+        $form->init();
+        $form->setData($data);
+
+        return $renderer->render('universal-viewer/module/config', [
+            'form' => $form,
+        ]);
     }
 
     public function handleConfigForm(AbstractController $controller)
     {
-        $settings = $this->getServiceLocator()->get('Omeka\Settings');
+        $services = $this->getServiceLocator();
+        $config = $services->get('Config');
+        $settings = $services->get('Omeka\Settings');
 
         $params = $controller->getRequest()->getPost();
+
+        $form = $this->getServiceLocator()->get('FormElementManager')
+            ->get(ConfigForm::class);
+        $form->init();
+        $form->setData($params);
+        if (!$form->isValid()) {
+            $controller->messenger()->addErrors($form->getMessages());
+            return false;
+        }
+
+        $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
         foreach ($params as $name => $value) {
-            if (isset($this->settings[$name])) {
+            if (isset($defaultSettings[$name])) {
                 $settings->set($name, $value);
             }
         }
@@ -308,7 +330,10 @@ class Module extends AbstractModule
     {
         $services = $this->getServiceLocator();
         $siteSettings = $services->get('Omeka\Settings\Site');
+        $config = $services->get('Config');
         $form = $event->getTarget();
+
+        $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
 
         // The module iiif server is required to display collections of items.
         $iiifServerIsActive = $this->iiifServerIsActive();
@@ -318,7 +343,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_set_show',
-            'type' => 'Checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to "Item set show"', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -326,14 +351,14 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_set_show',
-                    $this->siteSettings['universalviewer_append_item_set_show']
+                    $defaultSiteSettings['universalviewer_append_item_set_show']
                 ),
             ],
         ]);
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_show',
-            'type' => 'Checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to "Item show"', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -341,14 +366,14 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_show',
-                    $this->siteSettings['universalviewer_append_item_show']
+                    $defaultSiteSettings['universalviewer_append_item_show']
                 ),
             ],
         ]);
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_set_browse',
-            'type' => 'Checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to "Item set browse"', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -356,7 +381,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_set_browse',
-                    $this->siteSettings['universalviewer_append_item_set_browse']
+                    $defaultSiteSettings['universalviewer_append_item_set_browse']
                 ),
                 'disabled', !$iiifServerIsActive,
             ],
@@ -364,7 +389,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_browse',
-            'type' => 'Checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to "Item browse"', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -372,7 +397,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_append_item_browse',
-                    $this->siteSettings['universalviewer_append_item_browse']
+                    $defaultSiteSettings['universalviewer_append_item_browse']
                 ),
                 'disabled', !$iiifServerIsActive,
             ],
@@ -380,7 +405,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_class',
-            'type' => 'Text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Class of main div', // @translate
                 'info' => 'Class to add to the main div.',  // @translate
@@ -388,14 +413,14 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_class',
-                    $this->siteSettings['universalviewer_class']
+                    $defaultSiteSettings['universalviewer_class']
                 ),
             ],
         ]);
 
         $fieldset->add([
             'name' => 'universalviewer_style',
-            'type' => 'Text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Inline style', // @translate
                 'info' => 'If any, this style will be added to the main div of the Universal Viewer.' // @translate
@@ -404,14 +429,14 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_style',
-                    $this->siteSettings['universalviewer_style']
+                    $defaultSiteSettings['universalviewer_style']
                 ),
             ],
         ]);
 
         $fieldset->add([
             'name' => 'universalviewer_locale',
-            'type' => 'Text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Locales of the viewer', // @translate
                 'info' => 'Currently not working', // @translate
@@ -419,7 +444,7 @@ class Module extends AbstractModule
             'attributes' => [
                 'value' => $siteSettings->get(
                     'universalviewer_locale',
-                    $this->siteSettings['universalviewer_locale']
+                    $defaultSiteSettings['universalviewer_locale']
                 ),
             ],
         ]);

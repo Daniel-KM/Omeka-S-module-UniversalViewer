@@ -4,7 +4,7 @@ namespace UniversalViewer;
 return [
     'view_manager' => [
         'template_path_stack' => [
-            OMEKA_PATH . '/modules/UniversalViewer/view',
+            __DIR__ . '/../view',
         ],
     ],
     'view_helpers' => [
@@ -24,7 +24,7 @@ return [
     ],
     'form_elements' => [
         'factories' => [
-            'UniversalViewer\Form\Config' => Service\Form\ConfigFactory::class,
+            'UniversalViewer\Form\ConfigForm' => Service\Form\ConfigFormFactory::class,
         ],
     ],
     'router' => [
@@ -73,6 +73,20 @@ return [
                 'pattern' => '%s.mo',
                 'text_domain' => null,
             ],
+        ],
+    ],
+    'universalviewer' => [
+        'settings' => [
+            'universalviewer_manifest_property' => '',
+        ],
+        'site_settings' => [
+            'universalviewer_append_item_set_show' => true,
+            'universalviewer_append_item_show' => true,
+            'universalviewer_append_item_set_browse' => false,
+            'universalviewer_append_item_browse' => false,
+            'universalviewer_class' => '',
+            'universalviewer_style' => 'background-color: #000; height: 600px;',
+            'universalviewer_locale' => 'en-GB:English (GB),fr:French',
         ],
     ],
 ];

@@ -9,3 +9,4 @@ endif;
 ?></p>
 <p><?php echo $this->translate('The viewer itself can be configured in settings of each site, via the file "config.json" and the helper.'); ?></p>
 <?php echo $this->formCollection($form, false); ?>
+<?php echo $this->formRow($form->get('csrf')); ?>
