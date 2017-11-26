@@ -29,19 +29,22 @@ in the official [example server], because this is fully interoperable.
 Installation
 ------------
 
-Uncompress files and rename module folder "UniversalViewer".
+Download the last release [`UniversalViewer.zip`] from the list of releases (the
+master does not contain the javascript UniversalViewer library).
+
+Uncompress files and rename module folder "`UniversalViewer`".
 
 Then install it like any other Omeka module.
 
 If you don’t have an IIIF Server, install the module [IIIF Server].
 
 If you need to display big images (bigger than 1 to 10 MB according to your
-server), install the module [OpenLayersZoom], a module  that convert big images
-like maps and deep paintings, and any other images, into tiles in order to load
-and zoom them instantly.
+server and your network), use an external image server, or create tiles with [IIIF Server].
+The tiling means that big images like maps and deep paintings, and any other
+images, are converted into tiles in order to load and zoom them instantly.
 
 Only one option can be set in the main config (the manifest property, if any).
-The other can be set differently for each site:
+The other can be set differently for each site, in the site settings:
 
 - in site settings for the integration of the player;
 - in the json file "config.json" of UniversalViewer for the player itself: copy
@@ -56,7 +59,8 @@ See below the notes for more info.
 * Javascript library "UniversalViewer"
 
 Since version 2.2.1, the distribution release of the javascript library [UniversalViewer]
-is included in the folder `asset/vendor/uv/`.
+is included in the folder `asset/vendor/uv/`. Since version 3.5.6, the library
+is included only in the [full releases].
 
 If you want a more recent release, clone the last [distribution] in the same
 directory. "nodejs", other packages and any other files are not needed, because
@@ -65,14 +69,14 @@ itself. Or in command line, from the root of the module, the first time:
 
 ```
     npm install
-    gulp
+    gulp install
 ```
 
 The next times:
 
 ```
     npm update
-    gulp
+    gulp update
 ```
 
 Details of the config options can be found on the [wiki] and tested [online].
@@ -90,7 +94,7 @@ automatically embedded in "item-set/{id}" and "item/{id}" show and/or browse
 pages. This can be disabled in the settings of the site. Finally, a block layout
 is available to add the viewer in any standard page.
 
-To embed the Universal Viewer, just use the helper:
+To embed the Universal Viewer somewhere else, just use the helper:
 
 ```php
     // Display the viewer with the specified item set.
@@ -219,6 +223,8 @@ Module Universal Viewer for Omeka S:
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
 [Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
+[`UniversalViewer.zip`]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
+[full releases]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
 [Upgrade to Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
 [wiki]: https://github.com/UniversalViewer/universalviewer/wiki/Configuration
 [online]: http://universalviewer.io/examples/

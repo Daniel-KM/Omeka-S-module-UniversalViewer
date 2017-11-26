@@ -1,5 +1,7 @@
+/asset/vendor/uv
+/build
+/node_modules
+/vendor
 .php_cs.cache
-node_modules
 debug.log
 composer.lock
-/vendor

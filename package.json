@@ -1,6 +1,6 @@
 {
   "name": "universalviewer4omekas",
-  "version": "3.5.2",
+  "version": "3.5.6",
   "description": "Universal Viewer (module for Omeka S)",
   "main": "index.js",
   "scripts": {
@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer#readme",
   "devDependencies": {
-    "async": "^2.5.0",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
+    "async": "^2.6.0",
+    "del": "^3.0.0",
+    "gulp": "git+https://github.com/gulpjs/gulp.git#4.0",
     "gulp-rename": "^1.2.2",
-    "run-sequence": "^1.2.2"
+    "run-sequence": "^2.2.0"
   },
   "dependencies": {
     "universalviewer": "github:universalviewer/universalviewer#master"

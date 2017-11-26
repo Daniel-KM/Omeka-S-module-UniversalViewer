@@ -1,32 +1,34 @@
+'use strict';
+
 var async = require('async');
 var del = require('del');
 var fs = require('fs');
 var glob = require("glob");
 var gulp = require('gulp');
 var rename = require("gulp-rename");
-var runSequence = require('run-sequence');
 
-gulp.task('sync', function(cb) {
-
+gulp.task('sync', function(done) {
     async.series([
         function (next) {
             gulp.src(['node_modules/universalviewer/dist/uv-*/**'])
             .pipe(gulp.dest('asset/vendor/'))
             .on('end', next);
         }
-    ], cb);
+    ], done);
 });
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function(done) {
     return del('asset/vendor/uv');
 });
 
-gulp.task('rename', function(cb) {
+gulp.task('rename', function(done) {
     var file = glob.sync('asset/vendor/uv-*/');
     fs.renameSync(file[0], 'asset/vendor/uv/');
-    cb();
+    done();
 });
 
-gulp.task('default', function(cb) {
-    runSequence('clean', 'sync', 'rename', cb);
-});
+gulp.task('default', gulp.series('clean', 'sync', 'rename'));
+
+gulp.task('install', gulp.task('default'));
+
+gulp.task('update', gulp.task('default'));
