@@ -358,7 +358,7 @@ class Module extends AbstractModule
             'name' => 'universalviewer_append_item_set_show',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Append automatically to "Item set show"', // @translate
+                'label' => 'Append automatically to item set page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
             ],
             'attributes' => [
@@ -373,7 +373,7 @@ class Module extends AbstractModule
             'name' => 'universalviewer_append_item_show',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Append automatically to "Item show"', // @translate
+                'label' => 'Append automatically to item page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
             ],
             'attributes' => [
@@ -388,7 +388,7 @@ class Module extends AbstractModule
             'name' => 'universalviewer_append_item_set_browse',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Append automatically to "Item set browse"', // @translate
+                'label' => 'Append automatically to item sets browse page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
             ],
             'attributes' => [
@@ -404,7 +404,7 @@ class Module extends AbstractModule
             'name' => 'universalviewer_append_item_browse',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Append automatically to "Item browse"', // @translate
+                'label' => 'Append automatically to item browse page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
             ],
             'attributes' => [
