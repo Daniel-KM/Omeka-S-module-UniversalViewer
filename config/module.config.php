@@ -76,7 +76,7 @@ return [
         ],
     ],
     'universalviewer' => [
-        'settings' => [
+        'config' => [
             'universalviewer_manifest_property' => '',
         ],
         'site_settings' => [

@@ -83,7 +83,7 @@ class Module extends AbstractModule
         $this->manageSiteSettings($serviceLocator, 'uninstall');
     }
 
-    protected function manageSettings($settings, $process, $key = 'settings')
+    protected function manageSettings($settings, $process, $key = 'config')
     {
         $config = require __DIR__ . '/config/module.config.php';
         $defaultSettings = $config[strtolower(__NAMESPACE__)][$key];
@@ -115,7 +115,7 @@ class Module extends AbstractModule
         if (version_compare($oldVersion, '3.4.1', '<')) {
             $settings = $serviceLocator->get('Omeka\Settings');
             $config = require __DIR__ . '/config/module.config.php';
-            $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+            $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
             $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
 
             $settings->set('universalviewer_manifest_description_property',
@@ -209,7 +209,7 @@ class Module extends AbstractModule
             $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
             $api = $serviceLocator->get('Omeka\ApiManager');
             $config = require __DIR__ . '/config/module.config.php';
-            $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+            $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
             $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
 
             $sites = $api->search('sites')->getContent();
@@ -300,7 +300,7 @@ class Module extends AbstractModule
         $formElementManager = $services->get('FormElementManager');
 
         $data = [];
-        $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+        $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
         foreach ($defaultSettings as $name => $value) {
             $data[$name] = $settings->get($name);
         }
@@ -331,7 +331,7 @@ class Module extends AbstractModule
             return false;
         }
 
-        $defaultSettings = $config[strtolower(__NAMESPACE__)]['settings'];
+        $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
         foreach ($params as $name => $value) {
             if (isset($defaultSettings[$name])) {
                 $settings->set($name, $value);
