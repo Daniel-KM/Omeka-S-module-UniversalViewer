@@ -29,10 +29,33 @@ in the official [example server], because this is fully interoperable.
 Installation
 ------------
 
-Download the last release [`UniversalViewer.zip`] from the list of releases (the
-master does not contain the javascript UniversalViewer library).
+The module uses an external library [UniversalViewer], so use the release zip to
+install it, or use and init the source.
 
-Uncompress files and rename module folder "`UniversalViewer`".
+* From the zip
+
+Download the last release [`UniversalViewer.zip`] from the list of releases (the
+master does not contain the dependency), and uncompress it in the `modules`
+directory.
+
+* From the source and for development:
+
+If the module was installed from the source, rename the name of the folder of
+the module to `UniversalViewer`, and go to the root module, and run:
+
+```
+    npm install
+    gulp
+```
+
+The next times:
+
+```
+    npm update
+    gulp
+```
+
+* Configuration
 
 Then install it like any other Omeka module.
 
@@ -55,31 +78,6 @@ The other can be set differently for each site, in the site settings:
   below), or use a metadata in the field set in the IIIF server config form.
 
 See below the notes for more info.
-
-* Javascript library "UniversalViewer"
-
-Since version 2.2.1, the distribution release of the javascript library [UniversalViewer]
-is included in the folder `asset/vendor/uv/`. Since version 3.5.6, the library
-is included only in the [full releases].
-
-If you want a more recent release, clone the last [distribution] in the same
-directory. "nodejs", other packages and any other files are not needed, because
-only the viewer is used: the IIIF server is provided directly by the module
-itself. Or in command line, from the root of the module, the first time:
-
-```
-    npm install
-    gulp install
-```
-
-The next times:
-
-```
-    npm update
-    gulp update
-```
-
-Details of the config options can be found on the [wiki] and tested [online].
 
 
 Usage
@@ -200,7 +198,7 @@ Widget [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2017
+* Copyright Daniel Berthereau, 2015-2018
 * Copyright BibLibre, 2016-2017
 
 
@@ -224,13 +222,11 @@ Module Universal Viewer for Omeka S:
 [Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
 [`UniversalViewer.zip`]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
-[full releases]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
 [Upgrade to Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
 [wiki]: https://github.com/UniversalViewer/universalviewer/wiki/Configuration
 [online]: http://universalviewer.io/examples/
 [iiif specifications]: http://iiif.io/api/
 [official release]: https://github.com/UniversalViewer/universalviewer/releases
-[distribution]: https://github.com/UniversalViewer/universalviewer/tree/master/dist
 [OpenLayersZoom]: https://github.com/Daniel-KM/Omeka-S-module-OpenLayersZoom
 [threejs]: https://threejs.org
 [Archive Repertory]: https://github.com/Daniel-KM/Omeka-S-module-ArchiveRepertory
