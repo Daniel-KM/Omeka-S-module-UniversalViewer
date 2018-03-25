@@ -215,14 +215,14 @@ Module Universal Viewer for Omeka S:
 [Gallica]: http://gallica.bnf.fr
 [Bibliothèque Nationale de France]: http://bnf.fr
 [Wellcome Library]: http://wellcomelibrary.org
-[Universal Viewer plugin for Omeka]: https://github.com/Daniel-KM/UniversalViewer4Omeka
+[Universal Viewer plugin for Omeka]: https://github.com/Daniel-KM/Omeka-plugin-UniversalViewer
 [BibLibre]: https://github.com/biblibre
 [demo]: https://patrimoine.mines-paristech.fr/collections/play/7
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
 [Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
 [`UniversalViewer.zip`]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
-[Upgrade to Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
+[Upgrade to Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [wiki]: https://github.com/UniversalViewer/universalviewer/wiki/Configuration
 [online]: http://universalviewer.io/examples/
 [iiif specifications]: http://iiif.io/api/
