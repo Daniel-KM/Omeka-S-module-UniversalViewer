@@ -16,7 +16,7 @@ class ConfigForm extends Form
             'options' => [
                 'label' => 'Manifest property', // @translate
                 'info' => 'The property supplying the manifest URL for the viewer, for example "dcterms:hasFormat".', // @translate
-                'empty_option' => 'Select a property...', // @translate
+                'empty_option' => 'Select a property…', // @translate
                 'term_as_value' => true,
             ],
             'attributes' => [
