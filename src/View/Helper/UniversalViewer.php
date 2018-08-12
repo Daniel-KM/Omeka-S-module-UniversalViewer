@@ -235,7 +235,11 @@ class UniversalViewer extends AbstractHelper
             $urlManifest,
             $locale,
             $style);
-        $view->headScript()->appendFile($view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer'), 'application/javascript', ['id' => 'embedUV']);
+        $view->headScript()->appendFile(
+            $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer', false, false),
+            'application/javascript',
+            ['id' => 'embedUV']
+        );
         $view->headScript()->appendScript('/* wordpress fix */', 'application/javascript');
         return $html;
     }
@@ -249,19 +253,17 @@ class UniversalViewer extends AbstractHelper
      */
     protected function assetPath($path, $module = null)
     {
-        $view = $this->getView();
-
         // Check the path in the theme.
         if ($this->currentTheme) {
             $filepath = OMEKA_PATH . '/themes/' . $this->currentTheme->getId() . '/asset/' . $path;
             if (file_exists($filepath)) {
-                return $view->assetUrl($path);
+                return $this->view->assetUrl($path, null, false, false);
             }
         }
 
         // As fallback, get the path in the module (the file must exist).
         if ($module) {
-            $assetPath = $view->assetUrl($path, $module);
+            $assetPath = $this->view->assetUrl($path, $module, false, false);
             return $assetPath;
         }
     }
