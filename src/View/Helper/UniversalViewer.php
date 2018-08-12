@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2015-2017 Daniel Berthereau
+ * Copyright 2015-2018 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -229,16 +229,14 @@ class UniversalViewer extends AbstractHelper
             ? $this->basePath($options['config'])
             : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
-        $urlJs = $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer');
-
         $html = sprintf('<div class="uv%s" data-config="%s" data-uri="%s"%s%s></div>',
             $class,
             $config,
             $urlManifest,
             $locale,
             $style);
-        $html .= sprintf('<script type="text/javascript" id="embedUV" src="%s"></script>', $urlJs);
-        $html .= '<script type="text/javascript">/* wordpress fix */</script>';
+        $view->headScript()->appendFile($view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer'), 'application/javascript', ['id' => 'embedUV']);
+        $view->headScript()->appendScript('/* wordpress fix */', 'application/javascript');
         return $html;
     }
 
