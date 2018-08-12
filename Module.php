@@ -232,7 +232,7 @@ class Module extends AbstractModule
         $sharedEventManager->attach(
             \Omeka\Form\SiteSettingsForm::class,
             'form.add_elements',
-            [$this, 'addSiteSettingsFormElements']
+            [$this, 'addFormElementsSiteSettings']
         );
 
         // Note: there is no item-set show, but a special case for items browse.
@@ -331,13 +331,13 @@ class Module extends AbstractModule
 
         $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
         foreach ($params as $name => $value) {
-            if (isset($defaultSettings[$name])) {
+            if (array_key_exists($name, $defaultSettings)) {
                 $settings->set($name, $value);
             }
         }
     }
 
-    public function addSiteSettingsFormElements(Event $event)
+    public function addFormElementsSiteSettings(Event $event)
     {
         $services = $this->getServiceLocator();
         $siteSettings = $services->get('Omeka\Settings\Site');
