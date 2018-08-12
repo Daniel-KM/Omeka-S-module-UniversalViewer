@@ -41,8 +41,7 @@ use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Checkbox;
+use Zend\Form\Element;
 
 class Module extends AbstractModule
 {
@@ -61,13 +60,9 @@ class Module extends AbstractModule
 
     public function install(ServiceLocatorInterface $serviceLocator)
     {
-        $settings = $serviceLocator->get('Omeka\Settings');
-        $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
-        $api = $serviceLocator->get('Omeka\ApiManager');
-        $t = $serviceLocator->get('MvcTranslator');
-
         $js = __DIR__ . '/asset/vendor/uv/lib/embed.js';
         if (!file_exists($js)) {
+            $t = $serviceLocator->get('MvcTranslator');
             throw new ModuleCannotInstallException(
                 $t->translate('The UniversalViewer library should be installed.') // @translate
                     . ' ' . $t->translate('See module’s installation documentation.')); // @translate
@@ -354,7 +349,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_set_show',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to item set page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -369,7 +364,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_show',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to item page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -384,7 +379,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_set_browse',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to item sets browse page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -400,7 +395,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_append_item_browse',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to item browse page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
@@ -416,7 +411,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_class',
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'options' => [
                 'label' => 'Class of main div', // @translate
                 'info' => 'Class to add to the main div.',  // @translate
@@ -431,7 +426,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_style',
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'options' => [
                 'label' => 'Inline style', // @translate
                 'info' => 'If any, this style will be added to the main div of the Universal Viewer.' // @translate
@@ -447,7 +442,7 @@ class Module extends AbstractModule
 
         $fieldset->add([
             'name' => 'universalviewer_locale',
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'options' => [
                 'label' => 'Locales of the viewer', // @translate
                 'info' => 'Currently not working', // @translate
