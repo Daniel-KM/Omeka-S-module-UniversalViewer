@@ -118,60 +118,22 @@ class Module extends AbstractModule
             [$this, 'addFormElementsSiteSettings']
         );
 
-        // Note: there is no item-set show, but a special case for items browse.
         $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
             'view.browse.after',
-            function (Event $event) {
-                $view = $event->getTarget();
-                $services = $this->getServiceLocator();
-                $config = $services->get('Config');
-                $siteSettings = $services->get('Omeka\Settings\Site');
-                if ($siteSettings->get('universalviewer_append_item_set_show',
-                    $config['universalviewer']['site_settings']['universalviewer_append_item_set_show'])
-                ) {
-                    echo $view->universalViewer($view->itemSet);
-                } elseif ($this->iiifServerIsActive()
-                    && $siteSettings->get('universalviewer_append_item_browse',
-                        $config['universalviewer']['site_settings']['universalviewer_append_item_browse'])
-                ) {
-                    echo $view->universalViewer($view->items);
-                }
-            }
+            [$this, 'handleViewBrowseAfterItem']
         );
 
         $sharedEventManager->attach(
             'Omeka\Controller\Site\ItemSet',
             'view.browse.after',
-            function (Event $event) {
-                if ($this->iiifServerIsActive()) {
-                    $view = $event->getTarget();
-                    $services = $this->getServiceLocator();
-                    $config = $services->get('Config');
-                    $siteSettings = $services->get('Omeka\Settings\Site');
-                    if ($siteSettings->get('universalviewer_append_item_set_browse',
-                        $config['universalviewer']['site_settings']['universalviewer_append_item_set_browse'])
-                    ) {
-                        echo $view->universalViewer($view->itemSets);
-                    }
-                }
-            }
+            [$this, 'handleViewBrowseAfterItemSet']
         );
 
         $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
             'view.show.after',
-            function (Event $event) {
-                $view = $event->getTarget();
-                $services = $this->getServiceLocator();
-                $config = $services->get('Config');
-                $siteSettings = $services->get('Omeka\Settings\Site');
-                if ($siteSettings->get('universalviewer_append_item_show',
-                    $config['universalviewer']['site_settings']['universalviewer_append_item_show'])
-                ) {
-                    echo $view->universalViewer($view->item);
-                }
-            }
+            [$this, 'handleViewShowAfterItem']
         );
     }
 
@@ -344,6 +306,60 @@ class Module extends AbstractModule
         ]);
 
         $form->add($fieldset);
+    }
+
+    public function handleViewBrowseAfterItem(Event $event)
+    {
+        // Note: there is no item-set show, but a special case for items browse.
+        $view = $event->getTarget();
+        $services = $this->getServiceLocator();
+        $config = $services->get('Config');
+        $siteSettings = $services->get('Omeka\Settings\Site');
+        if ($siteSettings->get(
+            'universalviewer_append_item_set_show',
+            $config['universalviewer']['site_settings']['universalviewer_append_item_set_show']
+        )) {
+            echo $view->universalViewer($view->itemSet);
+        } elseif ($this->iiifServerIsActive()
+            && $siteSettings->get(
+                'universalviewer_append_item_browse',
+                $config['universalviewer']['site_settings']['universalviewer_append_item_browse']
+            )
+        ) {
+            echo $view->universalViewer($view->items);
+        }
+    }
+
+    public function handleViewBrowseAfterItemSet(Event $event)
+    {
+        if (!$this->iiifServerIsActive()) {
+            return;
+        }
+
+        $view = $event->getTarget();
+        $services = $this->getServiceLocator();
+        $config = $services->get('Config');
+        $siteSettings = $services->get('Omeka\Settings\Site');
+        if ($siteSettings->get(
+            'universalviewer_append_item_set_browse',
+            $config['universalviewer']['site_settings']['universalviewer_append_item_set_browse']
+        )) {
+            echo $view->universalViewer($view->itemSets);
+        }
+    }
+
+    public function handleViewShowAfterItem(Event $event)
+    {
+        $view = $event->getTarget();
+        $services = $this->getServiceLocator();
+        $config = $services->get('Config');
+        $siteSettings = $services->get('Omeka\Settings\Site');
+        if ($siteSettings->get(
+            'universalviewer_append_item_show',
+            $config['universalviewer']['site_settings']['universalviewer_append_item_show']
+        )) {
+            echo $view->universalViewer($view->item);
+        }
     }
 
     protected function iiifServerIsActive()
