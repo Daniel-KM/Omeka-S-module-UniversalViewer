@@ -26,39 +26,59 @@ if (version_compare($oldVersion, '3.4.1', '<')) {
     $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
     $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
 
-    $settings->set('universalviewer_manifest_description_property',
-        @$defaultSettings['universalviewer_manifest_description_property']);
+    $settings->set(
+        'universalviewer_manifest_description_property',
+        @$defaultSettings['universalviewer_manifest_description_property']
+    );
 
-    $settings->set('universalviewer_manifest_attribution_property',
-        @$defaultSettings['universalviewer_manifest_attribution_property']);
+    $settings->set(
+        'universalviewer_manifest_attribution_property',
+        @$defaultSettings['universalviewer_manifest_attribution_property']
+    );
 
-    $settings->set('universalviewer_manifest_attribution_default',
-        $settings->get('universalviewer_attribution'));
+    $settings->set(
+        'universalviewer_manifest_attribution_default',
+        $settings->get('universalviewer_attribution')
+    );
     $settings->delete('universalviewer_attribution');
 
-    $settings->set('universalviewer_manifest_license_property',
-        @$defaultSettings['universalviewer_manifest_license_property']);
+    $settings->set(
+        'universalviewer_manifest_license_property',
+        @$defaultSettings['universalviewer_manifest_license_property']
+    );
 
-    $settings->set('universalviewer_manifest_license_default',
-        $settings->get('universalviewer_licence'));
+    $settings->set(
+        'universalviewer_manifest_license_default',
+        $settings->get('universalviewer_licence')
+    );
     $settings->delete('universalviewer_licence');
 
-    $settings->set('universalviewer_manifest_logo_default',
-        @$defaultSettings['universalviewer_manifest_logo_default']);
+    $settings->set(
+        'universalviewer_manifest_logo_default',
+        @$defaultSettings['universalviewer_manifest_logo_default']
+    );
 
-    $settings->set('universalviewer_append_item_set_show',
-        $settings->get('universalviewer_append_collections_show'));
+    $settings->set(
+        'universalviewer_append_item_set_show',
+        $settings->get('universalviewer_append_collections_show')
+    );
     $settings->delete('universalviewer_append_collections_show');
 
-    $settings->set('universalviewer_append_item_show',
-        $settings->get('universalviewer_append_items_show'));
+    $settings->set(
+        'universalviewer_append_item_show',
+        $settings->get('universalviewer_append_items_show')
+    );
     $settings->delete('universalviewer_append_items_show');
 
-    $settings->set('universalviewer_append_item_set_browse',
-        $defaultSiteSettings['universalviewer_append_item_set_browse']);
+    $settings->set(
+        'universalviewer_append_item_set_browse',
+        $defaultSiteSettings['universalviewer_append_item_set_browse']
+    );
 
-    $settings->set('universalviewer_append_item_browse',
-        $defaultSiteSettings['universalviewer_append_item_browse']);
+    $settings->set(
+        'universalviewer_append_item_browse',
+        $defaultSiteSettings['universalviewer_append_item_browse']
+    );
 
     $style = $defaultSiteSettings['universalviewer_style'];
     $width = $settings->get('universalviewer_width') ?: '';
@@ -74,16 +94,20 @@ if (version_compare($oldVersion, '3.4.1', '<')) {
     $settings->delete('universalviewer_width');
     $settings->delete('universalviewer_height');
 
-    $settings->set('universalviewer_iiif_max_size',
-        $settings->get('universalviewer_max_dynamic_size'));
+    $settings->set(
+        'universalviewer_iiif_max_size',
+        $settings->get('universalviewer_max_dynamic_size')
+    );
     $settings->delete('universalviewer_max_dynamic_size');
 }
 
 if (version_compare($oldVersion, '3.5', '<=')
     && version_compare($newVersion, '3.5', '>=')
 ) {
-    $settings->set('universalviewer_manifest_property',
-        $settings->get('universalviewer_alternative_manifest_property'));
+    $settings->set(
+        'universalviewer_manifest_property',
+        $settings->get('universalviewer_alternative_manifest_property')
+    );
 
     $oldSettings = [
         'universalviewer_manifest_description_property',

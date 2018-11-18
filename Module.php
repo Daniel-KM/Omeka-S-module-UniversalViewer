@@ -64,7 +64,8 @@ class Module extends AbstractModule
             $t = $serviceLocator->get('MvcTranslator');
             throw new ModuleCannotInstallException(
                 $t->translate('The UniversalViewer library should be installed.') // @translate
-                    . ' ' . $t->translate('See module’s installation documentation.')); // @translate
+                    . ' ' . $t->translate('See module’s installation documentation.') // @translate
+            );
         }
 
         $this->manageSettings($serviceLocator->get('Omeka\Settings'), 'install');

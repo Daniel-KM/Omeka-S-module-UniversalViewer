@@ -42,8 +42,11 @@ class UniversalViewer extends AbstractBlockLayout
         return 'Universal Viewer'; // @translate
     }
 
-    public function form(PhpRenderer $view, SiteRepresentation $site,
-        SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+    public function form(
+        PhpRenderer $view,
+        SiteRepresentation $site,
+        SitePageRepresentation $page = null,
+        SitePageBlockRepresentation $block = null
     ) {
         return $view->blockAttachmentsForm($block);
     }

@@ -149,7 +149,8 @@ class UniversalViewer extends AbstractHelper
                 break;
         }
 
-        $urlManifest = $view->url($route,
+        $urlManifest = $view->url(
+            $route,
             ['id' => $resource->id()],
             ['force_canonical' => true]
         );
@@ -229,12 +230,14 @@ class UniversalViewer extends AbstractHelper
             ? $this->basePath($options['config'])
             : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
-        $html = sprintf('<div class="uv%s" data-config="%s" data-uri="%s"%s%s></div>',
+        $html = sprintf(
+            '<div class="uv%s" data-config="%s" data-uri="%s"%s%s></div>',
             $class,
             $config,
             $urlManifest,
             $locale,
-            $style);
+            $style
+        );
         $view->headScript()->appendFile(
             $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer', false, false),
             'application/javascript',
