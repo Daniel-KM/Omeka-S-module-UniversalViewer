@@ -23,8 +23,11 @@ return [
         ],
     ],
     'form_elements' => [
+        'invokables' => [
+            Form\ConfigForm::class => Form\ConfigForm::class,
+        ],
         'factories' => [
-            'UniversalViewer\Form\ConfigForm' => Service\Form\ConfigFormFactory::class,
+            Form\SiteSettingsFieldset::class => Service\Form\SiteSettingsFieldsetFactory::class,
         ],
     ],
     'router' => [

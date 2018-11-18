@@ -6,8 +6,6 @@ use Zend\Form\Form;
 
 class ConfigForm extends Form
 {
-    protected $iiifServerIsActive;
-
     public function init()
     {
         $this->add([
@@ -21,7 +19,7 @@ class ConfigForm extends Form
             ],
             'attributes' => [
                 'class' => 'chosen-select',
-                'data-placeholder' => 'Select a property', // @translate
+                'data-placeholder' => 'Select a property…', // @translate
             ],
         ]);
 
@@ -30,21 +28,5 @@ class ConfigForm extends Form
             'name' => 'universalviewer_manifest_property',
             'required' => false,
         ]);
-    }
-
-    /**
-     * @param bool $iiifServerIsActive
-     */
-    public function setIiifServerIsActive($iiifServerIsActive)
-    {
-        $this->iiifServerIsActive = $iiifServerIsActive;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIiifServerIsActive()
-    {
-        return $this->iiifServerIsActive;
     }
 }

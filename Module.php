@@ -34,14 +34,13 @@ use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Module\Manager as ModuleManager;
 use UniversalViewer\Form\ConfigForm;
+use UniversalViewer\Form\SiteSettingsFieldset;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
-use Zend\Form\Fieldset;
 use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
-use Zend\Form\Element;
 
 class Module extends AbstractModule
 {
@@ -113,12 +112,6 @@ class Module extends AbstractModule
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
         $sharedEventManager->attach(
-            \Omeka\Form\SiteSettingsForm::class,
-            'form.add_elements',
-            [$this, 'addFormElementsSiteSettings']
-        );
-
-        $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
             'view.browse.after',
             [$this, 'handleViewBrowseAfterItem']
@@ -135,6 +128,17 @@ class Module extends AbstractModule
             'view.show.after',
             [$this, 'handleViewShowAfterItem']
         );
+
+        $sharedEventManager->attach(
+            \Omeka\Form\SiteSettingsForm::class,
+            'form.add_elements',
+            [$this, 'handleSiteSettings']
+        );
+        $sharedEventManager->attach(
+            \Omeka\Form\SiteSettingsForm::class,
+            'form.add_input_filters',
+            [$this, 'handleSiteSettingsFilters']
+        );
     }
 
     public function getConfigForm(PhpRenderer $renderer)
@@ -144,11 +148,8 @@ class Module extends AbstractModule
         $settings = $services->get('Omeka\Settings');
         $form = $services->get('FormElementManager')->get(ConfigForm::class);
 
-        $data = [];
         $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
-        foreach ($defaultSettings as $name => $value) {
-            $data[$name] = $settings->get($name, $value);
-        }
+        $data = $this->prepareDataToPopulate($settings, $defaultSettings);
 
         $view = $renderer;
         $html = '<p>';
@@ -191,130 +192,54 @@ class Module extends AbstractModule
         }
     }
 
-    public function addFormElementsSiteSettings(Event $event)
+    public function handleSiteSettings(Event $event)
     {
         $services = $this->getServiceLocator();
-        $siteSettings = $services->get('Omeka\Settings\Site');
         $config = $services->get('Config');
+        $settings = $services->get('Omeka\Settings\Site');
+        $space = strtolower(__NAMESPACE__);
         $form = $event->getTarget();
-
-        $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
+        $fieldset = $services->get('FormElementManager')->get(SiteSettingsFieldset::class);
 
         // The module iiif server is required to display collections of items.
-        $iiifServerIsActive = $this->iiifServerIsActive();
 
-        $fieldset = new Fieldset('universal_viewer');
-        $fieldset->setLabel('UniversalViewer');
+        $data = $this->prepareDataToPopulate($settings, $config[$space]['site_settings']);
 
-        $fieldset->add([
-            'name' => 'universalviewer_append_item_set_show',
-            'type' => Element\Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to item set page', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_append_item_set_show',
-                    $defaultSiteSettings['universalviewer_append_item_set_show']
-                ),
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'universalviewer_append_item_show',
-            'type' => Element\Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to item page', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_append_item_show',
-                    $defaultSiteSettings['universalviewer_append_item_show']
-                ),
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'universalviewer_append_item_set_browse',
-            'type' => Element\Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to item sets browse page', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_append_item_set_browse',
-                    $defaultSiteSettings['universalviewer_append_item_set_browse']
-                ),
-                'disabled', !$iiifServerIsActive,
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'universalviewer_append_item_browse',
-            'type' => Element\Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to item browse page', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme or the block in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_append_item_browse',
-                    $defaultSiteSettings['universalviewer_append_item_browse']
-                ),
-                'disabled', !$iiifServerIsActive,
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'universalviewer_class',
-            'type' => Element\Text::class,
-            'options' => [
-                'label' => 'Class of main div', // @translate
-                'info' => 'Class to add to the main div.',  // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_class',
-                    $defaultSiteSettings['universalviewer_class']
-                ),
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'universalviewer_style',
-            'type' => Element\Text::class,
-            'options' => [
-                'label' => 'Inline style', // @translate
-                'info' => 'If any, this style will be added to the main div of the Universal Viewer.' // @translate
-                . ' ' . 'The height may be required.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_style',
-                    $defaultSiteSettings['universalviewer_style']
-                ),
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'universalviewer_locale',
-            'type' => Element\Text::class,
-            'options' => [
-                'label' => 'Locales of the viewer', // @translate
-                'info' => 'Currently not working', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'universalviewer_locale',
-                    $defaultSiteSettings['universalviewer_locale']
-                ),
-            ],
-        ]);
-
+        $fieldset->setName($space);
         $form->add($fieldset);
+        $form->get($space)->populateValues($data);
+    }
+
+    public function handleSiteSettingsFilters(Event $event)
+    {
+        $inputFilter = $event->getParam('inputFilter');
+        $inputFilter->get('universalviewer')->add([
+            'name' => 'universalviewer_append_item_set_browse',
+            'required' => false,
+        ]);
+        $inputFilter->get('universalviewer')->add([
+            'name' => 'universalviewer_append_item_browse',
+            'required' => false,
+        ]);
+    }
+
+    /**
+     * @todo Use form methods to populate.
+     * @param \Omeka\Settings\SettingsInterface $settings
+     * @param array$defaultSettings
+     * @return array
+     */
+    protected function prepareDataToPopulate(\Omeka\Settings\SettingsInterface $settings, array $defaultSettings)
+    {
+        $data = [];
+        foreach ($defaultSettings as $name => $value) {
+            $val = $settings->get($name, $value);
+            if (is_array($value)) {
+                $val = is_array($val) ? implode(PHP_EOL, $val) : $val;
+            }
+            $data[$name] = $val;
+        }
+        return $data;
     }
 
     public function handleViewBrowseAfterItem(Event $event)
