@@ -150,12 +150,21 @@ class Module extends AbstractModule
             $data[$name] = $settings->get($name, $value);
         }
 
+        $view = $renderer;
+        $html = '<p>';
+        $html .= $this->iiifServerIsActive()
+            ? $view->translate('The IIIF Server is active, so when no url is set, the viewer will use the standard routes.') // @translate
+            : ($view->translate('The IIIF Server is not active, so when no url is set, the viewer won’t be displayed.') // @translate
+                . ' ' . $view->translate('Furthermore, the Universal Viewer can’t display lists of items.')); // @translate
+        $html .= '</p>';
+        $html .= '<p>'
+            . $view->translate('The viewer itself can be configured in settings of each site, via the file "config.json" and the helper.') // @translate
+            . '</p>';
+
         $form->init();
         $form->setData($data);
-
-        return $renderer->render('universal-viewer/module/config', [
-            'form' => $form,
-        ]);
+        $html .= $renderer->formCollection($form);
+        return $html;
     }
 
     public function handleConfigForm(AbstractController $controller)
