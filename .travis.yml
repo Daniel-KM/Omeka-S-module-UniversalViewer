@@ -4,6 +4,8 @@ php:
   - 5.6
   - 7.0
   - 7.1
+  - 7.2
+  - 7.3
 
 sudo: false
 
@@ -30,6 +32,5 @@ before_script:
   - sed -i 's/^dbname.*/dbname = "omeka_test"/' application/test/config/database.ini
   - cd modules/UniversalViewer
   - composer install
-  - cd test
 
 script: phpunit
