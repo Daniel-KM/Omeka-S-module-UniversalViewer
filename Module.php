@@ -245,16 +245,19 @@ class Module extends AbstractModule
 
     public function handleViewBrowseAfterItem(Event $event)
     {
-        // Note: there is no item-set show, but a special case for items browse.
         $view = $event->getTarget();
         $services = $this->getServiceLocator();
         $config = $services->get('Config');
         $siteSettings = $services->get('Omeka\Settings\Site');
-        if ($siteSettings->get(
-            'universalviewer_append_item_set_show',
-            $config['universalviewer']['site_settings']['universalviewer_append_item_set_show']
-        )) {
-            echo $view->universalViewer($view->itemSet);
+        // Note: there is no item-set show, but a special case for items browse.
+        $isItemSetShow = (bool) $services->get('Application')->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
+        if ($isItemSetShow) {
+            if ($siteSettings->get(
+                'universalviewer_append_item_set_show',
+                $config['universalviewer']['site_settings']['universalviewer_append_item_set_show']
+            )) {
+                echo $view->universalViewer($view->itemSet);
+            }
         } elseif ($this->iiifServerIsActive()
             && $siteSettings->get(
                 'universalviewer_append_item_browse',
