@@ -44,15 +44,13 @@ If the module was installed from the source, rename the name of the folder of
 the module to `UniversalViewer`, and go to the root module, and run:
 
 ```
-    npm install
-    gulp
+    composer install
 ```
 
 The next times:
 
 ```
-    npm update
-    gulp
+    composer update
 ```
 
 * Configuration

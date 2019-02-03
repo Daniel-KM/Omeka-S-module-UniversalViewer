@@ -222,16 +222,15 @@ class UniversalViewer extends AbstractHelper
             ? $this->basePath($options['config'])
             : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
-
+        $view->headLink()
+            ->prependStylesheet($view->assetUrl('vendor/uv/uv.css', 'UniversalViewer'));
         $view->headScript()
-            ->appendFile(
-                $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer', false, false),
-                'application/javascript',
-                ['id' => 'embedUV']
-            )
-            ->appendScript('/* wordpress fix */', 'application/javascript');
+            ->appendFile($view->assetUrl('vendor/uv/lib/offline.js', 'UniversalViewer'))
+            ->appendFile($view->assetUrl('vendor/uv/helpers.js', 'UniversalViewer'))
+            ->appendFile($view->assetUrl('vendor/uv/uv.js', 'UniversalViewer'));
 
         return $view->partial('common/helper/universal-viewer', [
+            'root' => $view->assetUrl('vendor/uv/', 'UniversalViewer', false, false),
             'urlManifest' => $urlManifest,
             'class' => $class,
             'style' => $style,

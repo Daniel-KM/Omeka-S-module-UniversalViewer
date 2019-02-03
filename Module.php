@@ -59,7 +59,7 @@ class Module extends AbstractModule
 
     public function install(ServiceLocatorInterface $serviceLocator)
     {
-        $js = __DIR__ . '/asset/vendor/uv/lib/embed.js';
+        $js = __DIR__ . '/asset/vendor/uv/uv.js';
         if (!file_exists($js)) {
             $t = $serviceLocator->get('MvcTranslator');
             throw new ModuleCannotInstallException(
