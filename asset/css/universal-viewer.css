@@ -1,0 +1,10 @@
+/* Univesal viewer custom and fixes for common Omeka themes */
+@media screen {
+    .universal-viewer {
+        height: 600px;
+    }
+    .universal-viewer .headerPanel .centerOptions .mode label {
+        width: auto;
+        min-width: 31px;
+    }
+}

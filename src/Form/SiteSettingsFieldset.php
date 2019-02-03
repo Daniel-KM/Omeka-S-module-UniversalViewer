@@ -67,43 +67,6 @@ class SiteSettingsFieldset extends Fieldset
                 'disabled' => !$iiifServerIsActive,
             ],
         ]);
-
-        $this->add([
-            'name' => 'universalviewer_class',
-            'type' => Element\Text::class,
-            'options' => [
-                'label' => 'Class of main div', // @translate
-                'info' => 'Class to add to the main div.',  // @translate
-            ],
-            'attributes' => [
-                'id' => 'universalviewer_class',
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'universalviewer_style',
-            'type' => Element\Text::class,
-            'options' => [
-                'label' => 'Inline style', // @translate
-                'info' => 'If any, this style will be added to the main div of the Universal Viewer.' // @translate
-                . ' ' . 'The height may be required.', // @translate
-            ],
-            'attributes' => [
-                'id' => 'universalviewer_style',
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'universalviewer_locale',
-            'type' => Element\Text::class,
-            'options' => [
-                'label' => 'Locales of the viewer', // @translate
-                'info' => 'Currently not working', // @translate
-            ],
-            'attributes' => [
-                'id' => 'universalviewer_locale',
-            ],
-        ]);
     }
 
     /**

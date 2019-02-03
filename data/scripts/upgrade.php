@@ -152,3 +152,11 @@ if (version_compare($oldVersion, '3.5.2', '<=')) {
         $settings->delete($name);
     }
 }
+
+if (version_compare($oldVersion, '3.6.0', '<')) {
+    $sql = <<<SQL
+DELETE FROM site_setting
+WHERE id IN ("universalviewer_class", "universalviewer_style", "universalviewer_locale");
+SQL;
+    $connection->exec($sql);
+}

@@ -13,6 +13,8 @@ the "International Image Interoperability Framework" standard is supported
 (level 2). If you don’t have an [IIPImage] server, Omeka S can be one! Just
 install the module [IIIF Server].
 
+It’s an alternative to the [Mirador Viewer] or the lighter [Diva Viewer].
+
 The Universal Viewer was firstly developed by [Digirati] for the [Wellcome Library]
 of the [British Library] and the [National Library of Wales], then open sourced
 (unlike the viewer of [Gallica], the public digital library built by the [Bibliothèque Nationale de France], which is sold to its partners).
@@ -65,9 +67,8 @@ The tiling means that big images like maps and deep paintings, and any other
 images, are converted into tiles in order to load and zoom them instantly.
 
 Only one option can be set in the main config (the manifest property, if any).
-The other can be set differently for each site, in the site settings:
+The other ones can be set differently for each site via the theme:
 
-- in site settings for the integration of the player;
 - in the json file "config.json" of UniversalViewer for the player itself: copy
   and update it in a folder named "universal-viewer" inside the folder "asset"
   of the theme;
@@ -97,11 +98,9 @@ To embed the Universal Viewer somewhere else, just use the helper:
     echo $this->universalViewer($itemSet);
 
     // Display the viewer with the specified item and specified options.
-    echo $this->universalViewer($item, array(
-        'class' => 'my-class',
-        'style' => 'width: 40%; height: 400px;',
-        'config' => 'https://example.com/my/specific/config.json',
-    ));
+    // The options for UV are directly passed to the partial, so they are
+    // available in the theme and set for the viewer.
+    echo $this->universalViewer($item, $options);
 
     // Display multiple resources (items and/or item sets).
     echo $this->universalViewer($resources);

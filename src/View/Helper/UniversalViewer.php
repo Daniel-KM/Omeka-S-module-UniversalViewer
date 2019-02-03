@@ -37,19 +37,6 @@ use Zend\View\Helper\AbstractHelper;
 class UniversalViewer extends AbstractHelper
 {
     /**
-     * These options are used only when the player is called outside of a site
-     * or when the site settings are not set. They can be bypassed by options
-     * passed to the helper.
-     *
-     * @var array
-     */
-    protected $defaultOptions = [
-        'class' => '',
-        'style' => 'background-color: #000; height: 600px',
-        'locale' => 'en-GB:English (GB),fr:French',
-    ];
-
-    /**
      * @var Theme The current theme, if any
      */
     protected $currentTheme;
@@ -69,13 +56,9 @@ class UniversalViewer extends AbstractHelper
      *
      * Proxies to {@link render()}.
      *
-     * @param AbstractResourceEntityRepresentation|array $resource
-     * @param array $options Associative array of optional values:
-     *   - (string) class
-     *   - (string) locale
-     *   - (string) style
-     *   - (string) config
-     * @return string. The html string corresponding to the UniversalViewer.
+     * @param AbstractResourceEntityRepresentation|AbstractResourceEntityRepresentation[] $resource
+     * @param array $options
+     * @return string Html string corresponding to the viewer.
      */
     public function __invoke($resource, $options = [])
     {
@@ -198,43 +181,42 @@ class UniversalViewer extends AbstractHelper
      */
     protected function render($urlManifest, array $options = [], $resourceName = null)
     {
+        static $id = 0;
+
         $view = $this->view;
 
-        // Check site, because site settings aren’t available outside of a site.
-        $isSite = $view->params()->fromRoute('__SITE__');
-        if (empty($isSite)) {
-            $options += $this->defaultOptions;
-        }
-
-        $class = isset($options['class'])
-            ? $options['class']
-            : $view->siteSetting('universalviewer_class', $this->defaultOptions['class']);
-
-        $style = isset($options['style'])
-            ? $options['style']
-            : $view->siteSetting('universalviewer_style', $this->defaultOptions['style']);
-
-        $locale = isset($options['locale'])
-            ? $options['locale']
-            : $view->siteSetting('universalviewer_locale', $this->defaultOptions['locale']);
-
-        $config = isset($options['config'])
-            ? $this->basePath($options['config'])
-            : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
-
         $view->headLink()
-            ->prependStylesheet($view->assetUrl('vendor/uv/uv.css', 'UniversalViewer'));
+            ->prependStylesheet($view->assetUrl('vendor/uv/uv.css', 'UniversalViewer'))
+            ->prependStylesheet($view->assetUrl('css/universal-viewer.css', 'UniversalViewer'));
         $view->headScript()
             ->appendFile($view->assetUrl('vendor/uv/lib/offline.js', 'UniversalViewer'))
             ->appendFile($view->assetUrl('vendor/uv/helpers.js', 'UniversalViewer'))
             ->appendFile($view->assetUrl('vendor/uv/uv.js', 'UniversalViewer'));
 
-        return $view->partial('common/helper/universal-viewer', [
+        $configUri = isset($options['config'])
+            ? $this->basePath($options['config'])
+            : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
+
+        $config = [
+            'id' => 'uv-' . ++$id,
             'root' => $view->assetUrl('vendor/uv/', 'UniversalViewer', false, false),
-            'urlManifest' => $urlManifest,
-            'class' => $class,
-            'style' => $style,
-            'locale' => $locale,
+            'iiifResourceUri' => $urlManifest,
+            'configUri' => $configUri,
+            'embedded' => true,
+        ];
+
+        // $locale = $view->identity()
+        //     ? $view->userSetting('locale')
+        //     : ($view->params()->fromRoute('__SITE__')
+        //         ? $view->siteSetting('locale')
+        //         : ($view->setting('locale') ?: 'en-GB'));
+        $config['locales'] = [
+            ['name' => 'en-GB', 'label' => 'English'],
+        ];
+
+        $config += $options;
+
+        return $view->partial('common/helper/universal-viewer', [
             'config' => $config,
         ]);
     }
