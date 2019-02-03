@@ -6,6 +6,11 @@ use Zend\Form\Fieldset;
 
 class SiteSettingsFieldset extends Fieldset
 {
+    /**
+     * @var bool
+     */
+    protected $iiifServerIsActive;
+
     public function init()
     {
         // The module iiif server is required to display collections of items.

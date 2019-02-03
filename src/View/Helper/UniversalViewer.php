@@ -103,7 +103,7 @@ class UniversalViewer extends AbstractHelper
                 ['force_canonical' => true]
             );
             $urlManifest = $view->iiifForceBaseUrlIfRequired($urlManifest);
-            return $this->render($urlManifest, $options);
+            return $this->render($urlManifest, $options, 'multiple');
         }
 
         // Prepare the url for the manifest of a record after additional checks.
@@ -120,7 +120,7 @@ class UniversalViewer extends AbstractHelper
             if ($urlManifest) {
                 // Manage the case where the url is saved as an uri or a text.
                 $urlManifest = $urlManifest->uri() ?: $urlManifest->value();
-                return $this->render($urlManifest, $options);
+                return $this->render($urlManifest, $options, $resourceName);
             }
         }
 
@@ -156,7 +156,7 @@ class UniversalViewer extends AbstractHelper
         );
         $urlManifest = $view->iiifForceBaseUrlIfRequired($urlManifest);
 
-        return $this->render($urlManifest, $options);
+        return $this->render($urlManifest, $options, $resourceName);
     }
 
     /**
@@ -193,9 +193,10 @@ class UniversalViewer extends AbstractHelper
      *
      * @param string $urlManifest
      * @param array $options
-     * @return string
+     * @param string $resourceName
+     * @return string Html code.
      */
-    protected function render($urlManifest, $options = [])
+    protected function render($urlManifest, array $options = [], $resourceName = null)
     {
         $view = $this->view;
 
@@ -238,12 +239,13 @@ class UniversalViewer extends AbstractHelper
             $locale,
             $style
         );
-        $view->headScript()->appendFile(
-            $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer', false, false),
-            'application/javascript',
-            ['id' => 'embedUV']
-        );
-        $view->headScript()->appendScript('/* wordpress fix */', 'application/javascript');
+        $view->headScript()
+            ->appendFile(
+                $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer', false, false),
+                'application/javascript',
+                ['id' => 'embedUV']
+            )
+            ->appendScript('/* wordpress fix */', 'application/javascript');
         return $html;
     }
 

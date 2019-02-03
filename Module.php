@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2015-2017 Daniel Berthereau
+ * Copyright 2015-2019 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -54,7 +54,7 @@ class Module extends AbstractModule
         parent::onBootstrap($event);
 
         $acl = $this->getServiceLocator()->get('Omeka\Acl');
-        $acl->allow(null, 'UniversalViewer\Controller\Player');
+        $acl->allow(null, ['UniversalViewer\Controller\Player']);
     }
 
     public function install(ServiceLocatorInterface $serviceLocator)

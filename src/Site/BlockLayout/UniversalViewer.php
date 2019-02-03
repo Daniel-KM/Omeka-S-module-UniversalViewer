@@ -55,7 +55,7 @@ class UniversalViewer extends AbstractBlockLayout
     {
         $attachments = $block->attachments();
         if (!$attachments) {
-            return 'No item selected'; // @translate
+            return 'No resource selected'; // @translate
         }
 
         return $view->partial('common/block-layout/universal-viewer', [
