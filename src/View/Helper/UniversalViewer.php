@@ -209,36 +209,20 @@ class UniversalViewer extends AbstractHelper
         $class = isset($options['class'])
             ? $options['class']
             : $view->siteSetting('universalviewer_class', $this->defaultOptions['class']);
-        if (!empty($class)) {
-            $class = ' ' . $class;
-        }
 
         $style = isset($options['style'])
             ? $options['style']
             : $view->siteSetting('universalviewer_style', $this->defaultOptions['style']);
-        if (!empty($style)) {
-            $style = ' style="' . $style . '"';
-        }
 
         $locale = isset($options['locale'])
             ? $options['locale']
             : $view->siteSetting('universalviewer_locale', $this->defaultOptions['locale']);
-        if (!empty($locale)) {
-            $locale = ' data-locale="' . $locale . '"';
-        }
 
         $config = isset($options['config'])
             ? $this->basePath($options['config'])
             : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
-        $html = sprintf(
-            '<div class="uv%s" data-config="%s" data-uri="%s"%s%s></div>',
-            $class,
-            $config,
-            $urlManifest,
-            $locale,
-            $style
-        );
+
         $view->headScript()
             ->appendFile(
                 $view->assetUrl('vendor/uv/lib/embed.js', 'UniversalViewer', false, false),
@@ -246,7 +230,14 @@ class UniversalViewer extends AbstractHelper
                 ['id' => 'embedUV']
             )
             ->appendScript('/* wordpress fix */', 'application/javascript');
-        return $html;
+
+        return $view->partial('common/helper/universal-viewer', [
+            'urlManifest' => $urlManifest,
+            'class' => $class,
+            'style' => $style,
+            'locale' => $locale,
+            'config' => $config,
+        ]);
     }
 
     /**
