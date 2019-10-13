@@ -135,11 +135,6 @@ class Module extends AbstractModule
             'form.add_elements',
             [$this, 'handleSiteSettings']
         );
-        $sharedEventManager->attach(
-            \Omeka\Form\SiteSettingsForm::class,
-            'form.add_input_filters',
-            [$this, 'handleSiteSettingsFilters']
-        );
     }
 
     public function getConfigForm(PhpRenderer $renderer)
@@ -209,19 +204,6 @@ class Module extends AbstractModule
         $fieldset->setName($space);
         $form->add($fieldset);
         $form->get($space)->populateValues($data);
-    }
-
-    public function handleSiteSettingsFilters(Event $event)
-    {
-        $inputFilter = $event->getParam('inputFilter');
-        $inputFilter->get('universalviewer')->add([
-            'name' => 'universalviewer_append_item_set_browse',
-            'required' => false,
-        ]);
-        $inputFilter->get('universalviewer')->add([
-            'name' => 'universalviewer_append_item_browse',
-            'required' => false,
-        ]);
     }
 
     /**
