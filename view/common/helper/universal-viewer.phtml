@@ -9,24 +9,15 @@
 $config['id'] = isset($config['id']) ? $config['id'] : 'uv';
 $configJson = json_encode($config, 448);
 $script = <<<JS
-window.addEventListener('DOMContentLoaded', function() {
-
-var uvElement;
-window.addEventListener('uvLoaded', function (e) {
-
-    uvElement = createUV('#{$config['id']}', $configJson, new UV.URLDataProvider());
-    /*
-    uvElement.on("created", function(obj) {
-        console.log('parsed metadata', uvElement.extension.helper.manifest.getMetadata());
-        console.log('raw jsonld', uvElement.extension.helper.manifest.__jsonld);
-    });
-    */
-}, false);
-
-});
+if (typeof uv === 'undefined') {
+    var uv = [];
+}
+uv.push($configJson);
 JS;
-$this->headScript()->appendScript($script);
 
+$this->headScript()
+    ->appendFile($this->assetUrl('js/universal-viewer.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+    ->appendScript($script);
 ?>
 
 <div id="<?= $config['id'] ?>" class="universal-viewer viewer"></div>
