@@ -9,6 +9,8 @@
 $config['id'] = isset($config['id']) ? $config['id'] : 'uv';
 $configJson = json_encode($config, 448);
 $script = <<<JS
+window.addEventListener('DOMContentLoaded', function() {
+
 var uvElement;
 window.addEventListener('uvLoaded', function (e) {
 
@@ -20,6 +22,8 @@ window.addEventListener('uvLoaded', function (e) {
     });
     */
 }, false);
+
+});
 JS;
 $this->headScript()->appendScript($script);
 

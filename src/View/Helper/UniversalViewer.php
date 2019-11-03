@@ -185,13 +185,14 @@ class UniversalViewer extends AbstractHelper
 
         $view = $this->view;
 
+        $assetUrl = $view->plugin('assetUrl');
         $view->headLink()
-            ->prependStylesheet($view->assetUrl('vendor/uv/uv.css', 'UniversalViewer'))
-            ->prependStylesheet($view->assetUrl('css/universal-viewer.css', 'UniversalViewer'));
+            ->prependStylesheet($assetUrl('vendor/uv/uv.css', 'UniversalViewer'))
+            ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'));
         $view->headScript()
-            ->appendFile($view->assetUrl('vendor/uv/lib/offline.js', 'UniversalViewer'))
-            ->appendFile($view->assetUrl('vendor/uv/helpers.js', 'UniversalViewer'))
-            ->appendFile($view->assetUrl('vendor/uv/uv.js', 'UniversalViewer'));
+            ->appendFile($assetUrl('vendor/uv/lib/offline.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+            ->appendFile($assetUrl('vendor/uv/helpers.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+            ->appendFile($assetUrl('vendor/uv/uv.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
 
         $configUri = isset($options['config'])
             ? $this->basePath($options['config'])
@@ -199,7 +200,7 @@ class UniversalViewer extends AbstractHelper
 
         $config = [
             'id' => 'uv-' . ++$id,
-            'root' => $view->assetUrl('vendor/uv/', 'UniversalViewer', false, false),
+            'root' => $assetUrl('vendor/uv/', 'UniversalViewer', false, false),
             'iiifResourceUri' => $urlManifest,
             'configUri' => $configUri,
             'embedded' => true,
