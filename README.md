@@ -88,8 +88,8 @@ available by the Universal Viewer.
 The viewer is always available at `http://www.example.com/item-set/{item-set id}/play`
 and `http://www.example.com/item/{item id}/play`. Furthermore, it is
 automatically embedded in "item-set/{id}" and "item/{id}" show and/or browse
-pages. This can be disabled in the settings of the site. Finally, a block layout
-is available to add the viewer in any standard page.
+pages.  This can be disabled via the module [Blocks Disposition] for each site.
+Finally, a block layout is available to add the viewer in any standard page.
 
 To embed the Universal Viewer somewhere else, just use the helper:
 
@@ -195,7 +195,7 @@ Widget [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2018
+* Copyright Daniel Berthereau, 2015-2019
 * Copyright BibLibre, 2016-2017
 
 
@@ -225,6 +225,7 @@ Module Universal Viewer for Omeka S:
 [iiif specifications]: http://iiif.io/api/
 [official release]: https://github.com/UniversalViewer/universalviewer/releases
 [OpenLayersZoom]: https://github.com/Daniel-KM/Omeka-S-module-OpenLayersZoom
+[Blocks Disposition]: https://github.com/Daniel-KM/Omeka-S-module-BlocksDisposition
 [threejs]: https://threejs.org
 [Archive Repertory]: https://github.com/Daniel-KM/Omeka-S-module-ArchiveRepertory
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/issues
