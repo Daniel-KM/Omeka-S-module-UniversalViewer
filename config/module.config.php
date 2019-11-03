@@ -24,7 +24,7 @@ return [
     ],
     'form_elements' => [
         'invokables' => [
-            Form\ConfigForm::class => Form\ConfigForm::class,
+            Form\SettingsFieldset::class => Form\SettingsFieldset::class,
         ],
     ],
     'router' => [
@@ -76,7 +76,7 @@ return [
         ],
     ],
     'universalviewer' => [
-        'config' => [
+        'settings' => [
             'universalviewer_manifest_property' => '',
         ],
     ],
