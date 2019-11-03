@@ -160,3 +160,11 @@ WHERE id IN ("universalviewer_class", "universalviewer_style", "universalviewer_
 SQL;
     $connection->exec($sql);
 }
+
+if (version_compare($oldVersion, '3.6.1', '<')) {
+    $sql = <<<'SQL'
+DELETE FROM site_setting
+WHERE id IN ("universalviewer_append_item_set_show", "universalviewer_append_item_show", "universalviewer_append_item_set_browse", "universalviewer_append_item_browse");
+SQL;
+    $connection->exec($sql);
+}

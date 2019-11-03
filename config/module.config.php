@@ -26,9 +26,6 @@ return [
         'invokables' => [
             Form\ConfigForm::class => Form\ConfigForm::class,
         ],
-        'factories' => [
-            Form\SiteSettingsFieldset::class => Service\Form\SiteSettingsFieldsetFactory::class,
-        ],
     ],
     'router' => [
         'routes' => [
@@ -81,12 +78,6 @@ return [
     'universalviewer' => [
         'config' => [
             'universalviewer_manifest_property' => '',
-        ],
-        'site_settings' => [
-            'universalviewer_append_item_set_show' => true,
-            'universalviewer_append_item_show' => true,
-            'universalviewer_append_item_set_browse' => false,
-            'universalviewer_append_item_browse' => false,
         ],
     ],
 ];
