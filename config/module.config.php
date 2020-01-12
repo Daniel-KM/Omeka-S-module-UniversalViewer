@@ -29,6 +29,25 @@ return [
     ],
     'router' => [
         'routes' => [
+            'site' => [
+                'child_routes' => [
+                    'resource-id-mirador' => [
+                        'type' => \Zend\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/:resourcename/:id/uv',
+                            'constraints' => [
+                                'resourcename' => 'item|item\-set',
+                                'id' => '\d+',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'UniversalViewer\Controller',
+                                'controller' => 'Player',
+                                'action' => 'play',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'universalviewer_player' => [
                 'type' => 'segment',
                 'options' => [
