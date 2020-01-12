@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2015-2017 Daniel Berthereau
+ * Copyright 2015-2020 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -43,7 +43,9 @@ class PlayerController extends AbstractActionController
      */
     public function indexAction()
     {
-        $this->forward('play');
+        $params = $this->params()->fromRoute();
+        $params['action'] = 'play';
+        return $this->forward()->dispatch(__CLASS__, $params);
     }
 
     public function playAction()
