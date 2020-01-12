@@ -61,9 +61,11 @@ class Module extends AbstractModule
             $services = $this->getServiceLocator();
             $t = $services->get('MvcTranslator');
             throw new ModuleCannotInstallException(
-                $t->translate('The UniversalViewer library should be installed.') // @translate
-                    . ' ' . $t->translate('See module’s installation documentation.') // @translate
-            );
+                sprintf(
+                    $t->translate('The library "%s" should be installed.'), // @translate
+                    'Universal Viewer'
+                ) . ' '
+                . $t->translate('See module’s installation documentation.')); // @translate
         }
     }
 
