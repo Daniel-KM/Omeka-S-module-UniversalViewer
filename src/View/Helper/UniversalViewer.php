@@ -121,14 +121,14 @@ class UniversalViewer extends AbstractHelper
                     // return $view->translate('This item has no files and is not displayable.');
                     return '';
                 }
-                $route = 'iiifserver_presentation_item';
+                $route = 'iiifserver/manifest';
                 break;
             case 'item_sets':
                 if ($resource->itemCount() == 0) {
                     // return $view->translate('This collection has no item and is not displayable.');
                     return '';
                 }
-                $route = 'iiifserver_presentation_collection';
+                $route = 'iiifserver/collection';
                 break;
         }
 
