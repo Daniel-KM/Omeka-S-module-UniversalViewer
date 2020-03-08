@@ -78,13 +78,11 @@ class UniversalViewer extends AbstractHelper
                 return '';
             }
 
-            $identifier = $this->buildIdentifierForList($resource);
-            $route = 'iiifserver_presentation_collection_list';
-            $urlManifest = $view->url(
-                $route,
-                ['id' => $identifier],
-                ['force_canonical' => true]
-            );
+            $identifiers = $this->buildIdentifierForList($resource);
+            $urlManifest = $view->url('iiifserver/set', [], [
+                'query' => ['id' => $identifiers],
+                'force_canonical' => true,
+            ]);
             $urlManifest = $view->iiifForceBaseUrlIfRequired($urlManifest);
             return $this->render($urlManifest, $options, 'multiple');
         }
@@ -143,32 +141,18 @@ class UniversalViewer extends AbstractHelper
     }
 
     /**
-     * Helper to create an identifier from a list of records.
-     *
-     * The dynamic identifier is a flat list of ids: "5,1,2,3".
-     * If there is only one id, a comma is added to avoid to have the same route
-     * than the collection itself.
-     * In all cases the order of records is kept.
+     * Helper to list all resource ids.
      *
      * @todo Use IiifServer\View\Helper\IiifCollectionList::buildIdentifierForList()
      *
      * @param array $resources
      * @return string
      */
-    protected function buildIdentifierForList($resources)
+    protected function buildIdentifierForList(array $resources)
     {
-        $identifiers = [];
-        foreach ($resources as $resource) {
-            $identifiers[] = $resource->id();
-        }
-
-        $identifier = implode(',', $identifiers);
-
-        if (count($identifiers) == 1) {
-            $identifier .= ',';
-        }
-
-        return $identifier;
+        return array_map(function($v) {
+            return $v->id();
+        }, $resources);
     }
 
     /**
