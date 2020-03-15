@@ -42,13 +42,20 @@ class UniversalViewer extends AbstractHelper
     protected $currentTheme;
 
     /**
+     * @var bool
+     */
+    protected $isOldIiifServer;
+
+    /**
      * Construct the helper.
      *
      * @param Theme|null $currentTheme
+     * @param bool $isOldIiifServer
      */
-    public function __construct(Theme $currentTheme = null)
+    public function __construct(Theme $currentTheme = null, $isOldIiifServer = false)
     {
         $this->currentTheme = $currentTheme;
+        $this->isOldIiifServer = $isOldIiifServer;
     }
 
     /**
@@ -79,10 +86,23 @@ class UniversalViewer extends AbstractHelper
             }
 
             $identifiers = $this->buildIdentifierForList($resource);
-            $urlManifest = $view->url('iiifserver/set', [], [
-                'query' => ['id' => $identifiers],
-                'force_canonical' => true,
-            ]);
+            if ($this->isOldIiifServer) {
+                $route = 'iiifserver_presentation_collection_list';
+                $identifiers = count($identifiers) <= 1 ? reset($identifiers) . ',' : implode(',', $identifiers);
+                $urlManifest = $view->url($route,
+                    ['id' => $identifiers],
+                    ['force_canonical' => true]
+                );
+            } else {
+                $route = 'iiifserver/set';
+                $urlManifest = $view->url($route,
+                    [],
+                    [
+                        'query' => ['id' => $identifiers],
+                        'force_canonical' => true,
+                    ]
+                );
+            }
             $urlManifest = $view->iiifForceBaseUrlIfRequired($urlManifest);
             return $this->render($urlManifest, $options, 'multiple');
         }
@@ -119,14 +139,14 @@ class UniversalViewer extends AbstractHelper
                     // return $view->translate('This item has no files and is not displayable.');
                     return '';
                 }
-                $route = 'iiifserver/manifest';
+                $route = $this->isOldIiifServer ? 'iiifserver_presentation_item' : 'iiifserver/manifest';
                 break;
             case 'item_sets':
                 if ($resource->itemCount() == 0) {
                     // return $view->translate('This collection has no item and is not displayable.');
                     return '';
                 }
-                $route = 'iiifserver/collection';
+                $route = $this->isOldIiifServer ? 'iiifserver_presentation_collection' : 'iiifserver/collection';
                 break;
         }
 

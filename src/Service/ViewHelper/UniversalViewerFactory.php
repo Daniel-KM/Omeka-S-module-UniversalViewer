@@ -16,10 +16,12 @@ class UniversalViewerFactory implements FactoryInterface
      *
      * @return UniversalViewer
      */
-    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $currentTheme = $serviceLocator->get('Omeka\Site\ThemeManager')
+        $currentTheme = $services->get('Omeka\Site\ThemeManager')
             ->getCurrentTheme();
-        return new UniversalViewer($currentTheme);
+        $module = $services->get('Omeka\ModuleManager')->getModule('IiifServer');
+        $isOldIiifServer = $module && version_compare($module->getIni('version'), '3.6.0', '<');
+        return new UniversalViewer($currentTheme, $isOldIiifServer);
     }
 }
