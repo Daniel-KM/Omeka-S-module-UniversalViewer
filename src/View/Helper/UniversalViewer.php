@@ -171,8 +171,8 @@ class UniversalViewer extends AbstractHelper
 
         $assetUrl = $view->plugin('assetUrl');
         $view->headLink()
-            ->prependStylesheet($assetUrl('vendor/uv/uv.css', 'UniversalViewer'))
-            ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'));
+            ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
+            ->prependStylesheet($assetUrl('vendor/uv/uv.css', 'UniversalViewer'));
         $view->headScript()
             ->appendFile($assetUrl('vendor/uv/lib/offline.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
             ->appendFile($assetUrl('vendor/uv/helpers.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])

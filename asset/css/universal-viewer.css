@@ -7,4 +7,8 @@
         width: auto;
         min-width: 31px;
     }
+    /* Fix for firefox */
+    .universal-viewer .uv .footerPanel .searchOptions {
+        width: 480px;
+    }
 }
