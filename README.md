@@ -36,7 +36,7 @@ install it, or use and init the source.
 
 * From the zip
 
-Download the last release [`UniversalViewer.zip`] from the list of releases (the
+Download the last release [UniversalViewer.zip] from the list of releases (the
 master does not contain the dependency), and uncompress it in the `modules`
 directory.
 
@@ -195,7 +195,7 @@ Widget [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2019
+* Copyright Daniel Berthereau, 2015-2020
 * Copyright BibLibre, 2016-2017
 
 
@@ -203,6 +203,8 @@ Module Universal Viewer for Omeka S:
 [Omeka S]: https://omeka.org/s
 [Omeka]: https://omeka.org
 [IIIF Server]: https://github.com/Daniel-KM/Omeka-S-module-IiifServer
+[Mirador Viewer]: https://github.com/Daniel-KM/Omeka-S-module-Mirador
+[Diva Viewer]: https://github.com/Daniel-KM/Omeka-S-module-Diva
 [IIIF]: http://iiif.io
 [IIPImage]: http://iipimage.sourceforge.net
 [UniversalViewer]: https://github.com/UniversalViewer/universalviewer
@@ -218,7 +220,7 @@ Module Universal Viewer for Omeka S:
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
 [Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
-[`UniversalViewer.zip`]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
+[UniversalViewer.zip]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
 [Upgrade to Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [wiki]: https://github.com/UniversalViewer/universalviewer/wiki/Configuration
 [online]: http://universalviewer.io/examples/
