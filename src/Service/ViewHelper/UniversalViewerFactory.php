@@ -20,8 +20,6 @@ class UniversalViewerFactory implements FactoryInterface
     {
         $currentTheme = $services->get('Omeka\Site\ThemeManager')
             ->getCurrentTheme();
-        $module = $services->get('Omeka\ModuleManager')->getModule('IiifServer');
-        $isOldIiifServer = $module && version_compare($module->getIni('version'), '3.5.99', '<');
-        return new UniversalViewer($currentTheme, $isOldIiifServer);
+        return new UniversalViewer($currentTheme);
     }
 }
