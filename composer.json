@@ -6,7 +6,7 @@
                 "name": "asset/uv",
                 "version": "3.0.36",
                 "dist": {
-                    "url": "https://github.com/Daniel-KM/UniversalViewer/releases/download/3.0.36/uv.zip",
+                    "url": "https://gitlab.com/Daniel-KM/UniversalViewer/-/releases/download/3.0.36/uv.zip",
                     "type": "zip"
                 }
             }

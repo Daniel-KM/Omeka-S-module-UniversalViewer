@@ -147,7 +147,7 @@ your archives regularly so you can roll back if needed.
 Troubleshooting
 ---------------
 
-See online issues on the [module issues] page on GitHub.
+See online issues on the [module issues] page on GitLab.
 
 
 License
@@ -202,12 +202,12 @@ Module Universal Viewer for Omeka S:
 * Copyright BibLibre, 2016-2017
 
 
-[Universal Viewer]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer
+[Universal Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer
 [Omeka S]: https://omeka.org/s
 [Omeka]: https://omeka.org
-[IIIF Server]: https://github.com/Daniel-KM/Omeka-S-module-IiifServer
-[Mirador Viewer]: https://github.com/Daniel-KM/Omeka-S-module-Mirador
-[Diva Viewer]: https://github.com/Daniel-KM/Omeka-S-module-Diva
+[IIIF Server]: https://gitlab.com/Daniel-KM/Omeka-S-module-IiifServer
+[Mirador Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-Mirador
+[Diva Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-Diva
 [IIIF]: http://iiif.io
 [IIPImage]: http://iipimage.sourceforge.net
 [UniversalViewer]: https://github.com/UniversalViewer/universalviewer
@@ -217,23 +217,23 @@ Module Universal Viewer for Omeka S:
 [Gallica]: http://gallica.bnf.fr
 [Bibliothèque Nationale de France]: http://bnf.fr
 [Wellcome Library]: http://wellcomelibrary.org
-[Universal Viewer plugin for Omeka]: https://github.com/Daniel-KM/Omeka-plugin-UniversalViewer
+[Universal Viewer plugin for Omeka]: https://gitlab.com/Daniel-KM/Omeka-plugin-UniversalViewer
 [BibLibre]: https://github.com/biblibre
 [demo]: https://patrimoine.mines-paristech.fr/collections/play/7
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
 [Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
-[UniversalViewer.zip]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases
-[Upgrade to Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
+[UniversalViewer.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases
+[Upgrade to Omeka S]: https://gitlab.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [wiki]: https://github.com/UniversalViewer/universalviewer/wiki/Configuration
 [online]: http://universalviewer.io/examples/
 [iiif specifications]: http://iiif.io/api/
 [official release]: https://github.com/UniversalViewer/universalviewer/releases
-[OpenLayersZoom]: https://github.com/Daniel-KM/Omeka-S-module-OpenLayersZoom
-[Blocks Disposition]: https://github.com/Daniel-KM/Omeka-S-module-BlocksDisposition
+[OpenLayersZoom]: https://gitlab.com/Daniel-KM/Omeka-S-module-OpenLayersZoom
+[Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
 [threejs]: https://threejs.org
-[Archive Repertory]: https://github.com/Daniel-KM/Omeka-S-module-ArchiveRepertory
-[module issues]: https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/issues
+[Archive Repertory]: https://gitlab.com/Daniel-KM/Omeka-S-module-ArchiveRepertory
+[module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
@@ -241,4 +241,4 @@ Module Universal Viewer for Omeka S:
 [MIT licence]: https://github.com/UniversalViewer/universalviewer/blob/master/LICENSE.txt
 [Edward Silverton]: https://github.com/edsilv
 [GitLab]: https://gitlab.com/Daniel-KM
-[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
+[Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
