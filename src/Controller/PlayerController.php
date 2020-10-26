@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Copyright 2015-2020 Daniel Berthereau
@@ -30,9 +30,9 @@
 
 namespace UniversalViewer\Controller;
 
-use Omeka\Mvc\Exception\NotFoundException;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Omeka\Mvc\Exception\NotFoundException;
 
 class PlayerController extends AbstractActionController
 {

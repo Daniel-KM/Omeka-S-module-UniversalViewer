@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace UniversalViewer\Service\ViewHelper;
 
 use Interop\Container\ContainerInterface;
-use UniversalViewer\View\Helper\UniversalViewer;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use UniversalViewer\View\Helper\UniversalViewer;
 
 /**
  * Service factory for the UniversalViewer view helper.

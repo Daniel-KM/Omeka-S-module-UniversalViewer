@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace UniversalViewerTest\Controller;
 
@@ -8,7 +8,7 @@ abstract class UniversalViewerControllerTestCase extends OmekaControllerTestCase
 {
     protected $item;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->loginAsAdmin();
 
@@ -16,7 +16,7 @@ abstract class UniversalViewerControllerTestCase extends OmekaControllerTestCase
         $this->item = $response->getContent();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->api()->delete('items', $this->item->id());
     }

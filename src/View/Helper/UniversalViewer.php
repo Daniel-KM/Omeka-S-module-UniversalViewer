@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * Copyright 2015-2018 Daniel Berthereau
@@ -30,9 +30,9 @@
 
 namespace UniversalViewer\View\Helper;
 
+use Laminas\View\Helper\AbstractHelper;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Site\Theme\Theme;
-use Laminas\View\Helper\AbstractHelper;
 
 class UniversalViewer extends AbstractHelper
 {
