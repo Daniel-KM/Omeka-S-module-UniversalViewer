@@ -1,6 +1,9 @@
 Universal Viewer (module for Omeka S)
 =====================================
 
+> __New versions of this module and support for Omeka S version 3.0 and above
+> are available on [GitLab], which seems to respect users and privacy better.__
+
 [![Build Status](https://travis-ci.org/Daniel-KM/Omeka-S-module-UniversalViewer.svg?branch=master)](https://travis-ci.org/Daniel-KM/Omeka-S-module-UniversalViewer)
 
 [Universal Viewer] is a module for [Omeka S] that integrates [UniversalViewer],
@@ -237,4 +240,5 @@ Module Universal Viewer for Omeka S:
 [OSI]: http://opensource.org
 [MIT licence]: https://github.com/UniversalViewer/universalviewer/blob/master/LICENSE.txt
 [Edward Silverton]: https://github.com/edsilv
+[GitLab]: https://gitlab.com/Daniel-KM
 [Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
