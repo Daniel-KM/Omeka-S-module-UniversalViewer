@@ -52,12 +52,6 @@ the module to `UniversalViewer`, and go to the root module, and run:
 composer install --no-dev
 ```
 
-The next times:
-
-```sh
-composer update --no-dev
-```
-
 * Configuration
 
 Then install it like any other Omeka module.
@@ -88,8 +82,8 @@ Usage
 If the [IIIF Server] is installed, all resources of Omeka S are automatically
 available by the Universal Viewer.
 
-The viewer is always available at `http://www.example.com/item-set/{item-set id}/play`
-and `http://www.example.com/item/{item id}/play`. Furthermore, it is
+The viewer is always available at `http://www.example.com/item-set/{item-set id}/universal-viewer`
+and `http://www.example.com/item/{item id}/universal-viewer`. Furthermore, it is
 automatically embedded in "item-set/{id}" and "item/{id}" show and/or browse
 pages.  This can be disabled via the module [Blocks Disposition] for each site.
 Finally, a block layout is available to add the viewer in any standard page.
