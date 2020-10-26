@@ -95,8 +95,5 @@ return [
         ],
     ],
     'universalviewer' => [
-        'settings' => [
-            'universalviewer_manifest_property' => '',
-        ],
     ],
 ];

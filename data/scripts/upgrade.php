@@ -168,3 +168,7 @@ WHERE id IN ("universalviewer_append_item_set_show", "universalviewer_append_ite
 SQL;
     $connection->exec($sql);
 }
+
+if (version_compare($oldVersion, '3.6.3.0', '<')) {
+    $settings->delete('universalviewer_manifest_property');
+}

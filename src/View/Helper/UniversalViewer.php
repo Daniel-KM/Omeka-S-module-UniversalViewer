@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * Copyright 2015-2018 Daniel Berthereau
+ * Copyright 2015-2020 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -60,7 +60,7 @@ class UniversalViewer extends AbstractHelper
      * @param array $options
      * @return string Html string corresponding to the viewer.
      */
-    public function __invoke($resource, $options = [])
+    public function __invoke($resource, $options = []): string
     {
         if (empty($resource)) {
             return '';
@@ -72,8 +72,10 @@ class UniversalViewer extends AbstractHelper
         // created from Omeka files only when the Iiif Server is installed.
         $iiifServerIsActive = $view->getHelperPluginManager()->has('iiifUrl');
 
+        $isCollection = is_array($resource);
+
         // Prepare the url of the manifest for a dynamic collection.
-        if (is_array($resource)) {
+        if ($isCollection) {
             if (!$iiifServerIsActive) {
                 return '';
             }
@@ -88,15 +90,9 @@ class UniversalViewer extends AbstractHelper
         }
 
         // Determine the url of the manifest from a field in the metadata.
-        $urlManifest = '';
-        $manifestProperty = $view->setting('universalviewer_manifest_property');
-        if ($manifestProperty) {
-            $urlManifest = $resource->value($manifestProperty);
-            if ($urlManifest) {
-                // Manage the case where the url is saved as an uri or a text.
-                $urlManifest = $urlManifest->uri() ?: $urlManifest->value();
-                return $this->render($urlManifest, $options, $resourceName);
-            }
+        $externalManifest = $view->iiifManifestExternal($resource);
+        if ($externalManifest) {
+            return $this->render($externalManifest, $options, $resourceName, true);
         }
 
         // If the manifest is not provided in metadata, point to the manifest

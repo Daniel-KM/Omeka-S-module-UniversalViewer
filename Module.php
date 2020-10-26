@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * Copyright 2015-2019 Daniel Berthereau
+ * Copyright 2015-2020 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -86,44 +86,6 @@ class Module extends AbstractModule
             'view.show.after',
             [$this, 'handleViewShowAfterItem']
         );
-
-        $sharedEventManager->attach(
-            \Omeka\Form\SettingForm::class,
-            'form.add_elements',
-            [$this, 'handleMainSettings']
-        );
-        $sharedEventManager->attach(
-            \Omeka\Form\SettingForm::class,
-            'form.add_input_filters',
-            [$this, 'handleMainSettingsFilters']
-        );
-    }
-
-    public function handleMainSettings(Event $event): void
-    {
-        parent::handleMainSettings($event);
-
-        $form = $event->getTarget();
-
-        $translator = $this->getServiceLocator()->get('MvcTranslator');
-        $message = $this->iiifServerIsActive()
-            ? $translator->translate('The IIIF Server is active, so when no url is set, the viewer will use the standard routes.') // @translate;
-            : $translator->translate('The IIIF Server is not active, so when no url is set, the viewer won’t be displayed. Furthermore, the viewer won’t display lists of items.'); // @translate
-
-        /** @var \Omeka\Form\Element\PropertySelect $element */
-        $element = $form->get('universalviewer')->get('universalviewer_manifest_property');
-        $element->setOption('info', $translator->translate($element->getOption('info')) . ' ' . $message);
-    }
-
-    public function handleMainSettingsFilters(Event $event): void
-    {
-        $event->getParam('inputFilter')
-            ->get('universalviewer')
-            ->add([
-                'name' => 'universalviewer_manifest_property',
-                'required' => false,
-            ])
-        ;
     }
 
     public function handleViewBrowseAfterItem(Event $event): void
