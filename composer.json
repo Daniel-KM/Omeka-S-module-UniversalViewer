@@ -4,9 +4,9 @@
             "type": "package",
             "package": {
                 "name": "asset/uv",
-                "version": "3.0.36",
+                "version": "3.1.1",
                 "dist": {
-                    "url": "https://gitlab.com/Daniel-KM/UniversalViewer/-/releases/download/3.0.36/uv.zip",
+                    "url": "https://github.com/Daniel-KM/UniversalViewer/releases/download/3.1.1/uv.zip",
                     "type": "zip"
                 }
             }

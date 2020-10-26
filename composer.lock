@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40b49ff1bd45a8be7c411683c8c1ca0a",
+    "content-hash": "17c34f6b29401260a36ed36da73dab55",
     "packages": [
         {
             "name": "asset/uv",
-            "version": "3.0.36",
+            "version": "3.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/Daniel-KM/UniversalViewer/-/releases/download/3.0.36/uv.zip"
+                "url": "https://github.com/Daniel-KM/UniversalViewer/releases/download/3.1.1/uv.zip"
             },
             "type": "library"
         },
