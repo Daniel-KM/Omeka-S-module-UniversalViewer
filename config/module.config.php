@@ -31,7 +31,7 @@ return [
         'routes' => [
             'site' => [
                 'child_routes' => [
-                    'resource-id-mirador' => [
+                    'resource-id-universal-viewer' => [
                         'type' => \Zend\Router\Http\Segment::class,
                         'options' => [
                             'route' => '/:resourcename/:id/uv',
@@ -51,7 +51,7 @@ return [
             'universalviewer_player' => [
                 'type' => 'segment',
                 'options' => [
-                    'route' => '/:resourcename/:id/play',
+                    'route' => '/:resourcename/:id/universal-viewer',
                     'constraints' => [
                         'resourcename' => 'item|item\-set',
                         'id' => '\d+',
