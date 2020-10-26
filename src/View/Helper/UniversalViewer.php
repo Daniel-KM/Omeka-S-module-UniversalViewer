@@ -32,7 +32,7 @@ namespace UniversalViewer\View\Helper;
 
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Site\Theme\Theme;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class UniversalViewer extends AbstractHelper
 {

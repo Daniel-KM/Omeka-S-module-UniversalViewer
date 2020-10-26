@@ -4,7 +4,7 @@ namespace UniversalViewer\Service\ViewHelper;
 
 use Interop\Container\ContainerInterface;
 use UniversalViewer\View\Helper\UniversalViewer;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Service factory for the UniversalViewer view helper.

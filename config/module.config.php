@@ -32,7 +32,7 @@ return [
             'site' => [
                 'child_routes' => [
                     'resource-id-universal-viewer' => [
-                        'type' => \Zend\Router\Http\Segment::class,
+                        'type' => \Laminas\Router\Http\Segment::class,
                         'options' => [
                             'route' => '/:resourcename/:id/uv',
                             'constraints' => [
