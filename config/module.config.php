@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace UniversalViewer;
 
 return [
@@ -20,11 +21,6 @@ return [
     'controllers' => [
         'invokables' => [
             'UniversalViewer\Controller\Player' => Controller\PlayerController::class,
-        ],
-    ],
-    'form_elements' => [
-        'invokables' => [
-            Form\SettingsFieldset::class => Form\SettingsFieldset::class,
         ],
     ],
     'router' => [
