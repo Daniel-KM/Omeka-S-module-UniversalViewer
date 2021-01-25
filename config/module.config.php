@@ -22,38 +22,70 @@ return [
         'invokables' => [
             'UniversalViewer\Controller\Player' => Controller\PlayerController::class,
         ],
+        // The aliases simplify the routing, the url assembly and allows to support module Clean url.
+        'aliases' => [
+            'UniversalViewer\Controller\Item' => Controller\PlayerController::class,
+            'UniversalViewer\Controller\ItemSet' => Controller\PlayerController::class,
+            'UniversalViewer\Controller\CleanUrlController' => Controller\PlayerController::class,
+        ],
     ],
     'router' => [
         'routes' => [
             'site' => [
                 'child_routes' => [
+                    // This route allows to have a url compatible with Clean url.
+                    'resource-id' => [
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'universal-viewer' => [
+                                'type' => \Laminas\Router\Http\Literal::class,
+                                'options' => [
+                                    'route' => '/uv',
+                                    'constraints' => [
+                                        'controller' => 'item|item-set',
+                                        'action' => 'play',
+                                    ],
+                                    'defaults' => [
+                                        '__NAMESPACE__' => 'UniversalViewer\Controller',
+                                        'controller' => 'Player',
+                                        'action' => 'play',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    // This route is the default url.
                     'resource-id-universal-viewer' => [
                         'type' => \Laminas\Router\Http\Segment::class,
                         'options' => [
-                            'route' => '/:resourcename/:id/uv',
+                            'route' => '/:controller/:id/uv',
                             'constraints' => [
-                                'resourcename' => 'item|item\-set',
-                                'id' => '\d+',
+                                'controller' => 'item|item-set',
+                                'action' => 'play',
                             ],
                             'defaults' => [
                                 '__NAMESPACE__' => 'UniversalViewer\Controller',
                                 'controller' => 'Player',
                                 'action' => 'play',
+                                'id' => '\d+',
                             ],
                         ],
                     ],
                 ],
             ],
+            // This route allows to have a top url without Clean url.
+            // TODO Remove this route?
             'universalviewer_player' => [
-                'type' => 'segment',
+                'type' => \Laminas\Router\Http\Segment::class,
                 'options' => [
-                    'route' => '/:resourcename/:id/universal-viewer',
+                    'route' => '/:controller/:id/uv',
                     'constraints' => [
-                        'resourcename' => 'item|item\-set',
+                        'controller' => 'item|item-set',
                         'id' => '\d+',
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'UniversalViewer\Controller',
+                        // '__SITE__' => true,
                         'controller' => 'Player',
                         'action' => 'play',
                     ],
@@ -66,9 +98,9 @@ return [
             // 'universalviewer_player_classic' => [
             //     'type' => 'segment',
             //     'options' => [
-            //         'route' => '/:resourcename/play/:id',
+            //         'route' => '/:controller/play/:id',
             //         'constraints' => [
-            //             'resourcename' => 'item|items|item\-set|item_set|collection|item\-sets|item_sets|collections',
+            //             'controller' => 'item|items|item\-set|item_set|collection|item\-sets|item_sets|collections',
             //             'id' => '\d+',
             //         ],
             //         'defaults' => [
