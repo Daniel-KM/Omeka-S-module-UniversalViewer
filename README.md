@@ -14,8 +14,9 @@ is installed. Rotation, zoom, inside search, etc. may be managed too.
 
 It uses the resources of any [IIIF] compliant server. The full specification of
 the "International Image Interoperability Framework" standard is supported
-(level 2). If you don’t have an [IIPImage] server, Omeka S can be one! Just
-install the module [IIIF Server].
+(level 2). If you don’t have an IIIF-compatible image server, like [Cantaloupe]
+or [IIP Image] server, Omeka S can be one! Just install the module [IIIF Server]
+and [Image Server].
 
 It’s an alternative to the [Mirador Viewer] or the lighter [Diva Viewer].
 
@@ -193,7 +194,7 @@ Widget [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2020
+* Copyright Daniel Berthereau, 2015-2021
 * Copyright BibLibre, 2016-2017
 
 
@@ -201,10 +202,12 @@ Module Universal Viewer for Omeka S:
 [Omeka S]: https://omeka.org/s
 [Omeka]: https://omeka.org
 [IIIF Server]: https://gitlab.com/Daniel-KM/Omeka-S-module-IiifServer
+[Image Server]: https://gitlab.com/Daniel-KM/Omeka-S-module-ImageServer
 [Mirador Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-Mirador
 [Diva Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-Diva
 [IIIF]: http://iiif.io
-[IIPImage]: http://iipimage.sourceforge.net
+[Cantaloupe]: https://cantaloupe-project.github.io
+[IIP Image]: http://iipimage.sourceforge.net
 [UniversalViewer]: https://github.com/UniversalViewer/universalviewer
 [Digirati]: http://digirati.co.uk
 [British Library]: http://bl.uk
