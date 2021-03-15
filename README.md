@@ -54,19 +54,49 @@ the module to `UniversalViewer`, and go to the root module, and run:
 composer install --no-dev
 ```
 
-* Configuration
-
 Then install it like any other Omeka module.
 
-If you don’t have an IIIF Server, install the module [IIIF Server].
+* Compilation of Universal Viewer
+
+The Universal Viewer is provided via an [external repository] in order to be
+installed with composer.
+
+To install and compile it, run this command inside the repository of this
+external repository:
+
+```sh
+grunt build --dist
+```
+
+* Access to IIIF images
+
+UV viewer is based on IIIF, so an image server compliant with this protocol is
+required to use it. So, install the module [Image Server] if needed.
 
 If you need to display big images (bigger than 1 to 10 MB according to your
-server and your network), use an external image server, or create tiles with [IIIF Server].
-The tiling means that big images like maps and deep paintings, and any other
-images, are converted into tiles in order to load and zoom them instantly.
+server, your network, and your users), use an external image server, or create
+tiles with [Image Server]. The tiling means that big images like maps and deep
+paintings, and any other images, are converted into tiles in order to load and
+zoom them instantly.
 
-Only one option can be set in the main config (the manifest property, if any).
-The other ones can be set differently for each site via the theme:
+* Access to 3D models
+
+The display of 3D models is fully supported by the widget and natively managed
+since the release 2.3. 3D models are managed via the [threejs] library.
+Nevertheless, see the readme of the [module IIIF Server] for some possible
+additional requirements and the supported formats.
+
+
+Usage
+-----
+
+### Configuration
+
+The url of the manifest of the items should be set inside the property specified
+in the config form of the module. If you don’t have an IIIF Server, install the
+module [IIIF Server].
+
+To config the universal viewer:
 
 - in the json file "config.json" of UniversalViewer for the player itself: copy
   and update it in a folder named "universal-viewer" inside the folder "asset"
@@ -75,14 +105,11 @@ The other ones can be set differently for each site via the theme:
   `config` with its url in the array of arguments passed to the viewer (see
   below), or use a metadata in the field set in the IIIF server config form.
 
-See below the notes for more info.
-
-
-Usage
------
+### Display
 
 If the [IIIF Server] is installed, all resources of Omeka S are automatically
-available by the Universal Viewer.
+available by the viewer, else the url of the manifest should be set in the
+configured property.
 
 The viewer is always available at `http://www.example.com/item-set/{item-set id}/universal-viewer`
 and `http://www.example.com/item/{item id}/universal-viewer`. Furthermore, it is
@@ -118,10 +145,6 @@ Notes
   file "routes.ini".
 - The Universal Viewer cannot display empty item sets, so an empty view may
   appear when multiple resources are displayed.
-- The display of 3D models is fully supported by the widget and natively managed
-  since the release 2.3. 3D models are managed via the [threejs] library.
-  Nevertheless, see the readme of the module [IIIF Server] for some possible
-  additional requirements.
 
 
 Bugs
@@ -222,13 +245,14 @@ Module Universal Viewer for Omeka S:
 [Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
 [UniversalViewer.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases
+[external repository]: https://gitlab.com/Daniel-KM/UniversalViewer
 [Upgrade to Omeka S]: https://gitlab.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [wiki]: https://github.com/UniversalViewer/universalviewer/wiki/Configuration
 [online]: http://universalviewer.io/examples/
 [iiif specifications]: http://iiif.io/api/
-[official release]: https://github.com/UniversalViewer/universalviewer/releases
 [OpenLayersZoom]: https://gitlab.com/Daniel-KM/Omeka-S-module-OpenLayersZoom
 [Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
+[module IIIF Server]: https://gitlab.com/Daniel-KM/Omeka-S-module-IiifServer#3d-models
 [threejs]: https://threejs.org
 [Archive Repertory]: https://gitlab.com/Daniel-KM/Omeka-S-module-ArchiveRepertory
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/issues
