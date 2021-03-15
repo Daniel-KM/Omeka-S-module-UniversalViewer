@@ -9,8 +9,16 @@ return [
         ],
     ],
     'view_helpers' => [
+        'invokables' => [
+            'iiifManifestExternal' => View\Helper\IiifManifestExternal::class,
+        ],
         'factories' => [
             'universalViewer' => Service\ViewHelper\UniversalViewerFactory::class,
+        ],
+    ],
+    'form_elements' => [
+        'invokables' => [
+            Form\ConfigForm::class => Form\ConfigForm::class,
         ],
     ],
     'block_layouts' => [
@@ -123,5 +131,12 @@ return [
         ],
     ],
     'universalviewer' => [
+        'config' => [
+            // By exception, the name of this property is the same than
+            // module iiif server (and other iiif viewer).
+            // This option allows to use this module independantly, but for
+            // consistency, the same name is used.
+            'iiifserver_manifest_external_property' => 'dcterms:hasFormat',
+        ],
     ],
 ];
