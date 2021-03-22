@@ -83,8 +83,8 @@ zoom them instantly.
 
 The display of 3D models is fully supported by the widget and natively managed
 since the release 2.3. 3D models are managed via the [threejs] library.
-Nevertheless, see the readme of the [module IIIF Server] for some possible
-additional requirements and the supported formats.
+Nevertheless, see the readme of the [module Three JS Model viewer] for some
+possible additional requirements and the supported formats.
 
 
 Usage
@@ -193,16 +193,7 @@ altered, and that no provisions are either added or removed herefrom.
 
 The [UniversalViewer] is published under the [MIT licence].
 
-
-Contact
--------
-
 See documentation on the UniversalViewer and the IIIF on their respective site.
-
-Current maintainers of the module:
-* Daniel Berthereau (see [Daniel-KM])
-
-First version of this module was built for [Mines ParisTech].
 
 
 Copyright
@@ -217,8 +208,10 @@ Widget [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2021
+* Copyright Daniel Berthereau, 2015-2021 (see [Daniel-KM])
 * Copyright BibLibre, 2016-2017
+
+First version of this module was built for [Mines ParisTech].
 
 
 [Universal Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer
@@ -242,7 +235,6 @@ Module Universal Viewer for Omeka S:
 [BibLibre]: https://github.com/biblibre
 [demo]: https://patrimoine.mines-paristech.fr/collections/play/7
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
-[Mines ParisTech]: http://mines-paristech.fr
 [example server]: http://universalviewer.io/examples/
 [UniversalViewer.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases
 [external repository]: https://gitlab.com/Daniel-KM/UniversalViewer
@@ -254,6 +246,7 @@ Module Universal Viewer for Omeka S:
 [Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
 [module IIIF Server]: https://gitlab.com/Daniel-KM/Omeka-S-module-IiifServer#3d-models
 [threejs]: https://threejs.org
+[module Three JS Model viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-ThreeJs
 [Archive Repertory]: https://gitlab.com/Daniel-KM/Omeka-S-module-ArchiveRepertory
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
@@ -263,4 +256,5 @@ Module Universal Viewer for Omeka S:
 [MIT licence]: https://github.com/UniversalViewer/universalviewer/blob/master/LICENSE.txt
 [Edward Silverton]: https://github.com/edsilv
 [GitLab]: https://gitlab.com/Daniel-KM
+[Mines ParisTech]: http://mines-paristech.fr
 [Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
