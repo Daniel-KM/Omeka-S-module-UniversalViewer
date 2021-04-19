@@ -209,12 +209,21 @@ class UniversalViewer extends AbstractHelper
             'style' => 'background-color: #000; height: 600px;'
         ];
 
-        $locale = $view->identity()
+        $locale = /* $view->identity()
             ? $view->userSetting('locale')
-            : ($view->status()->isSiteRequest()
+            : */($view->status()->isSiteRequest()
                 ? $view->siteSetting('locale')
-                : ($view->setting('locale') ?: 'en-GB'));
-        $config['locale'] = $locale;
+                : $view->setting('locale'));
+        if (mb_strlen($locale) === 2) {
+            $locale = mb_strtolower($locale) . '-' . mb_strtoupper($locale);
+        }
+        $config['locale'] = in_array($locale, [
+            'cy-GB',
+            'en-GB',
+            'fr-FR',
+        ])
+            ? $locale
+            : 'en-GB';
 
         $config += $options;
 
