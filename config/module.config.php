@@ -19,6 +19,7 @@ return [
     'form_elements' => [
         'invokables' => [
             Form\ConfigForm::class => Form\ConfigForm::class,
+            Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
     ],
     'block_layouts' => [
@@ -137,6 +138,9 @@ return [
             // This option allows to use this module independantly, but for
             // consistency, the same name is used.
             'iiifserver_manifest_external_property' => 'dcterms:hasFormat',
+        ],
+        'site_settings' => [
+            'universalviewer_version' => '3',
         ],
     ],
 ];

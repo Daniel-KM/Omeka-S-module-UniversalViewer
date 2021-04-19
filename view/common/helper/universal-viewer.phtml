@@ -2,9 +2,18 @@
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var array $config Require keys "root", "iiifResourceUri" and "configUri".
+ * @var string $version Optional
  *
  * @link https://github.com/UniversalViewer/universalviewer/wiki/V3
  */
+
+if (isset($version) && $version === '2'):
+?>
+
+<div id="<?= $config['id'] ?>" class="uv universal-viewer viewer <?= $config['class'] ?? '' ?>" data-config="<?= $config['configUri'] ?>" data-uri="<?= $config['iiifResourceUri'] ?>" data-locale="<?= $config['locale'] ?>" style="<?= $config['style'] ?>"></div>
+
+<?php else:
+
 $config['id'] = $config['id'] ?? 'uv';
 $configJson = json_encode($config, 448);
 $script = <<<JS
@@ -20,3 +29,5 @@ $this->headScript()
 ?>
 
 <div id="<?= $config['id'] ?>" class="universal-viewer viewer"></div>
+
+<?php endif;

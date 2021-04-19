@@ -1,45 +1,76 @@
 {
+    "name": "daniel-km/omeka-s-module-universalviewer",
+    "description": "Integrates the Universal Viewer in order to create carousels of virtual books from image files and to display any media file (pdf, audio, video, 3D…) in a unified player.",
+    "type": "library",
+    "license": "CECILL-2.1",
+    "authors": [
+        {
+            "name": "Daniel Berthereau",
+            "email": "Daniel.git@Berthereau.net"
+        }
+    ],
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer",
+    "support": {
+        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewerViewer/-/issues",
+        "forum": "https://forum.omeka.org/"
+    },
+    "keywords": [
+        "Omeka S",
+        "Omeka S module",
+        "viewer",
+        "iiif",
+        "audio",
+        "video",
+        "model",
+        "pdf"
+    ],
     "repositories": [
         {
             "type": "package",
             "package": {
                 "name": "asset/uv",
+                "type": "omeka-addon-asset",
                 "version": "3.1.2",
                 "dist": {
+                    "type": "zip",
                     "url": "https://github.com/Daniel-KM/UniversalViewer/releases/download/3.1.2/uv.zip",
-                    "type": "zip"
+                    "reference": "3.0.2"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "asset/uv2",
+                "type": "omeka-addon-asset",
+                "version": "2.0.2",
+                "dist": {
+                    "type": "tar",
+                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.4.4/uv-2.0.2.tar.gz",
+                    "reference": "2.0.2"
                 }
             }
         }
     ],
-
     "require": {
-        "slowprog/composer-copy-file": "~0.3",
-        "asset/uv": "*"
+        "oomphinc/composer-installers-extender": "^2.0",
+        "asset/uv": "3.1.2",
+        "asset/uv2": "2.0.2"
     },
-
-    "scripts": {
-        "post-install-cmd": [
-            "SlowProg\\CopyFile\\ScriptHandler::copy"
-        ],
-        "post-update-cmd": [
-            "SlowProg\\CopyFile\\ScriptHandler::copy"
-        ]
-    },
-
-    "extra": {
-        "copy-file": {
-            "vendor/asset/uv/": "asset/vendor/uv/"
-        }
-    },
-
     "require-dev": {
         "biblibre/omeka-s-test-helper": "dev-master"
     },
-
     "autoload-dev": {
         "psr-4": {
             "UniversalViewerTest\\": "test/UniversalViewerTest/"
+        }
+    },
+    "extra": {
+        "installer-types": ["omeka-addon-asset"],
+        "installer-paths": {
+            "asset/vendor/{$name}/": [
+                "type:omeka-addon-asset"
+            ]
         }
     }
 }

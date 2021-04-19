@@ -90,6 +90,12 @@ possible additional requirements and the supported formats.
 Usage
 -----
 
+### Version 2.0.2 and the last one
+
+Two versions of the viewer are provided and can be selected in site settings:
+version 2.0.2 and version 3.1. The first one manages pdf files quicker but
+supports only iiif v2, the second is more modern.
+
 ### Configuration
 
 The url of the manifest of the items should be set inside the property specified
@@ -152,6 +158,12 @@ Bugs
 
 - When an item set contains non image items, the left panel with the index is
   displayed only when the first item contains an image.
+
+
+TODO
+----
+
+- [ ] Improve integration of pdf for big scanned files in last version in order to remove version 2.0.2.
 
 
 Warning
