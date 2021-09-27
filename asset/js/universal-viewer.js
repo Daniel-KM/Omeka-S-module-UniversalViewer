@@ -8,7 +8,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
     window.addEventListener('uvLoaded', function (e) {
         var uvElement;
         uv.forEach(function (config, index) {
-            uvElement = createUV('#' + config.id, config, new UV.URLDataProvider());
+            var urlDataProvider = new UV.URLDataProvider();
+            config["collectionIndex"] = Number(urlDataProvider.get('c', 0)),
+            config["manifestIndex"  ] = Number(urlDataProvider.get('m', 0)),
+            config["sequenceIndex"  ] = Number(urlDataProvider.get('s', 0)),
+            config["canvasIndex"    ] = Number(urlDataProvider.get('cv', 0));
+            config["xywh"           ] = Number(urlDataProvider.get('xywh', ''));
+            uvElement = createUV('#' + config.id, config, urlDataProvider);
             /*
             // Check uv loading.
             uvElement.on('created', function(obj) {
