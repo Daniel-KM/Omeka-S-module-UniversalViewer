@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-13 00:00+0100\n"
+"PO-Revision-Date: 2021-09-27 00:00+0000\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 3.0\n"
+
+#: Module.php:65
+#, php-format
+msgid "The library \"%s\" should be installed."
+msgstr "La bibliothèque \"%s\" doit être installée."
+
+#: Module.php:68
+msgid "See module’s installation documentation."
+msgstr "Voir la documentation d’installation du module."
+
+#: Module.php:110
+msgid ""
+"The IIIF Server is active, so when no url is set, the viewer will use the "
+"standard routes."
+msgstr ""
+"Le serveur IIIF est actif. Si aucune url n’est indiquée, la visionneuse "
+"utilisera les routes standards."
+
+#: Module.php:111
+msgid ""
+"The IIIF Server is not active, so when no url is set, the viewer won’t be "
+"displayed. Furthermore, the viewer won’t display lists of items."
+msgstr ""
+"Le serveur IIIF n’est pas actif. Si aucune url n’est indiquée, la "
+"visionneuse ne sera pas affichée. De plus, elle n’affichera pas les listes "
+"de contenus."
+
+#: src/Generic/AbstractModule.php:518
+#, php-format
+msgid "This module requires the module \"%s\"."
+msgstr "Ce module requiert le module \"%s\"."
+
+#: src/Generic/AbstractModule.php:538
+#, php-format
+msgid "This module requires modules \"%s\"."
+msgstr "Ce module requiert les modules \"%s\"."
+
+#: src/Generic/AbstractModule.php:606
+#, php-format
+msgid ""
+"The module \"%s\" was automatically deactivated because the dependencies are "
+"unavailable."
+msgstr ""
+"Le module \"%s\" a été automatiquement désactivé car ses dépendances ne sont "
+"plus disponibles."
+
+#: src/Form/SettingsFieldset.php:9 src/Site/BlockLayout/UniversalViewer.php:42
+msgid "Universal Viewer"
+msgstr "Universal Viewer"
+
+#: src/Form/SettingsFieldset.php:18
+msgid "Manifest property"
+msgstr "Propriété pour le manifeste"
+
+#: src/Form/SettingsFieldset.php:19
+msgid ""
+"The property supplying the manifest URL for the viewer, for example "
+"\"dcterms:hasFormat\" or \"dcterms:isFormatOf\"."
+msgstr ""
+"La propriété permettant d’indiquer l’url du manifeste pour la visionneuse, "
+"par exemple  \"dcterms:hasFormat\" ou \"dcterms:isFormatOf\"."
+
+#: src/Form/SettingsFieldset.php:26
+msgid "Select a property…"
+msgstr "Choisir une propriété…"
