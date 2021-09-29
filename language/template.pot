@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-13 00:00+0100\n"
+"POT-Creation-Date: 2021-09-27 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,49 +26,55 @@ msgstr ""
 msgid "See module’s installation documentation."
 msgstr ""
 
-#: Module.php:110
-msgid ""
-"The IIIF Server is active, so when no url is set, the viewer will use the "
-"standard routes."
-msgstr ""
-
-#: Module.php:111
-msgid ""
-"The IIIF Server is not active, so when no url is set, the viewer won’t be "
-"displayed. Furthermore, the viewer won’t display lists of items."
-msgstr ""
-
-#: src/Generic/AbstractModule.php:518
+#: src/Generic/AbstractModule.php:66
 #, php-format
 msgid "This module requires the module \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:538
+#: src/Generic/AbstractModule.php:73
 #, php-format
 msgid "This module requires modules \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:606
+#: src/Generic/AbstractModule.php:80
+msgid "This module has resources that cannot be installed."
+msgstr ""
+
+#: src/Generic/AbstractModule.php:725
 #, php-format
 msgid ""
 "The module \"%s\" was automatically deactivated because the dependencies are "
 "unavailable."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:9 src/Site/BlockLayout/UniversalViewer.php:42
+#: src/Form/ConfigForm.php:19
+msgid "Property supplying an external manifest"
+msgstr ""
+
+#: src/Form/ConfigForm.php:20
+msgid ""
+"External or static manifests can be more customized and may be quicker to be "
+"loaded. Usually, the property is \"dcterms:hasFormat\" or \"dcterms:"
+"isFormatOf\"."
+msgstr ""
+
+#: src/Form/ConfigForm.php:28
+msgid "Select a property…"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:10
+#: src/Site/BlockLayout/UniversalViewer.php:42
 msgid "Universal Viewer"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:18
-msgid "Manifest property"
+#: src/Form/SiteSettingsFieldset.php:19
+msgid "Version of Universal viewer"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:19
-msgid ""
-"The property supplying the manifest URL for the viewer, for example "
-"\"dcterms:hasFormat\" or \"dcterms:isFormatOf\"."
+#: src/Form/SiteSettingsFieldset.php:21
+msgid "Version 2.0.2 (better speed for some scanned pdf; require iiif v2)"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:26
-msgid "Select a property…"
+#: src/Form/SiteSettingsFieldset.php:22
+msgid "Version 3 (more modern)"
 msgstr ""
