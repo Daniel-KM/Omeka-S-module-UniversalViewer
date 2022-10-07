@@ -96,14 +96,16 @@ class Module extends AbstractModule
     public function handleViewBrowseAfterItem(Event $event): void
     {
         $view = $event->getTarget();
-        $services = $this->getServiceLocator();
-        // Note: there is no item-set show, but a special case for items browse.
-        $isItemSetShow = (bool) $services->get('Application')
-            ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
-        if ($isItemSetShow) {
-            echo $view->universalViewer($view->itemSet);
-        } elseif ($this->iiifServerIsActive()) {
-            echo $view->universalViewer($view->items);
+        if ($view->siteSetting('universalviewer_append_to_item_view_browse', true)) {
+            $services = $this->getServiceLocator();
+            // Note: there is no item-set show, but a special case for items browse.
+            $isItemSetShow = (bool) $services->get('Application')
+                ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
+            if ($isItemSetShow) {
+                echo $view->universalViewer($view->itemSet);
+            } elseif ($this->iiifServerIsActive()) {
+                echo $view->universalViewer($view->items);
+            }
         }
     }
 
@@ -114,13 +116,17 @@ class Module extends AbstractModule
         }
 
         $view = $event->getTarget();
-        echo $view->universalViewer($view->itemSets);
+        if ($view->siteSetting('universalviewer_append_to_itemset_view_browse', true)) {
+            echo $view->universalViewer($view->itemSets);
+        }
     }
 
     public function handleViewShowAfterItem(Event $event): void
     {
         $view = $event->getTarget();
-        echo $view->universalViewer($view->item);
+        if ($view->siteSetting('universalviewer_append_to_item_view_show', true)) {
+            echo $view->universalViewer($view->item);
+        }
     }
 
     protected function iiifServerIsActive()

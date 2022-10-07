@@ -27,6 +27,30 @@ class SiteSettingsFieldset extends Fieldset
                     'value' => '3',
                 ],
             ])
+            ->add([
+                'name' => 'universalviewer_append_to_item_view_show',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'label' => 'Show UniversalViewer on item page', // @translate
+                    'use_hidden_element' => true,
+                ],
+            ])
+            ->add([
+                'name' => 'universalviewer_append_to_item_view_browse',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'label' => 'Show UniversalViewer on item browse page', // @translate
+                    'use_hidden_element' => true,
+                ],
+            ])
+            ->add([
+                'name' => 'universalviewer_append_to_itemset_view_browse',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'label' => 'Show UniversalViewer on item set browse page', // @translate
+                    'use_hidden_element' => true,
+                ],
+            ])
         ;
     }
 }

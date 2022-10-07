@@ -141,6 +141,9 @@ return [
         ],
         'site_settings' => [
             'universalviewer_version' => '3',
+            'universalviewer_append_to_item_view_show' => '1',
+            'universalviewer_append_to_item_view_browse' => '1',
+            'universalviewer_append_to_itemset_view_browse' => '1',
         ],
     ],
 ];
