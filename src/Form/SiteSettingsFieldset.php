@@ -12,6 +12,7 @@ class SiteSettingsFieldset extends Fieldset
     public function init(): void
     {
         $this
+            ->setAttribute('id', 'universal-viewer')
             ->add([
                 'name' => 'universalviewer_version',
                 'type' => Element\Radio::class,
