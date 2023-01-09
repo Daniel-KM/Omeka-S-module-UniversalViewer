@@ -1,30 +1,33 @@
 <?php declare(strict_types=1);
+
 namespace UniversalViewer;
+
+use Omeka\Stdlib\Message;
 
 /**
  * @var Module $this
- * @var \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
- * @var string $oldVersion
+ * @var \Laminas\ServiceManager\ServiceLocatorInterface $services
  * @var string $newVersion
- */
-$services = $serviceLocator;
-
-/**
+ * @var string $oldVersion
+ *
+ * @var \Omeka\Api\Manager $api
  * @var \Omeka\Settings\Settings $settings
  * @var \Doctrine\DBAL\Connection $connection
- * @var array $config
- * @var array $config
- * @var \Omeka\Mvc\Controller\Plugin\Api $api
+ * @var \Doctrine\ORM\EntityManager $entityManager
+ * @var \Omeka\Mvc\Controller\Plugin\Messenger $messenger
  */
-$settings = $services->get('Omeka\Settings');
-$connection = $services->get('Omeka\Connection');
-$config = require dirname(__DIR__, 2) . '/config/module.config.php';
 $plugins = $services->get('ControllerPluginManager');
 $api = $plugins->get('api');
+$settings = $services->get('Omeka\Settings');
+$connection = $services->get('Omeka\Connection');
+$messenger = $plugins->get('messenger');
+$entityManager = $services->get('Omeka\EntityManager');
+
+$defaultConfig = require dirname(__DIR__, 2) . '/config/module.config.php';
 
 if (version_compare($oldVersion, '3.4.1', '<')) {
-    $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
-    $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
+    $defaultSettings = $defaultConfig['universalviewer']['config'];
+    $defaultSiteSettings = $defaultConfig['universalviewer']['site_settings'];
 
     $settings->set(
         'universalviewer_manifest_description_property',
@@ -135,9 +138,9 @@ if (version_compare($oldVersion, '3.5', '<=')
 }
 
 if (version_compare($oldVersion, '3.5.2', '<=')) {
-    $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
-    $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
-    $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    $defaultSettings = $defaultConfig['universalviewer']['config'];
+    $defaultSiteSettings = $defaultConfig['universalviewer']['site_settings'];
 
     $sites = $api->search('sites')->getContent();
     foreach ($sites as $site) {
@@ -158,7 +161,7 @@ if (version_compare($oldVersion, '3.6.0', '<')) {
 DELETE FROM site_setting
 WHERE id IN ("universalviewer_class", "universalviewer_style", "universalviewer_locale");
 SQL;
-    $connection->exec($sql);
+    $connection->executeStatement($sql);
 }
 
 if (version_compare($oldVersion, '3.6.1', '<')) {
@@ -166,7 +169,7 @@ if (version_compare($oldVersion, '3.6.1', '<')) {
 DELETE FROM site_setting
 WHERE id IN ("universalviewer_append_item_set_show", "universalviewer_append_item_show", "universalviewer_append_item_set_browse", "universalviewer_append_item_browse");
 SQL;
-    $connection->exec($sql);
+    $connection->executeStatement($sql);
 }
 
 if (version_compare($oldVersion, '3.6.3.0', '<')) {
