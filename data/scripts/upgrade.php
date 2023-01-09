@@ -175,3 +175,8 @@ SQL;
 if (version_compare($oldVersion, '3.6.3.0', '<')) {
     $settings->delete('universalviewer_manifest_property');
 }
+
+if (version_compare($oldVersion, '3.6.5.4', '<')) {
+    $message = new Message('Last version of Universal Viewer (v4) has been integrated. Check if it works fine with your documents.'); // @translate
+    $messenger->addSuccess($message);
+}
