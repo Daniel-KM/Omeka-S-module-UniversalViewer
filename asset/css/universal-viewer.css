@@ -11,6 +11,10 @@
     .universal-viewer .uv .footerPanel .searchOptions {
         width: 480px;
     }
+    /* Fix for v4 when not embedded. */
+    .uv {
+        word-wrap: initial;
+    }
 }
 .play.fullscreen,
 .play.fullscreen > .universal-viewer {

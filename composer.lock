@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6fbc14d7ff6cb28a1581bc5531bfe7d",
+    "content-hash": "8ad5f5c65332fece0c844041e092e3eb",
     "packages": [
         {
             "name": "asset/uv",
-            "version": "3.1.2",
+            "version": "4.0.17",
             "dist": {
-                "type": "zip",
-                "url": "https://github.com/Daniel-KM/UniversalViewer/releases/download/3.1.2/uv.zip",
-                "reference": "3.0.2"
+                "type": "tar",
+                "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-4.0.17.tar.gz",
+                "reference": "4.0.17"
             },
             "type": "omeka-addon-asset"
         },
@@ -27,40 +27,48 @@
             "type": "omeka-addon-asset"
         },
         {
+            "name": "asset/uv3",
+            "version": "3.1.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-3.1.2.zip",
+                "reference": "3.1.2"
+            },
+            "type": "omeka-addon-asset"
+        },
+        {
             "name": "composer/installers",
-            "version": "v1.10.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d"
+                "reference": "c29dc4b93137acb82734f672c37e029dfbd95b35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d",
-                "reference": "1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d",
+                "url": "https://api.github.com/repos/composer/installers/zipball/c29dc4b93137acb82734f672c37e029dfbd95b35",
+                "reference": "c29dc4b93137acb82734f672c37e029dfbd95b35",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
-            },
-            "replace": {
-                "roundcube/plugin-installer": "*",
-                "shama/baton": "*"
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
                 "composer/composer": "1.6.* || ^2.0",
                 "composer/semver": "^1 || ^3",
                 "phpstan/phpstan": "^0.12.55",
                 "phpstan/phpstan-phpunit": "^0.12.16",
-                "symfony/phpunit-bridge": "^4.2 || ^5",
-                "symfony/process": "^2.3"
+                "symfony/phpunit-bridge": "^5.3",
+                "symfony/process": "^5"
             },
             "type": "composer-plugin",
             "extra": {
                 "class": "Composer\\Installers\\Plugin",
                 "branch-alias": {
-                    "dev-main": "1.x-dev"
-                }
+                    "dev-main": "2.x-dev"
+                },
+                "plugin-modifies-install-path": true
             },
             "autoload": {
                 "psr-4": {
@@ -81,7 +89,6 @@
             "description": "A multi-framework Composer library installer",
             "homepage": "https://composer.github.io/installers/",
             "keywords": [
-                "Craft",
                 "Dolibarr",
                 "Eliasis",
                 "Hurad",
@@ -102,7 +109,6 @@
                 "Whmcs",
                 "WolfCMS",
                 "agl",
-                "aimeos",
                 "annotatecms",
                 "attogram",
                 "bitrix",
@@ -121,7 +127,6 @@
                 "grav",
                 "installer",
                 "itop",
-                "joomla",
                 "known",
                 "kohana",
                 "laravel",
@@ -130,11 +135,14 @@
                 "magento",
                 "majima",
                 "mako",
+                "matomo",
                 "mediawiki",
+                "miaoxing",
                 "modulework",
                 "modx",
                 "moodle",
                 "osclass",
+                "pantheon",
                 "phpbb",
                 "piwik",
                 "ppi",
@@ -147,8 +155,7 @@
                 "silverstripe",
                 "sydes",
                 "sylius",
-                "symfony",
-                "typo3",
+                "tastyigniter",
                 "wordpress",
                 "yawik",
                 "zend",
@@ -156,7 +163,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/installers/issues",
-                "source": "https://github.com/composer/installers/tree/v1.10.0"
+                "source": "https://github.com/composer/installers/tree/v2.2.0"
             },
             "funding": [
                 {
@@ -172,25 +179,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-14T11:07:16+00:00"
+            "time": "2022-08-20T06:45:11+00:00"
         },
         {
             "name": "oomphinc/composer-installers-extender",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oomphinc/composer-installers-extender.git",
-                "reference": "8d3fe38a1723e0e91076920c8bb946b1696e28ca"
+                "reference": "cbf4b6f9a24153b785d09eee755b995ba87bd5f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/8d3fe38a1723e0e91076920c8bb946b1696e28ca",
-                "reference": "8d3fe38a1723e0e91076920c8bb946b1696e28ca",
+                "url": "https://api.github.com/repos/oomphinc/composer-installers-extender/zipball/cbf4b6f9a24153b785d09eee755b995ba87bd5f9",
+                "reference": "cbf4b6f9a24153b785d09eee755b995ba87bd5f9",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.1 || ^2.0",
-                "composer/installers": "^1.0",
+                "composer/installers": "^1.0 || ^2.0",
                 "php": ">=7.1"
             },
             "require-dev": {
@@ -227,9 +234,9 @@
             "homepage": "http://www.oomphinc.com/",
             "support": {
                 "issues": "https://github.com/oomphinc/composer-installers-extender/issues",
-                "source": "https://github.com/oomphinc/composer-installers-extender/tree/2.0.0"
+                "source": "https://github.com/oomphinc/composer-installers-extender/tree/2.0.1"
             },
-            "time": "2020-08-11T21:06:11+00:00"
+            "time": "2021-12-15T12:32:42+00:00"
         }
     ],
     "packages-dev": [
@@ -283,5 +290,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

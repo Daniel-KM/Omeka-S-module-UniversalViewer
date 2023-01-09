@@ -123,7 +123,7 @@ class UniversalViewer extends AbstractHelper
     }
 
     /**
-     * Render a universal viewer for a url, according to options.
+     * Render a universal viewer v2, v3 or v4 for a url, according to options.
      *
      * @param string $urlManifest
      * @param array $options
@@ -132,67 +132,30 @@ class UniversalViewer extends AbstractHelper
      */
     protected function render($urlManifest, array $options = [], $resourceName = null)
     {
-        static $id = 0;
-
-        $view = $this->view;
-
-        $isSite = $view->status()->isSiteRequest();
-        $setting = $isSite ? $view->plugin('siteSetting') : $view->plugin('setting');
-        if ($setting('universalviewer_version') === '2') {
-            return $this->renderUv2($urlManifest, $options, $resourceName);
+        $isSite = $this->view->status()->isSiteRequest();
+        $setting = $isSite ? $this->view->plugin('siteSetting') : $this->view->plugin('setting');
+        $uvVersion = (string) $setting('universalviewer_version') ?: '4';
+        if ($uvVersion === '2') {
+            return $this->renderUv2($urlManifest, $options, $resourceName, $isSite);
+        } elseif ($uvVersion === '3') {
+            return $this->renderUv3($urlManifest, $options, $resourceName, $isSite);
+        } else {
+            return $this->renderUv4($urlManifest, $options, $resourceName, $isSite);
         }
-
-        $assetUrl = $view->plugin('assetUrl');
-        $view->headLink()
-            ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
-            ->prependStylesheet($assetUrl("vendor/uv/uv.css", 'UniversalViewer'));
-        $view->headScript()
-            ->appendFile($assetUrl("vendor/uv/lib/offline.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
-            ->appendFile($assetUrl("vendor/uv/helpers.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
-            ->appendFile($assetUrl("vendor/uv/uv.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
-
-        $configUri = isset($options['config'])
-            ? $this->basePath($options['config'])
-            : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
-
-        $config = [
-            'id' => 'uv-' . ++$id,
-            'root' => $assetUrl("vendor/uv/", 'UniversalViewer', false, false),
-            'iiifResourceUri' => $urlManifest,
-            'configUri' => $configUri,
-            'embedded' => true,
-        ];
-
-        // $locale = $view->identity()
-        //     ? $view->userSetting('locale')
-        //     : ($view->params()->fromRoute('__SITE__')
-        //         ? $view->siteSetting('locale')
-        //         : ($view->setting('locale') ?: 'en-GB'));
-        $config['locales'] = [
-            ['name' => 'en-GB', 'label' => 'English'],
-        ];
-
-        $config += $options;
-
-        return $view->partial('common/helper/universal-viewer', [
-            'config' => $config,
-        ]);
     }
 
-    protected function renderUv2($urlManifest, array $options = [], $resourceName = null)
+    protected function renderUv2($urlManifest, array $options = [], $resourceName = null, $isSite = false)
     {
         static $id = 0;
 
-        $view = $this->view;
-
-        $assetUrl = $view->plugin('assetUrl');
-        $view->headLink()
+        $assetUrl = $this->view->plugin('assetUrl');
+        $this->view->headLink()
             ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'));
-        $view->headScript()
+        $this->view->headScript()
             ->appendFile(
-                $view->assetUrl('vendor/uv2/lib/embed.js', 'UniversalViewer', false, false),
-                'application/javascript',
-                ['id' => 'embedUV']
+                    $assetUrl('vendor/uv2/lib/embed.js', 'UniversalViewer', false, false),
+                    'application/javascript',
+                    ['id' => 'embedUV']
                 )
                 ->appendScript('/* wordpress fix */', 'application/javascript');
 
@@ -209,11 +172,11 @@ class UniversalViewer extends AbstractHelper
             'style' => 'background-color: #000; height: 600px;'
         ];
 
-        $locale = /* $view->identity()
-            ? $view->userSetting('locale')
-            : */($view->status()->isSiteRequest()
-                ? $view->siteSetting('locale')
-                : $view->setting('locale'));
+        $locale = /* $this->view->identity()
+            ? $this->view->userSetting('locale')
+            : */($isSite
+                ? $this->view->siteSetting('locale')
+                : $this->view->setting('locale'));
         if (mb_strlen($locale) === 2) {
             $locale = mb_strtolower($locale) . '-' . mb_strtoupper($locale);
         }
@@ -227,9 +190,91 @@ class UniversalViewer extends AbstractHelper
 
         $config += $options;
 
-        return $view->partial('common/helper/universal-viewer', [
+        return $this->view->partial('common/universal-viewer', [
             'config' => $config,
             'version' => '2',
+        ]);
+    }
+
+    protected function renderUv3($urlManifest, array $options = [], $resourceName = null, $isSite = false)
+    {
+        static $id = 0;
+
+        $assetUrl = $this->view->plugin('assetUrl');
+        $this->view->headLink()
+            ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
+            ->prependStylesheet($assetUrl("vendor/uv3/uv.css", 'UniversalViewer'));
+        $this->view->headScript()
+            ->appendFile($assetUrl("vendor/uv3/lib/offline.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+            ->appendFile($assetUrl("vendor/uv3/helpers.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+            ->appendFile($assetUrl("vendor/uv3/uv.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
+
+        $configUri = isset($options['config'])
+            ? $this->basePath($options['config'])
+            : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
+
+        $config = [
+            'id' => 'uv-' . ++$id,
+            'root' => $assetUrl('vendor/uv3/', 'UniversalViewer', false, false),
+            'iiifResourceUri' => $urlManifest,
+            'configUri' => $configUri,
+            'embedded' => true,
+        ];
+
+        // $locale = $view->identity()
+        //     ? $view->userSetting('locale')
+        //     : ($view->params()->fromRoute('__SITE__')
+        //         ? $view->siteSetting('locale')
+        //         : ($view->setting('locale') ?: 'en-GB'));
+        $config['locales'] = [
+            ['name' => 'en-GB', 'label' => 'English'],
+        ];
+
+        $config += $options;
+
+        return $this->view->partial('common/universal-viewer', [
+            'config' => $config,
+            'version' => '3',
+        ]);
+    }
+
+    protected function renderUv4($urlManifest, array $options = [], $resourceName = null, $isSite = false)
+    {
+        static $id = 0;
+
+        $assetUrl = $this->view->plugin('assetUrl');
+        $this->view->headLink()
+            ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
+            ->prependStylesheet($assetUrl("vendor/uv/uv.css", 'UniversalViewer'));
+        $this->view->headScript()
+           ->appendFile($assetUrl("vendor/uv/umd/UV.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
+
+        $configUri = isset($options['config'])
+            ? $this->basePath($options['config'])
+            : $this->assetPath('universal-viewer/uv-config.json', 'UniversalViewer');
+
+        $config = [
+            'id' => 'uv-' . ++$id,
+            'root' => $assetUrl('vendor/uv/', 'UniversalViewer', false, false),
+            'manifest' => $urlManifest,
+            'configUri' => $configUri,
+            'embedded' => false,
+        ];
+
+        // $locale = $this->view->identity()
+        //     ? $this->view->userSetting('locale')
+        //     : ($isSite
+        //         ? $this->view->siteSetting('locale')
+        //         : ($this->view->setting('locale') ?: 'en-GB'));
+        $config['locales'] = [
+            ['name' => 'en-GB', 'label' => 'English'],
+        ];
+
+        $config += $options;
+
+        return $this->view->partial('common/universal-viewer', [
+            'config' => $config,
+            'version' => '4',
         ]);
     }
 

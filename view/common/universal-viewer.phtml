@@ -1,0 +1,55 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var array $config Require keys "root", "iiifResourceUri" and "configUri"
+ * @var string $version 2, 3 or 4 (default)
+ *
+ * @link https://github.com/UniversalViewer/universalviewer/wiki/V3
+ */
+
+// This template allows to display multiple viewers without loading multiple times the js.
+// The class "uv" is required with default styles when not embedded.
+
+$version = $version ?? '4';
+
+if ($version === '2'):
+?>
+
+<div id="<?= $config['id'] ?>" class="uv universal-viewer viewer <?= $config['class'] ?? '' ?>" data-config="<?= $config['configUri'] ?>" data-uri="<?= $config['iiifResourceUri'] ?>" data-locale="<?= $config['locale'] ?>" style="<?= $config['style'] ?>"></div>
+
+<?php elseif ($version === '3'):
+
+$config['id'] = $config['id'] ?? 'uv';
+$configJson = json_encode($config, 448);
+$script = <<<JS
+if (typeof uv === 'undefined') {
+    var uv = [];
+}
+uv.push($configJson);
+JS;
+$this->headScript()
+    ->appendFile($this->assetUrl('js/universal-viewer.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+    ->appendScript($script);
+?>
+
+<div id="<?= $config['id'] ?>" class="uv universal-viewer viewer"></div>
+
+<?php else: // Version 4.
+
+$config['id'] = $config['id'] ?? 'uv';
+$configJson = json_encode($config, 448);
+$script = <<<JS
+if (typeof uvConfigs === 'undefined') {
+    var uvConfigs = [];
+}
+uvConfigs.push($configJson);
+JS;
+$this->headScript()
+    ->appendFile($this->assetUrl('js/uv.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
+    ->appendScript($script);
+?>
+
+<div id="<?= $config['id'] ?>" class="uv universal-viewer viewer"></div>
+
+<?php
+endif;

@@ -140,7 +140,7 @@ return [
             'iiifserver_manifest_external_property' => 'dcterms:hasFormat',
         ],
         'site_settings' => [
-            'universalviewer_version' => '3',
+            'universalviewer_version' => '4',
         ],
     ],
 ];

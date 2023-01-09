@@ -28,19 +28,6 @@
         {
             "type": "package",
             "package": {
-                "name": "asset/uv",
-                "type": "omeka-addon-asset",
-                "version": "3.1.2",
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/Daniel-KM/UniversalViewer/releases/download/3.1.2/uv.zip",
-                    "reference": "3.0.2"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "asset/uv2",
                 "type": "omeka-addon-asset",
                 "version": "2.0.2",
@@ -50,12 +37,39 @@
                     "reference": "2.0.2"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "asset/uv3",
+                "type": "omeka-addon-asset",
+                "version": "3.1.2",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-3.1.2.zip",
+                    "reference": "3.1.2"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "asset/uv",
+                "type": "omeka-addon-asset",
+                "version": "4.0.17",
+                "dist": {
+                    "type": "tar",
+                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-4.0.17.tar.gz",
+                    "reference": "4.0.17"
+                }
+            }
         }
     ],
     "require": {
         "oomphinc/composer-installers-extender": "^2.0",
-        "asset/uv": "3.1.2",
-        "asset/uv2": "2.0.2"
+        "asset/uv2": "2.0.2",
+        "asset/uv3": "3.1.2",
+        "asset/uv": "4.0.17"
     },
     "require-dev": {
         "biblibre/omeka-s-test-helper": "dev-master"
