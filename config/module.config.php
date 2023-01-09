@@ -27,6 +27,11 @@ return [
             'universalViewer' => Site\BlockLayout\UniversalViewer::class,
         ],
     ],
+    'resource_page_block_layouts' => [
+        'invokables' => [
+            'universalViewer' => Site\ResourcePageBlockLayout\UniversalViewer::class,
+        ],
+    ],
     'controllers' => [
         'invokables' => [
             'UniversalViewer\Controller\Player' => Controller\PlayerController::class,
