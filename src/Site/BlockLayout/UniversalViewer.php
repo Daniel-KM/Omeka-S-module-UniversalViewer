@@ -59,6 +59,7 @@ class UniversalViewer extends AbstractBlockLayout
         }
 
         return $view->partial('common/block-layout/universal-viewer', [
+            'block' => $block,
             'attachments' => $attachments,
         ]);
     }
