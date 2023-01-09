@@ -9,28 +9,24 @@ Universal Viewer (module for Omeka S)
 
 [Universal Viewer] is a module for [Omeka S] that integrates [UniversalViewer],
 a unified online player for any files, so it can display books, images, maps,
-audio, movies, pdf, 3D, and anything else as long as the appropriate extension
-is installed. Rotation, zoom, inside search, etc. may be managed too.
+audio, movies, pdf, epub, 3D, youtuben and anything else as long as the
+appropriate extension is installed. Rotation, zoom, inside search, etc. may be
+managed too.
 
 It uses the resources of any [IIIF] compliant server. The full specification of
 the "International Image Interoperability Framework" standard is supported
-(level 2). If you don’t have an IIIF-compatible image server, like [Cantaloupe]
-or [IIP Image] server, Omeka S can be one! Just install the module [IIIF Server]
-and [Image Server].
+(API v2 and API v3 level 2). If you don’t have an IIIF-compatible image server,
+like [Cantaloupe] or [IIP Image] server, Omeka S can be one! Just install the
+modules [IIIF Server] and [Image Server].
 
 It’s an alternative to the [Mirador Viewer] or the lighter [Diva Viewer].
 
-The Universal Viewer was firstly developed by [Digirati] for the [Wellcome Library]
-of the [British Library] and the [National Library of Wales], then open sourced
-(unlike the viewer of [Gallica], the public digital library built by the [Bibliothèque Nationale de France], which is sold to its partners).
+The Universal Viewer was firstly developed by [Digirati] for the [Wellcome Library],
+the [British Library] and the [National Library of Wales], then open sourced
+(unlike the viewer of [Gallica], the public digital library built by the [Bibliothèque Nationale de France],
+based on Mirador, which is sold to its partners).
 
-This [Omeka S] module is a rewrite of the [Universal Viewer plugin for Omeka] by
-[BibLibre] with the same features as the original plugin, but separated into two
-modules (the IIIF server and the widget Universal Viewer).
-
-See a [demo] on the [Bibliothèque patrimoniale] of [Mines ParisTech], or you can
-set the url "https://patrimoine.mines-paristech.fr/iiif/collection/7"
-in the official [example server], because this is fully interoperable.
+For an example, see [Collections de la Maison de Salins].
 
 
 Installation
@@ -58,15 +54,32 @@ Then install it like any other Omeka module.
 
 * Compilation of Universal Viewer
 
-The Universal Viewer is provided via an [external repository] in order to be
-installed with composer.
+The Universal Viewer is provided via as a compressed file in order to be
+installed quickly with composer. The compressed file is the vanilla version that
+is built with default options.
 
-To install and compile it, run this command inside the repository of this
-external repository:
+So, you need to compile Universal Viewer only for development.
+
+For v4, in a temp directory:
+
+```sh
+git clone https://github.com/UniversalViewer/universalviewer
+npm run build
+```
+
+Then, the content of the directory "dist" is copied in the directory "asset/vendor/uv"
+of the module.
+
+For v3, an [external repository] was used in order to include the last version
+of OpenSeaDragon, the main component that manages the zoom viewer (used in other
+IIIF viewers), in order to manage IIIF v3. Run this command inside the
+repository of this external repository, then copy "dist" in directory "asset/vendor/uv3":
 
 ```sh
 grunt build --dist
 ```
+
+For v2, the "dist" directory was provided by default in the git repository.
 
 * Access to IIIF images
 
@@ -90,11 +103,14 @@ possible additional requirements and the supported formats.
 Usage
 -----
 
-### Version 2.0.2 and the last one
+### Version 2.0, 3.1 or 4.0
 
-Two versions of the viewer are provided and can be selected in site settings:
-version 2.0.2 and version 3.1. The first one manages pdf files quicker but
-supports only iiif v2, the second is more modern.
+Three versions of the viewer are provided and can be selected in site settings:
+version 2.0.2, version 3.1.1 (adapted for IIIF v3) and last version of series 4.
+
+The first one manages pdf files quicker but supports only iiif v2 (`manifest`
+for presentation and `info` for image), the second is more modern and the last
+one is the up-to-date version.
 
 ### Configuration
 
@@ -117,26 +133,38 @@ If the [IIIF Server] is installed, all resources of Omeka S are automatically
 available by the viewer, else the url of the manifest should be set in the
 configured property.
 
-The viewer is always available at `http://www.example.com/item-set/{item-set id}/universal-viewer`
-and `http://www.example.com/item/{item id}/universal-viewer`. Furthermore, it is
-automatically embedded in "item-set/{id}" and "item/{id}" show and/or browse
-pages.  This can be disabled via the module [Blocks Disposition] for each site.
+The viewer is always available at `http://www.example.com/item-set/{item-set id}/uv`
+and `http://www.example.com/item/{item id}/uv`.
+
+Furthermore, it is automatically embedded in "item-set/{id}" and "item/{id}"
+show and/or browse pages.  This can be disabled via the module [Blocks Disposition]
+for each site.
+
+In Omeka S v4, you can use the block in the resource page theme options. Note
+that when this new feature is used, the option in module [Blocks Disposition] is
+automatically skipped.
+
 Finally, a block layout is available to add the viewer in any standard page.
 
 To embed the Universal Viewer somewhere else, just use the helper:
 
 ```php
-    // Display the viewer with the specified item set.
-    echo $this->universalViewer($itemSet);
+// Display the viewer with the specified item set.
+echo $this->universalViewer($itemSet);
 
-    // Display the viewer with the specified item and specified options.
-    // The options for UV are directly passed to the partial, so they are
-    // available in the theme and set for the viewer.
-    echo $this->universalViewer($item, $options);
+// Display the viewer with the specified item and specified options.
+// The options for UV are directly passed to the partial, so they are
+// available in the theme and set for the viewer.
+echo $this->universalViewer($item, $options);
 
-    // Display multiple resources (items and/or item sets).
-    echo $this->universalViewer($resources);
+// Display multiple resources (items and/or item sets).
+echo $this->universalViewer($resources);
 ```
+
+### Exemple of full config for version 4.
+
+See the [Universal Viewer examples], then choose "Config example", that
+redirects to a sandbox on [codesandbox.io], where the full config is available.
 
 
 Notes
@@ -163,7 +191,8 @@ Bugs
 TODO
 ----
 
-- [ ] Improve integration of pdf for big scanned files in last version in order to remove version 2.0.2.
+- [ ] Improve integration of pdf for big scanned files in last version in order to use it in any version, not only v2.0.2.
+- [ ] Integrate json config inside site settings.
 
 
 Warning
@@ -211,19 +240,29 @@ See documentation on the UniversalViewer and the IIIF on their respective site.
 Copyright
 ---------
 
-Widget [UniversalViewer]:
+Player [UniversalViewer]:
 
 * Copyright Wellcome Library, 2013
 * Copyright British Library, 2015-2017
 * Copyright National Library of Wales, 2015-2017
-* Copyright [Edward Silverton] 2013-2017
+* Copyright [Edward Silverton] 2013-2023
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2021 (see [Daniel-KM])
+* Copyright Daniel Berthereau, 2015-2023 (see [Daniel-KM])
 * Copyright BibLibre, 2016-2017
 
 First version of this module was built for [Mines ParisTech].
+
+This [Omeka S] module is a rewrite of the [Universal Viewer plugin for Omeka] by
+[BibLibre] with the same features as the original plugin. Next, it was separated
+into three modules, the IIIF server, the Image server and the player Universal Viewer.
+
+See a [demo] on the [Bibliothèque patrimoniale] of [Mines ParisTech], or you can
+set the url "https://patrimoine.mines-paristech.fr/iiif/collection/7"
+in the official [example server], because this is fully interoperable.
+
+For Omeka S: example on [Collections de la Maison de Salins].
 
 
 [Universal Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer
@@ -247,6 +286,7 @@ First version of this module was built for [Mines ParisTech].
 [BibLibre]: https://github.com/biblibre
 [demo]: https://patrimoine.mines-paristech.fr/collections/play/7
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
+[Collections de la Maison de Salins]: https://collections.maison-salins.fr/s/patrimoine/item/1638
 [example server]: http://universalviewer.io/examples/
 [UniversalViewer.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases
 [external repository]: https://gitlab.com/Daniel-KM/UniversalViewer
@@ -256,6 +296,8 @@ First version of this module was built for [Mines ParisTech].
 [iiif specifications]: http://iiif.io/api/
 [OpenLayersZoom]: https://gitlab.com/Daniel-KM/Omeka-S-module-OpenLayersZoom
 [Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
+[Universal Viewer examples]: https://github.com/UniversalViewer/universalviewer/wiki/UV-Examples
+[codesandbox.io]: https://codesandbox.io/s/uv-config-example-7kh4s?file=/uv-config.json
 [module IIIF Server]: https://gitlab.com/Daniel-KM/Omeka-S-module-IiifServer#3d-models
 [threejs]: https://threejs.org
 [module Three JS Model viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-ThreeJs
