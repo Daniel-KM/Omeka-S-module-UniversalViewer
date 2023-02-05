@@ -56,7 +56,7 @@ class Module extends AbstractModule
 
     protected function preInstall(): void
     {
-        $js = __DIR__ . '/asset/vendor/uv/uv.js';
+        $js = __DIR__ . '/asset/vendor/uv/umd/UV.js';
         if (!file_exists($js)) {
             $services = $this->getServiceLocator();
             $t = $services->get('MvcTranslator');
