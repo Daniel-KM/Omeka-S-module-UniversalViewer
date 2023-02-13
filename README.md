@@ -193,6 +193,7 @@ TODO
 
 - [ ] Improve integration of pdf for big scanned files in last version in order to use it in any version, not only v2.0.2.
 - [ ] Integrate json config inside site settings.
+- [ ] Remove dependency to IiifServer for block.
 
 
 Warning
