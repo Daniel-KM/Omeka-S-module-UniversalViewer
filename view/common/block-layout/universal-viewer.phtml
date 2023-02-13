@@ -13,4 +13,4 @@ foreach ($attachments as $attachment) {
     }
 }
 // Display the viewer with the specified resources.
-echo $this->universalViewer($resources);
+echo $this->universalViewer(count($resources) === 1 ? reset($resources) : $resources);
