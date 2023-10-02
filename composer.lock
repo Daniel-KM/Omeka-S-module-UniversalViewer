@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ad5f5c65332fece0c844041e092e3eb",
+    "content-hash": "6289511e296e2d0e8a07e51aeeef084e",
     "packages": [
         {
             "name": "asset/uv",
-            "version": "4.0.17",
+            "version": "4.0.22",
             "dist": {
                 "type": "tar",
-                "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-4.0.17.tar.gz",
-                "reference": "4.0.17"
+                "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.8/uv-4.0.22.tar.gz",
+                "reference": "4.0.22"
             },
             "type": "omeka-addon-asset"
         },
