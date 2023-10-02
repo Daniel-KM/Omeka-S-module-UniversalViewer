@@ -54,17 +54,23 @@ Then install it like any other Omeka module.
 
 * Compilation of Universal Viewer
 
-The Universal Viewer is provided via as a compressed file in order to be
-installed quickly with composer. The compressed file is the vanilla version that
-is built with default options.
+The Universal Viewer is provided as a compressed file in order to be installed
+quickly with composer. The compressed file is the vanilla version that is built
+with default options.
 
 So, you need to compile Universal Viewer only for development.
 
 For v4, in a temp directory:
 
 ```sh
+cd /tmp
 git clone https://github.com/UniversalViewer/universalviewer
+cd universalviewer
+npm install
 npm run build
+# Prepare tar for release if needed. 
+mv dist uv
+tar -czvf uv-4.0.22.tar.gz -C /tmp/universalviewer ./uv
 ```
 
 Then, the content of the directory "dist" is copied in the directory "asset/vendor/uv"
