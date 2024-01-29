@@ -144,8 +144,14 @@ return [
             // consistency, the same name is used.
             'iiifserver_manifest_external_property' => 'dcterms:hasFormat',
         ],
+        'settings' => [
+            'universalviewer_version' => '4',
+            'universalviewer_config' => '{}',
+        ],
         'site_settings' => [
             'universalviewer_version' => '4',
+            'universalviewer_config' => '{}',
+            'universalviewer_config_theme' => false,
         ],
     ],
 ];

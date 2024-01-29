@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     uvConfigs.forEach(function (uvConfig) {
         const urlAdapter = new UV.IIIFURLAdapter();
 
-        var data = {
+        var params = {
             manifest: uvConfig.manifest,
             embedded: uvConfig.embedded,
             collectionIndex: urlAdapter.get('c') !== undefined ? Number(urlAdapter.get('c')) : undefined,
@@ -21,10 +21,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
             target: urlAdapter.get('target', ''),
         };
 
-        uv = UV.init(uvConfig.id, data);
-        urlAdapter.bindTo(uv);
+        // Deprecated.
+        if (uvConfig.configUri && uvConfig.configUri) {
+            uv = UV.init(uvConfig.id, params);
+            urlAdapter.bindTo(uv);
 
-        if (uvConfig.configUri) {
             uv.on('configure', function ({ config, cb }) {
                 cb(
                     // To increase loading speed, just use the specific settings you require.
@@ -38,6 +39,17 @@ document.addEventListener('DOMContentLoaded', function (event) {
                     })
                 );
            });
+       } else {
+            var urlAdaptor = new UV.IIIFURLAdaptor();
+            const data = urlAdaptor.getInitialData(params);
+            uv = UV.init(uvConfig.id, data);
+            urlAdaptor.bindTo(uv);
+            if (uvConfig.config && Object.keys(uvConfig.config).length) {
+                // Override config using an inline json object.
+                uv.on("configure", function ({ config, cb }) {
+                    cb(uvConfig.config);
+                });
+            }
        }
 
         if (!uvConfig.embedded) {

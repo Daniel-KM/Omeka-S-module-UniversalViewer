@@ -282,6 +282,9 @@ class UniversalViewer extends AbstractHelper
 
         $plugins = $this->view->getHelperPluginManager();
         $assetUrl = $plugins->get('assetUrl');
+        $setting = $plugins->get('setting');
+        $siteSetting = $plugins->get('siteSetting');
+        $mainOrSiteSetting = $this->isSite ? $siteSetting : $setting;
 
         $this->view->headLink()
             ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
@@ -289,17 +292,32 @@ class UniversalViewer extends AbstractHelper
         $this->view->headScript()
            ->appendFile($assetUrl("vendor/uv/umd/UV.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
 
-        $configUri = isset($options['config'])
-            ? $this->view->basePath($options['config'])
-            : $this->assetPath('universal-viewer/uv-config.json', 'UniversalViewer');
-
-        $config = [
-            'id' => 'uv-' . ++$id,
-            'root' => $assetUrl('vendor/uv/', 'UniversalViewer', false, false),
-            'manifest' => $urlManifest,
-            'configUri' => $configUri,
-            'embedded' => false,
-        ];
+        $themeConfig = (bool) $mainOrSiteSetting('universalviewer_config_theme', false);
+        if ($themeConfig) {
+            // Deprecated.
+            $configUri = isset($options['config'])
+                ? $this->view->basePath($options['config'])
+                : $this->assetPath('universal-viewer/uv-config.json', 'UniversalViewer');
+            $config = [
+                'id' => 'uv-' . ++$id,
+                'root' => $assetUrl('vendor/uv/', 'UniversalViewer', false, false),
+                'manifest' => $urlManifest,
+                'configUri' => $configUri,
+                'embedded' => false,
+            ];
+        } else {
+            $mainConfig = $setting('universalviewer_config', '{}');
+            $mainConfig = json_decode($mainConfig, true) ?: [];
+            $siteConfig = $siteSetting('universalviewer_config', '{}');
+            $siteConfig = json_decode($siteConfig, true) ?: [];
+            $config = [
+                'id' => 'uv-' . ++$id,
+                'root' => $assetUrl('vendor/uv/', 'UniversalViewer', false, false),
+                'manifest' => $urlManifest,
+                'embedded' => false,
+                'config' => array_merge($mainConfig, $siteConfig),
+            ];
+        }
 
         $config += $options;
 
