@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * Copyright 2015-2023 Daniel Berthereau
+ * Copyright 2015-2024 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -37,9 +37,23 @@ use Omeka\Site\Theme\Theme;
 class UniversalViewer extends AbstractHelper
 {
     /**
-     * @var Theme The current theme, if any
+     * @var \Omeka\Site\Theme\Theme
+     *
+     * The current theme, if any.
      */
     protected $currentTheme;
+
+    /**
+     * @var bool
+     */
+    protected $isSite;
+
+    /**
+     * @var string
+     *
+     * "2", "3" or "4" (version of UniversalViewer).
+     */
+    protected $version;
 
     /**
      * Construct the helper.
@@ -67,6 +81,10 @@ class UniversalViewer extends AbstractHelper
         }
 
         $view = $this->getView();
+        $this->isSite = $view->status()->isSiteRequest();
+        $this->version = $this->isSite
+            ? (string) $this->view->siteSetting('universalviewer_version', '4')
+            : (string) $this->view->setting('universalviewer_version', '4');
 
         // If the manifest is not provided in metadata, point to the manifest
         // created from Omeka files only when the Iiif Server is installed.
@@ -104,14 +122,17 @@ class UniversalViewer extends AbstractHelper
         // Some specific checks.
         switch ($resourceName) {
             case 'items':
+                /** @var \Omeka\Api\Representation\ItemRepresentation $resource */
                 // Currently, an item without files is unprocessable.
-                if (count($resource->media()) == 0) {
+                $medias = $resource->media();
+                if (!count($medias)) {
                     // return $view->translate('This item has no files and is not displayable.');
                     return '';
                 }
                 break;
             case 'item_sets':
-                if ($resource->itemCount() == 0) {
+                /** @var \Omeka\Api\Representation\ItemSetRepresentation $resource */
+                if (!$resource->itemCount()) {
                     // return $view->translate('This collection has no item and is not displayable.');
                     return '';
                 }
@@ -132,23 +153,25 @@ class UniversalViewer extends AbstractHelper
      */
     protected function render($urlManifest, array $options = [], $resourceName = null)
     {
-        $isSite = $this->view->status()->isSiteRequest();
-        $setting = $isSite ? $this->view->plugin('siteSetting') : $this->view->plugin('setting');
-        $uvVersion = (string) $setting('universalviewer_version') ?: '4';
-        if ($uvVersion === '2') {
-            return $this->renderUv2($urlManifest, $options, $resourceName, $isSite);
-        } elseif ($uvVersion === '3') {
-            return $this->renderUv3($urlManifest, $options, $resourceName, $isSite);
+        if ($this->version === '2') {
+            return $this->renderUv2($urlManifest, $options, $resourceName);
+        } elseif ($this->version === '3') {
+            return $this->renderUv3($urlManifest, $options, $resourceName);
         } else {
-            return $this->renderUv4($urlManifest, $options, $resourceName, $isSite);
+            return $this->renderUv4($urlManifest, $options, $resourceName);
         }
     }
 
-    protected function renderUv2($urlManifest, array $options = [], $resourceName = null, $isSite = false)
+    protected function renderUv2($urlManifest, array $options = [], $resourceName = null)
     {
         static $id = 0;
 
-        $assetUrl = $this->view->plugin('assetUrl');
+        $plugins = $this->view->getHelperPluginManager();
+        $assetUrl = $plugins->get('assetUrl');
+        $setting = $plugins->get('setting');
+        $siteSetting = $plugins->get('siteSetting');
+        $mainOrSiteSetting = $this->isSite ? $siteSetting : $setting;
+
         $this->view->headLink()
             ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'));
         $this->view->headScript()
@@ -160,7 +183,7 @@ class UniversalViewer extends AbstractHelper
                 ->appendScript('/* wordpress fix */', 'application/javascript');
 
         $configUri = isset($options['config'])
-            ? $this->basePath($options['config'])
+            ? $this->view->basePath($options['config'])
             : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
         $config = [
@@ -172,19 +195,17 @@ class UniversalViewer extends AbstractHelper
             'style' => 'background-color: #000; height: 600px;'
         ];
 
-        $locale = /* $this->view->identity()
-            ? $this->view->userSetting('locale')
-            : */($isSite
-                ? $this->view->siteSetting('locale')
-                : $this->view->setting('locale'));
+        $locale = $this->view->identity()
+            ? (string) $this->view->userSetting('locale')
+            : (string) $mainOrSiteSetting('locale');
         if (mb_strlen($locale) === 2) {
             $locale = mb_strtolower($locale) . '-' . mb_strtoupper($locale);
         }
         $config['locale'] = in_array($locale, [
-            'cy-GB',
-            'en-GB',
-            'fr-FR',
-        ])
+                'cy-GB',
+                'en-GB',
+                'fr-FR',
+            ])
             ? $locale
             : 'en-GB';
 
@@ -200,7 +221,14 @@ class UniversalViewer extends AbstractHelper
     {
         static $id = 0;
 
-        $assetUrl = $this->view->plugin('assetUrl');
+        $plugins = $this->view->getHelperPluginManager();
+        $assetUrl = $plugins->get('assetUrl');
+        /*
+        $setting = $plugins->get('setting');
+        $siteSetting = $plugins->get('siteSetting');
+        $mainOrSiteSetting = $this->isSite ? $siteSetting : $setting;
+        */
+
         $this->view->headLink()
             ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
             ->prependStylesheet($assetUrl("vendor/uv3/uv.css", 'UniversalViewer'));
@@ -210,7 +238,7 @@ class UniversalViewer extends AbstractHelper
             ->appendFile($assetUrl("vendor/uv3/uv.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
 
         $configUri = isset($options['config'])
-            ? $this->basePath($options['config'])
+            ? $this->view->basePath($options['config'])
             : $this->assetPath('universal-viewer/config.json', 'UniversalViewer');
 
         $config = [
@@ -221,14 +249,24 @@ class UniversalViewer extends AbstractHelper
             'embedded' => true,
         ];
 
-        // $locale = $view->identity()
-        //     ? $view->userSetting('locale')
-        //     : ($view->params()->fromRoute('__SITE__')
-        //         ? $view->siteSetting('locale')
-        //         : ($view->setting('locale') ?: 'en-GB'));
+        /*
+        $locale = $this->view->identity()
+            ? (string) $this->view->userSetting('locale')
+            : (string) $mainOrSiteSetting('locale');
+        if (mb_strlen($locale) === 2) {
+            $locale = mb_strtolower($locale) . '-' . mb_strtoupper($locale);
+        }
+        $config['locale'] = in_array($locale, [
+                'cy-GB',
+                'en-GB',
+                'fr-FR',
+            ])
+            ? $locale
+            : 'en-GB';
         $config['locales'] = [
             ['name' => 'en-GB', 'label' => 'English'],
         ];
+        */
 
         $config += $options;
 
@@ -242,7 +280,9 @@ class UniversalViewer extends AbstractHelper
     {
         static $id = 0;
 
-        $assetUrl = $this->view->plugin('assetUrl');
+        $plugins = $this->view->getHelperPluginManager();
+        $assetUrl = $plugins->get('assetUrl');
+
         $this->view->headLink()
             ->prependStylesheet($assetUrl('css/universal-viewer.css', 'UniversalViewer'))
             ->prependStylesheet($assetUrl("vendor/uv/uv.css", 'UniversalViewer'));
@@ -250,7 +290,7 @@ class UniversalViewer extends AbstractHelper
            ->appendFile($assetUrl("vendor/uv/umd/UV.js", 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
 
         $configUri = isset($options['config'])
-            ? $this->basePath($options['config'])
+            ? $this->view->basePath($options['config'])
             : $this->assetPath('universal-viewer/uv-config.json', 'UniversalViewer');
 
         $config = [
@@ -259,15 +299,6 @@ class UniversalViewer extends AbstractHelper
             'manifest' => $urlManifest,
             'configUri' => $configUri,
             'embedded' => false,
-        ];
-
-        // $locale = $this->view->identity()
-        //     ? $this->view->userSetting('locale')
-        //     : ($isSite
-        //         ? $this->view->siteSetting('locale')
-        //         : ($this->view->setting('locale') ?: 'en-GB'));
-        $config['locales'] = [
-            ['name' => 'en-GB', 'label' => 'English'],
         ];
 
         $config += $options;
@@ -297,8 +328,7 @@ class UniversalViewer extends AbstractHelper
 
         // As fallback, get the path in the module (the file must exist).
         if ($module) {
-            $assetPath = $this->view->assetUrl($path, $module, false, false);
-            return $assetPath;
+            return $this->view->assetUrl($path, $module, false, false);
         }
     }
 }
