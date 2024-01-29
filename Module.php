@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * Copyright 2015-2023 Daniel Berthereau
+ * Copyright 2015-2024 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -30,21 +30,21 @@
 
 namespace UniversalViewer;
 
-if (!class_exists(\Generic\AbstractModule::class)) {
-    require file_exists(dirname(__DIR__) . '/Generic/AbstractModule.php')
-        ? dirname(__DIR__) . '/Generic/AbstractModule.php'
-        : __DIR__ . '/src/Generic/AbstractModule.php';
+if (!class_exists(\Common\TraitModule::class)) {
+    require_once dirname(__DIR__) . '/Common/TraitModule.php';
 }
 
-use Generic\AbstractModule;
+use Common\TraitModule;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Mvc\MvcEvent;
+use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
-use Omeka\Module\Manager as ModuleManager;
 
 class Module extends AbstractModule
 {
+    use TraitModule;
+
     const NAMESPACE = __NAMESPACE__;
 
     public function onBootstrap(MvcEvent $event): void
@@ -102,14 +102,14 @@ class Module extends AbstractModule
             ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
         if ($isItemSetShow) {
             echo $view->universalViewer($view->itemSet);
-        } elseif ($this->iiifServerIsActive()) {
+        } elseif ($this->isModuleActive('IiifServer')) {
             echo $view->universalViewer($view->items);
         }
     }
 
     public function handleViewBrowseAfterItemSet(Event $event): void
     {
-        if (!$this->iiifServerIsActive()) {
+        if (!$this->isModuleActive('IiifServer')) {
             return;
         }
 
@@ -121,30 +121,15 @@ class Module extends AbstractModule
     {
         // In Omeka S v4, if the player is set in the view, don't add it.
         $view = $event->getTarget();
-        if (version_compare(\Omeka\Module::VERSION, '4', '>=')) {
-            $services = $this->getServiceLocator();
-            $currentTheme = $services->get('Omeka\Site\ThemeManager')->getCurrentTheme();
-            $blockLayoutManager = $services->get('Omeka\ResourcePageBlockLayoutManager');
-            $resourcePageBlocks = $blockLayoutManager->getResourcePageBlocks($currentTheme);
-            foreach ($resourcePageBlocks['items'] ?? [] as $blocks) {
-                if (in_array('universalViewer', $blocks)) {
-                    return;
-                }
+        $services = $this->getServiceLocator();
+        $currentTheme = $services->get('Omeka\Site\ThemeManager')->getCurrentTheme();
+        $blockLayoutManager = $services->get('Omeka\ResourcePageBlockLayoutManager');
+        $resourcePageBlocks = $blockLayoutManager->getResourcePageBlocks($currentTheme);
+        foreach ($resourcePageBlocks['items'] ?? [] as $blocks) {
+            if (in_array('universalViewer', $blocks)) {
+                return;
             }
         }
         echo $view->universalViewer($view->item);
-    }
-
-    protected function iiifServerIsActive()
-    {
-        static $iiifServerIsActive;
-
-        if (is_null($iiifServerIsActive)) {
-            $module = $this->getServiceLocator()
-                ->get('Omeka\ModuleManager')
-                ->getModule('IiifServer');
-            $iiifServerIsActive = $module && $module->getState() === ModuleManager::STATE_ACTIVE;
-        }
-        return $iiifServerIsActive;
     }
 }
