@@ -56,6 +56,17 @@ class Module extends AbstractModule
 
     protected function preInstall(): void
     {
+        $services = $this->getServiceLocator();
+        $translate = $services->get('ControllerPluginManager')->get('translate');
+
+        if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.49')) {
+            $message = new \Omeka\Stdlib\Message(
+                $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
+                'Common', '3.4.49'
+            );
+            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+        }
+
         $js = __DIR__ . '/asset/vendor/uv/umd/UV.js';
         if (!file_exists($js)) {
             $services = $this->getServiceLocator();

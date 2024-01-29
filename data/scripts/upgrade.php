@@ -177,6 +177,35 @@ if (version_compare($oldVersion, '3.6.3.0', '<')) {
 }
 
 if (version_compare($oldVersion, '3.6.5.4', '<')) {
-    $message = new Message('Last version of Universal Viewer (v4) has been integrated. Check if it works fine with your documents.'); // @translate
+    $message = new Message(
+        'Last version of Universal Viewer (v4) has been integrated. Check if it works fine with your documents.' // @translate
+    );
+    $messenger->addSuccess($message);
+}
+
+if (version_compare($oldVersion, '3.6.9', '<')) {
+    if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.49')) {
+        $message = new Message(
+            'The module %1$s should be upgraded to version %2$s or later.', // @translate
+            'Common', '3.4.49'
+        );
+        throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+    }
+
+    /** @var \Omeka\Settings\SiteSettings $siteSettings */
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    $sites = $api->search('sites')->getContent();
+    foreach ($sites as $site) {
+        $siteSettings->setTargetId($site->id());
+        if ((string) $siteSettings->get('universalviewer_version', '4') === '4') {
+            $siteSettings->set('universalviewer_config_theme', true);
+        }
+    }
+
+    $message = new Message(
+        'A param in settings (default) and in site settings allows to set the config of Universal Viewer version 4. See %1$sdocumentation%2$s.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer#exemple-of-full-config-for-version-4" target="_blank" rel="noopener">', '</a>'
+    );
+    $message->setEscapeHtml(false);
     $messenger->addSuccess($message);
 }
