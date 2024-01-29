@@ -56,11 +56,11 @@
             "package": {
                 "name": "asset/uv",
                 "type": "omeka-addon-asset",
-                "version": "4.0.22",
+                "version": "4.0.25",
                 "dist": {
                     "type": "tar",
-                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.8/uv-4.0.22.tar.gz",
-                    "reference": "4.0.22"
+                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.9/uv-4.0.25.tar.gz",
+                    "reference": "4.0.25"
                 }
             }
         }
@@ -69,7 +69,7 @@
         "oomphinc/composer-installers-extender": "^2.0",
         "asset/uv2": "2.0.2",
         "asset/uv3": "3.1.2",
-        "asset/uv": "4.0.22"
+        "asset/uv": "4.0.25"
     },
     "require-dev": {
         "biblibre/omeka-s-test-helper": "dev-master"

@@ -70,7 +70,7 @@ npm install
 npm run build
 # Prepare tar for release if needed. 
 mv dist uv
-tar -czvf uv-4.0.22.tar.gz -C /tmp/universalviewer ./uv
+tar -czvf uv-4.0.25.tar.gz -C /tmp/universalviewer ./uv
 ```
 
 Then, the content of the directory "dist" is copied in the directory "asset/vendor/uv"
