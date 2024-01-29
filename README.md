@@ -32,6 +32,10 @@ For an example, see [Collections de la Maison de Salins].
 Installation
 ------------
 
+See general end user documentation for [installing a module].
+
+The module [Common] must be installed first.
+
 The module uses an external library [UniversalViewer], so use the release zip to
 install it, or use and init the source.
 
@@ -197,8 +201,8 @@ Bugs
 TODO
 ----
 
-- [ ] Improve integration of pdf for big scanned files in last version in order to use it in any version, not only v2.0.2.
-- [ ] Integrate json config inside site settings.
+- [x] Improve integration of pdf for big scanned files in last version in order to use it in any version, not only v2.0.2 (fixed in v4).
+- [x] Integrate json config inside site settings.
 - [ ] Remove dependency to IiifServer for block.
 
 
@@ -256,7 +260,7 @@ Player [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2023 (see [Daniel-KM])
+* Copyright Daniel Berthereau, 2015-2024 (see [Daniel-KM])
 * Copyright BibLibre, 2016-2017
 
 First version of this module was built for [Mines ParisTech].
@@ -294,6 +298,7 @@ For Omeka S: example on [Collections de la Maison de Salins].
 [demo]: https://patrimoine.mines-paristech.fr/collections/play/7
 [Bibliothèque patrimoniale]: https://patrimoine.mines-paristech.fr
 [Collections de la Maison de Salins]: https://collections.maison-salins.fr/s/patrimoine/item/1638
+[Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
 [example server]: http://universalviewer.io/examples/
 [UniversalViewer.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases
 [external repository]: https://gitlab.com/Daniel-KM/UniversalViewer
