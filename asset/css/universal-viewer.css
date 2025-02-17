@@ -1,5 +1,5 @@
 /* Universal viewer custom and fixes for common Omeka themes */
-@media screen {
+@media all {
     .universal-viewer {
         height: 600px;
     }
