@@ -174,7 +174,34 @@ echo $this->universalViewer($resources);
 ### Exemple of full config for version 4.
 
 See the [Universal Viewer examples], then choose "Config example", that
-redirects to a sandbox on [codesandbox.io], where the full config is available.
+redirects to a sandbox on [codesandbox.io], where the full config is available
+in the file "uv-config.json". Example to set the French theme with a specific
+option for the left panel:
+
+```json
+{
+    "options": {
+        "theme": "uv-fr-FR-theme"
+    },
+    "modules": {
+        "contentLeftPanel": {
+            "options": {
+                "autoExpandTreeEnabled": true
+            }
+        }
+    },
+    "locales": [
+        {
+            "name": "fr-FR"
+        }
+    ]
+}
+```
+
+Internal locales are cy-GB, en-GB,fr-FR, pl-PL and sv-SE. They are always
+included. The default locale is the locale of the site if it is in this list. To
+set the default locale, set it as first object in array "locales" with keys
+name, label and path. Only the name is required for internal locales.
 
 
 Notes
