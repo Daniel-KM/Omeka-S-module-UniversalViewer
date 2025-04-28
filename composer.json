@@ -92,5 +92,13 @@
             "composer/installers": true,
             "oomphinc/composer-installers-extender": true
         }
+    },
+    "scripts": {
+        "post-install-cmd": "@build",
+        "post-update-cmd": "@build",
+        "build": [
+            "# Update css file for French in uv2.",
+            "sed -i -e 's~113px~124px~' asset/vendor/uv2/themes/uv-fr-FR-theme/css/uv-seadragon-extension/theme.css"
+        ]
     }
 }
