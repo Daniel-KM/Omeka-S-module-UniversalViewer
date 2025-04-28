@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-29 00:00+0000\n"
+"POT-Creation-Date: 2025-04-28 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Module.php:64
+#: data/scripts/upgrade.php:40 Module.php:64
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
@@ -31,26 +31,25 @@ msgstr ""
 msgid "See module’s installation documentation."
 msgstr ""
 
-#: data/scripts/upgrade.php:181
+#: data/scripts/upgrade.php:199
 msgid ""
 "Last version of Universal Viewer (v4) has been integrated. Check if it works "
 "fine with your documents."
 msgstr ""
 
-#: data/scripts/upgrade.php:206
-#, php-format
+#: data/scripts/upgrade.php:216
 msgid ""
 "A param in settings (default) and in site settings allows to set the config "
-"of Universal Viewer version 4. See %1$sdocumentation%2$s."
+"of Universal Viewer version 4. See {link}documentation{link_end}."
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:18
-msgid "Use Universal Viewer config from the theme for v4 (deprecated)"
+msgid "Universal Viewer: Use config file from the theme for v4 (deprecated)"
 msgstr ""
 
 #: src/Form/SettingsFieldset.php:10
 #: src/Site/ResourcePageBlockLayout/UniversalViewer.php:13
-#: src/Site/BlockLayout/UniversalViewer.php:42
+#: src/Site/BlockLayout/UniversalViewer.php:48
 msgid "Universal Viewer"
 msgstr ""
 
@@ -59,7 +58,7 @@ msgid "Players"
 msgstr ""
 
 #: src/Form/SettingsFieldset.php:30
-msgid "Version of Universal viewer"
+msgid "Universal viewer: Version"
 msgstr ""
 
 #: src/Form/SettingsFieldset.php:32
@@ -75,7 +74,7 @@ msgid "Version 4 (up to date)"
 msgstr ""
 
 #: src/Form/SettingsFieldset.php:47
-msgid "Universal viewer config as json for v4"
+msgid "Universal viewer: Config as json for v4"
 msgstr ""
 
 #: src/Form/SettingsFieldset.php:48

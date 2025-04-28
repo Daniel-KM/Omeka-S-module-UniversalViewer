@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-29 00:00+0000\n"
-"PO-Revision-Date: 2024-01-29 00:00+0000\n"
+"POT-Creation-Date: 2025-04-28 00:00+0000\n"
+"PO-Revision-Date: 2025-04-28 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: Module.php:64
+#: data/scripts/upgrade.php:40 Module.php:64
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
@@ -33,7 +33,7 @@ msgstr "La bibliothèque \"%s\" doit être installée."
 msgid "See module’s installation documentation."
 msgstr "Voir la documentation d’installation du module."
 
-#: data/scripts/upgrade.php:181
+#: data/scripts/upgrade.php:199
 msgid ""
 "Last version of Universal Viewer (v4) has been integrated. Check if it works "
 "fine with your documents."
@@ -41,23 +41,22 @@ msgstr ""
 "La dernière version d’Universal Viewer (v4) a été intégrée. Vérifiez si elle "
 "fonctionne bien avec vos documents."
 
-#: data/scripts/upgrade.php:206
-#, php-format
+#: data/scripts/upgrade.php:216
 msgid ""
 "A param in settings (default) and in site settings allows to set the config "
-"of Universal Viewer version 4. See %1$sdocumentation%2$s."
+"of Universal Viewer version 4. See {link}documentation{link_end}."
 msgstr ""
-"Un paramètre général et un paramètre pour chaque site permet de "
-"personnaliser la config d’Universal Viewer version 4. Consulter la "
-"%1$sdocumentation%2$s."
+"Un paramètre général et un paramètre pour chaque site permettent de "
+"personnaliser la config d’Universal Viewer version 4. Consulter la {link}"
+"documentation{link_end}."
 
 #: src/Form/SiteSettingsFieldset.php:18
-msgid "Use Universal Viewer config from the theme for v4 (deprecated)"
-msgstr "Utiliser la config Universal Viewer du thème pour v4 (obsolète)"
+msgid "Universal Viewer: Use config file from the theme for v4 (deprecated)"
+msgstr "Universal Viewer : Utiliser la config du thème pour v4 (obsolète)"
 
 #: src/Form/SettingsFieldset.php:10
 #: src/Site/ResourcePageBlockLayout/UniversalViewer.php:13
-#: src/Site/BlockLayout/UniversalViewer.php:42
+#: src/Site/BlockLayout/UniversalViewer.php:48
 msgid "Universal Viewer"
 msgstr "Universal Viewer"
 
@@ -66,8 +65,8 @@ msgid "Players"
 msgstr "Lecteurs"
 
 #: src/Form/SettingsFieldset.php:30
-msgid "Version of Universal viewer"
-msgstr "Version of Universal viewer"
+msgid "Universal viewer: Version"
+msgstr "Universal Viewer : Version"
 
 #: src/Form/SettingsFieldset.php:32
 msgid "Version 2.0.2 (better speed for some scanned pdf; require iiif v2)"
@@ -84,8 +83,8 @@ msgid "Version 4 (up to date)"
 msgstr "Version 4 (à jour)"
 
 #: src/Form/SettingsFieldset.php:47
-msgid "Universal viewer config as json for v4"
-msgstr "Config Universal viewer en json pour v4"
+msgid "Universal viewer: Config as json for v4"
+msgstr "Universal Viewer : Config en json pour v4"
 
 #: src/Form/SettingsFieldset.php:48
 msgid ""
@@ -112,6 +111,9 @@ msgstr ""
 #: src/Form/ConfigForm.php:28
 msgid "Select a property…"
 msgstr "Choisir une propriété…"
+
+#~ msgid "Version of Universal viewer"
+#~ msgstr "Version of Universal viewer"
 
 #~ msgid ""
 #~ "The IIIF Server is active, so when no url is set, the viewer will use the "
