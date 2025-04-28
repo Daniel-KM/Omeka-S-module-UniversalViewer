@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
         };
 
         // Deprecated.
-        if (uvConfig.configUri && uvConfig.configUri) {
+        if (uvConfig.configUri && uvConfig.configUri.length) {
             uv = UV.init(uvConfig.id, params);
             urlAdapter.bindTo(uv);
             uv.on('configure', function ({ config, cb }) {
