@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * Copyright 2015-2024 Daniel Berthereau
+ * Copyright 2015-2025 Daniel Berthereau
  * Copyright 2016-2017 BibLibre
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -249,25 +249,6 @@ class UniversalViewer extends AbstractHelper
             'embedded' => true,
         ];
 
-        /*
-        $locale = $this->view->identity()
-            ? (string) $this->view->userSetting('locale')
-            : (string) $mainOrSiteSetting('locale');
-        if (mb_strlen($locale) === 2) {
-            $locale = mb_strtolower($locale) . '-' . mb_strtoupper($locale);
-        }
-        $config['locale'] = in_array($locale, [
-                'cy-GB',
-                'en-GB',
-                'fr-FR',
-            ])
-            ? $locale
-            : 'en-GB';
-        $config['locales'] = [
-            ['name' => 'en-GB', 'label' => 'English'],
-        ];
-        */
-
         $config += $options;
 
         return $this->view->partial('common/universal-viewer', [
@@ -315,9 +296,35 @@ class UniversalViewer extends AbstractHelper
                 'root' => $assetUrl('vendor/uv/', 'UniversalViewer', false, false),
                 'manifest' => $urlManifest,
                 'embedded' => false,
-                'config' => array_merge($mainConfig, $siteConfig),
             ];
+            $config = array_merge($config, $siteConfig, $mainConfig);
         }
+
+       // For internal locales, only the name is needed.
+       // The first is the default locale. The others are optional.
+       // Default locales are always included.
+       // Use the locale of the site if not set in the config.
+       // A locale is required to make the viewer working.
+       if (empty($config['locales'])) {
+           $locales = [
+               'cy-CY' => 'cy-GB',
+               'en-EN' => 'en-GB',
+               'fr-FR' => 'fr-FR',
+               'pl-PL' => 'pl-PL',
+               'sv-SE' => 'sv-SE',
+               'sv-SV' => 'sv-SE',
+           ];
+           $locale = $this->view->identity()
+               ? (string) $this->view->userSetting('locale')
+               : (string) $mainOrSiteSetting('locale');
+           $locale = mb_strlen($locale) === 2
+               ? mb_strtolower($locale) . '-' . mb_strtoupper($locale)
+               : str_replace('_', '-', $locale);
+           $locale = $locales[$locale] ??'en-GB';
+           $config['locales'] = [
+               ['name' => $locale],
+           ];
+       }
 
         $config += $options;
 

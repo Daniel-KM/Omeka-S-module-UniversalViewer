@@ -15,7 +15,7 @@ class SiteSettingsFieldset extends SettingsFieldset
                 'type' => Element\Checkbox::class,
                 'options' => [
                     'element_group' => 'player',
-                    'label' => 'Use Universal Viewer config from the theme for v4 (deprecated)', // @translate
+                    'label' => 'Universal Viewer: Use config file from the theme for v4 (deprecated)', // @translate
                 ],
                 'attributes' => [
                     'id' => 'universalviewer_config_theme',

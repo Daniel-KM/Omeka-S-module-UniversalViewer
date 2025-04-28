@@ -1,3 +1,5 @@
+'use strict';
+
 // Prepare multiple uv4.
 document.addEventListener('DOMContentLoaded', function (event) {
 
@@ -7,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
 
     uvConfigs.forEach(function (uvConfig) {
-        const urlAdapter = new UV.IIIFURLAdapter();
+        var uv;
+        const urlAdapter = new UV.IIIFURLAdapter(true);
 
         var params = {
             manifest: uvConfig.manifest,
@@ -19,13 +22,15 @@ document.addEventListener('DOMContentLoaded', function (event) {
             rangeId: urlAdapter.get('rid', ''),
             xywh: urlAdapter.get('xywh', ''),
             target: urlAdapter.get('target', ''),
+            options: uvConfig.options ? uvConfig.options : {},
+            modules: uvConfig.modules ? uvConfig.modules : {},
+            locales: uvConfig.locales ? uvConfig.locales : [],
         };
 
         // Deprecated.
         if (uvConfig.configUri && uvConfig.configUri) {
             uv = UV.init(uvConfig.id, params);
             urlAdapter.bindTo(uv);
-
             uv.on('configure', function ({ config, cb }) {
                 cb(
                     // To increase loading speed, just use the specific settings you require.
@@ -40,10 +45,38 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 );
            });
        } else {
-            var urlAdaptor = new UV.IIIFURLAdaptor();
-            const data = urlAdaptor.getInitialData(params);
+           // Function to merge object recursively (array_merge()).
+           function arrayMerge(obj1, obj2) {
+               const result = { ...obj1 };
+               for (const key in obj2) {
+                   if (obj2.hasOwnProperty(key)) {
+                       if (typeof obj2[key] === 'object' && obj2[key] !== null && !Array.isArray(obj2[key])) {
+                           result[key] = arrayMerge(result[key] || {}, obj2[key]);
+                       } else {
+                           result[key] = obj2[key];
+                       }
+                   }
+               }
+               return result;
+           }
+
+            // Merge data and options
+            var data = urlAdapter.getInitialData(params);
+            data = arrayMerge(params, data);
+            /*
+            // For internal locales, only the name is needed.
+            // The first is the default locale. The others are optional.
+            // Default locales are always included.
+            data.locales = [
+                {
+                    name: 'fr-FR',
+                    // label: 'Français',
+                    // path: 'path/to/french/locale/config.json',
+                },
+            ];
+            */
             uv = UV.init(uvConfig.id, data);
-            urlAdaptor.bindTo(uv);
+            urlAdapter.bindTo(uv);
             if (uvConfig.config && Object.keys(uvConfig.config).length) {
                 // Override config using an inline json object.
                 uv.on("configure", function ({ config, cb }) {
