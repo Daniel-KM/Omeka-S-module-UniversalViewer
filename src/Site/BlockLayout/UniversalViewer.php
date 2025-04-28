@@ -34,9 +34,15 @@ use Omeka\Api\Representation\SitePageBlockRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
 use Omeka\Site\BlockLayout\AbstractBlockLayout;
+use Omeka\Site\BlockLayout\TemplateableBlockLayoutInterface;
 
-class UniversalViewer extends AbstractBlockLayout
+class UniversalViewer extends AbstractBlockLayout implements TemplateableBlockLayoutInterface
 {
+    /**
+     * The default partial view script.
+     */
+    const PARTIAL_NAME = 'common/block-layout/universal-viewer';
+
     public function getLabel()
     {
         return 'Universal Viewer'; // @translate
@@ -51,14 +57,14 @@ class UniversalViewer extends AbstractBlockLayout
         return $view->blockAttachmentsForm($block);
     }
 
-    public function render(PhpRenderer $view, SitePageBlockRepresentation $block)
+    public function render(PhpRenderer $view, SitePageBlockRepresentation $block, $templateViewScript = self::PARTIAL_NAME)
     {
         $attachments = $block->attachments();
         if (!$attachments) {
             return 'No resource selected'; // @translate
         }
 
-        return $view->partial('common/block-layout/universal-viewer', [
+        return $view->partial($templateViewScript, [
             'block' => $block,
             'attachments' => $attachments,
         ]);
