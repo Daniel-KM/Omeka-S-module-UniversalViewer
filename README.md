@@ -74,7 +74,7 @@ npm install
 npm run build
 # Prepare tar for release if needed. 
 mv dist uv
-tar -czvf uv-4.0.25.tar.gz -C /tmp/universalviewer ./uv
+tar -czvf uv-4.1.0.tar.gz -C /tmp/universalviewer ./uv
 ```
 
 Then, the content of the directory "dist" is copied in the directory "asset/vendor/uv"
@@ -287,7 +287,7 @@ Player [UniversalViewer]:
 
 Module Universal Viewer for Omeka S:
 
-* Copyright Daniel Berthereau, 2015-2024 (see [Daniel-KM])
+* Copyright Daniel Berthereau, 2015-2025 (see [Daniel-KM])
 * Copyright BibLibre, 2016-2017
 
 First version of this module was built for [Mines ParisTech].

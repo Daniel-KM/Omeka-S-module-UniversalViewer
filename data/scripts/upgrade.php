@@ -2,7 +2,7 @@
 
 namespace UniversalViewer;
 
-use Omeka\Stdlib\Message;
+use Common\Stdlib\PsrMessage;
 
 /**
  * @var Module $this
@@ -11,19 +11,37 @@ use Omeka\Stdlib\Message;
  * @var string $oldVersion
  *
  * @var \Omeka\Api\Manager $api
+ * @var \Omeka\View\Helper\Url $url
+ * @var \Laminas\Log\Logger $logger
  * @var \Omeka\Settings\Settings $settings
+ * @var \Laminas\I18n\View\Helper\Translate $translate
  * @var \Doctrine\DBAL\Connection $connection
+ * @var \Laminas\Mvc\I18n\Translator $translator
  * @var \Doctrine\ORM\EntityManager $entityManager
+ * @var \Omeka\Settings\SiteSettings $siteSettings
  * @var \Omeka\Mvc\Controller\Plugin\Messenger $messenger
  */
 $plugins = $services->get('ControllerPluginManager');
+$url = $plugins->get('url');
 $api = $plugins->get('api');
+$logger = $services->get('Omeka\Logger');
 $settings = $services->get('Omeka\Settings');
+$translate = $plugins->get('translate');
+$translator = $services->get('MvcTranslator');
 $connection = $services->get('Omeka\Connection');
 $messenger = $plugins->get('messenger');
+$siteSettings = $services->get('Omeka\Settings\Site');
 $entityManager = $services->get('Omeka\EntityManager');
 
 $defaultConfig = require dirname(__DIR__, 2) . '/config/module.config.php';
+
+if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.66')) {
+    $message = new \Omeka\Stdlib\Message(
+        $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
+        'Common', '3.4.66'
+    );
+    throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+}
 
 if (version_compare($oldVersion, '3.4.1', '<')) {
     $defaultSettings = $defaultConfig['universalviewer']['config'];
@@ -158,17 +176,17 @@ if (version_compare($oldVersion, '3.5.2', '<=')) {
 
 if (version_compare($oldVersion, '3.6.0', '<')) {
     $sql = <<<SQL
-DELETE FROM site_setting
-WHERE id IN ("universalviewer_class", "universalviewer_style", "universalviewer_locale");
-SQL;
+        DELETE FROM site_setting
+        WHERE id IN ("universalviewer_class", "universalviewer_style", "universalviewer_locale");
+        SQL;
     $connection->executeStatement($sql);
 }
 
 if (version_compare($oldVersion, '3.6.1', '<')) {
     $sql = <<<'SQL'
-DELETE FROM site_setting
-WHERE id IN ("universalviewer_append_item_set_show", "universalviewer_append_item_show", "universalviewer_append_item_set_browse", "universalviewer_append_item_browse");
-SQL;
+        DELETE FROM site_setting
+        WHERE id IN ("universalviewer_append_item_set_show", "universalviewer_append_item_show", "universalviewer_append_item_set_browse", "universalviewer_append_item_browse");
+        SQL;
     $connection->executeStatement($sql);
 }
 
@@ -177,21 +195,13 @@ if (version_compare($oldVersion, '3.6.3.0', '<')) {
 }
 
 if (version_compare($oldVersion, '3.6.5.4', '<')) {
-    $message = new Message(
+    $message = new PsrMessage(
         'Last version of Universal Viewer (v4) has been integrated. Check if it works fine with your documents.' // @translate
     );
     $messenger->addSuccess($message);
 }
 
 if (version_compare($oldVersion, '3.6.9', '<')) {
-    if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.66')) {
-        $message = new Message(
-            'The module %1$s should be upgraded to version %2$s or later.', // @translate
-            'Common', '3.4.66'
-        );
-        throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
-    }
-
     /** @var \Omeka\Settings\SiteSettings $siteSettings */
     $siteSettings = $services->get('Omeka\Settings\Site');
     $sites = $api->search('sites')->getContent();
@@ -202,9 +212,9 @@ if (version_compare($oldVersion, '3.6.9', '<')) {
         }
     }
 
-    $message = new Message(
-        'A param in settings (default) and in site settings allows to set the config of Universal Viewer version 4. See %1$sdocumentation%2$s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer#exemple-of-full-config-for-version-4" target="_blank" rel="noopener">', '</a>'
+    $message = new PsrMessage(
+        'A param in settings (default) and in site settings allows to set the config of Universal Viewer version 4. See {link}documentation{link_end}.', // @translate
+        ['link' => '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer#exemple-of-full-config-for-version-4" target="_blank" rel="noopener">', 'link_end' => '</a>']
     );
     $message->setEscapeHtml(false);
     $messenger->addSuccess($message);
