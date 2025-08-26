@@ -113,6 +113,13 @@ class Module extends AbstractModule
     {
         $view = $event->getTarget();
         $services = $this->getServiceLocator();
+        
+        // Check if viewer should be shown on browse pages
+        $showOnBrowse = $view->siteSetting('universalviewer_show_browse', true);
+        if (!$showOnBrowse) {
+            return;
+        }
+        
         // Note: there is no item-set show, but a special case for items browse.
         $isItemSetShow = (bool) $services->get('Application')
             ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
@@ -130,6 +137,13 @@ class Module extends AbstractModule
         }
 
         $view = $event->getTarget();
+        
+        // Check if viewer should be shown on browse pages
+        $showOnBrowse = $view->siteSetting('universalviewer_show_browse', true);
+        if (!$showOnBrowse) {
+            return;
+        }
+        
         echo $view->universalViewer($view->itemSets);
     }
 
