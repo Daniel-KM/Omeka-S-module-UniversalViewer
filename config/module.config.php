@@ -151,6 +151,7 @@ return [
         'site_settings' => [
             'universalviewer_version' => '4',
             'universalviewer_config' => '{}',
+            'universalviewer_show_browse' => false,
             'universalviewer_config_theme' => false,
         ],
     ],
