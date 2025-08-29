@@ -20,8 +20,6 @@ class SiteSettingsFieldset extends SettingsFieldset
                 ],
                 'attributes' => [
                     'id' => 'universalviewer_show_browse',
-                    'value' => 1,
-                    'checked' => true,
                 ],
             ])
             ->add([
