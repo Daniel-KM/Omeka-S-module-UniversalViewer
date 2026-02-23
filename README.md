@@ -5,7 +5,6 @@ Universal Viewer (module for Omeka S)
 > are available on [GitLab], which seems to respect users and privacy better
 > than the previous repository.__
 
-[![Build Status](https://travis-ci.org/Daniel-KM/Omeka-S-module-UniversalViewer.svg?branch=master)](https://travis-ci.org/Daniel-KM/Omeka-S-module-UniversalViewer)
 
 [Universal Viewer] is a module for [Omeka S] that integrates [UniversalViewer],
 a unified online player for any files, so it can display books, images, maps,
@@ -64,21 +63,43 @@ with default options.
 
 So, you need to compile Universal Viewer only for development.
 
-For v4, in a temp directory:
+For v4, in a temp directory (replace `v4.2.1` with the desired version tag):
 
 ```sh
 cd /tmp
-git clone https://github.com/UniversalViewer/universalviewer
+git clone --branch v4.2.1 --depth 1 https://github.com/UniversalViewer/universalviewer
 cd universalviewer
-npm install
-npm run build
-# Prepare tar for release if needed. 
-mv dist uv
-tar -czvf uv-4.1.0.tar.gz -C /tmp/universalviewer ./uv
 ```
 
-Then, the content of the directory "dist" is copied in the directory "asset/vendor/uv"
-of the module.
+Apply the patch that adds extra locales (de-DE, ja-JP), registers them in all
+extension configs, and removes the global jQuery shim that conflicts with other
+modules. The patch file is stored in the `data/patches/` directory of this module:
+
+```sh
+patch -p1 < /path/to/modules/UniversalViewer/data/patches/uv-4.2.1.patch
+```
+
+Then build:
+
+```sh
+npm install
+npm run build
+```
+
+Copy the content of the directory `dist` into `asset/vendor/uv` of the module
+(remove the old `umd` directory first to avoid stale chunks):
+
+```sh
+rm -rf /path/to/modules/UniversalViewer/asset/vendor/uv/umd
+cp -r dist/* /path/to/modules/UniversalViewer/asset/vendor/uv/
+```
+
+To prepare a tar for a release:
+
+```sh
+mv dist uv
+tar -czvf uv-4.2.1.tar.gz -C /tmp/universalviewer ./uv
+```
 
 For v3, an [external repository] was used in order to include the last version
 of OpenSeaDragon, the main component that manages the zoom viewer (used in other
@@ -90,6 +111,15 @@ grunt build --dist
 ```
 
 For v2, the "dist" directory was provided by default in the git repository.
+
+* For test
+
+The module includes a comprehensive test suite with unit and functional tests.
+Run them from the root of Omeka:
+
+```sh
+vendor/bin/phpunit -c modules/UniversalViewer/phpunit.xml --testdox
+```
 
 * Access to IIIF images
 
@@ -244,6 +274,39 @@ your archives regularly so you can roll back if needed.
 
 Troubleshooting
 ---------------
+
+### PDF does not fit in fullscreen
+
+By default, UV4 uses pdf.js to render PDF documents with a fixed scale (0.7),
+which does not adapt to the viewer size or fullscreen. To use the browser's
+native PDF viewer instead (which handles fit-to-screen automatically), add this
+JSON in the settings (Admin > Settings > Universal Viewer > Config as json for
+v4) or in the site settings:
+
+```json
+{
+    "modules": {
+        "pdfCenterPanel": {
+            "options": {
+                "usePdfJs": false
+            }
+        }
+    }
+}
+```
+
+### Theme CSS conflicts with UV4 buttons
+
+UV4 renders inline in the DOM (not in an iframe), so theme global CSS selectors
+like `button` may cascade into the viewer and alter its appearance. The module
+includes a CSS fix (`all: revert`) for common elements. If buttons still look
+wrong (colored background, oversized), check your theme's global button styles.
+
+### jQuery UI conflict with other modules
+
+UV4 no longer exposes jQuery globally (fixed in 3.6.12). If you use an older
+version, the global `window.$` set by UV may conflict with other modules that
+rely on jQuery UI widgets (accordion, tabs, etc.).
 
 See online issues on the [module issues] page on GitLab.
 
