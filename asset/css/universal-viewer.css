@@ -15,6 +15,16 @@
     .uv {
         word-wrap: initial;
     }
+    /* UV4 renders inline in the dom, not iframe or shadow dom,
+       so global theme selectors may override the uv ones, so reset them. */
+    .uv button,
+    .uv a,
+    .uv input,
+    .uv select,
+    .uv label,
+    .uv textarea {
+        all: revert;
+    }
 }
 .play.fullscreen,
 .play.fullscreen > .universal-viewer {
