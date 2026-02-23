@@ -1,0 +1,560 @@
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -362,8 +362,32 @@
+     "label": "English (GB)",
+     "locales": [
+       {
++        "name": "cy-GB",
++        "label": "Cymraeg"
++      },
++      {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
++      },
++      {
++        "name": "fr-FR",
++        "label": "Français (FR)"
++      },
++      {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
++        "name": "pl-PL",
++        "label": "Polski"
++      },
++      {
++        "name": "sv-SE",
++        "label": "Svenska"
+       }
+     ]
+   },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -442,6 +442,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -450,6 +454,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -365,6 +365,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -373,6 +377,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -361,6 +361,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -369,6 +373,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -360,6 +360,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -368,6 +372,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -373,6 +373,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -381,6 +385,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -580,6 +580,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -588,6 +592,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
+@@ -422,6 +422,10 @@
+         "label": "Cymraeg"
+       },
+       {
++        "name": "de-DE",
++        "label": "Deutsch"
++      },
++      {
+         "name": "en-GB",
+         "label": "English (GB)"
+       },
+@@ -430,6 +434,10 @@
+         "label": "Français (FR)"
+       },
+       {
++        "name": "ja-JP",
++        "label": "日本語"
++      },
++      {
+         "name": "pl-PL",
+         "label": "Polski"
+       },
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts universalviewer-4.2.1/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts
+--- universalviewer-4.2.1-clean/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts	2026-02-23 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts	2026-02-23 00:00:00.000000000 +0000
+@@ -83,7 +83,9 @@
+   localeLoaders: Record<string, () => Promise<any>> = {
+     "en-GB": () => import("../../../../locales/en-GB.json"),
+     "cy-GB": () => import("../../../../locales/cy-GB.json"),
++    "de-DE": () => import("../../../../locales/de-DE.json"),
+     "fr-FR": () => import("../../../../locales/fr-FR.json"),
++    "ja-JP": () => import("../../../../locales/ja-JP.json"),
+     "pl-PL": () => import("../../../../locales/pl-PL.json"),
+     "sv-SE": () => import("../../../../locales/sv-SE.json"),
+   };
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/de-DE.json universalviewer-4.2.1/src/locales/de-DE.json
+--- universalviewer-4.2.1-clean/src/locales/de-DE.json	1970-01-01 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/locales/de-DE.json	2026-02-23 00:00:00.000000000 +0000
+@@ -0,0 +1,164 @@
++{
++  "$collapse": "Inhalt verbergen",
++  "$collapseFull": "Galerie verbergen",
++  "$date": "Datum",
++  "$expandContents": "Inhalt anzeigen",
++  "$expandGallery": "Galerie anzeigen",
++  "$index": "Index",
++  "$manifestRanges": "Manifestations-Bereiche",
++  "$searchResult": "{0} Suchresultat",
++  "$searchResults": "{0} Suchresultate",
++  "$sortBy": "Sortieren nach:",
++  "$thumbnails": "Miniaturbilder",
++  "$contents": "Inhalte",
++  "$volume": "Band",
++  "$close": "Schliessen",
++  "$closeAttribution": "Zuschreibungsfeld schliessen",
++  "$allPages": "Alle Seiten",
++  "$currentViewAsJpg": "Aktuelle Ansicht {0} x {1}px (jpg)",
++  "$openNewWindow": "Öffnet in einem neuen Fenster",
++  "$download": "Download",
++  "$downloadSelection": "Download Auswahl",
++  "$downloadSelectionExplanation": "Öffnet einen Dialog zur Auswahl der herunterzuladenden Seiten.",
++  "$editSettings": "Einstellungen bearbeiten",
++  "$entireDocument": "Ganzes Dokument ({0})",
++  "$entireFileX": "Ganze Datei ({0})",
++  "$entireFile": "Ganze Datei",
++  "$individualPages": "Einzelne Seiten",
++  "$noDownloadOptionsAvailable": "Es sind keine Download-Optionen vorhanden.",
++  "$pagingNote": "Bitte schalten Sie die Zwei-Seiten-Ansicht aus um zusätzliche Optionen zu sehen.",
++  "$preview": "Vorschau",
++  "$selection": "Auswahl",
++  "$termsOfUse": "Nutzungsbedingungen",
++  "$wholeImageHighRes": "Ganzes Bild {0} x {1}px ({2})",
++  "$wholeImageHighResExplanation": "Öffnet in einem neuen Fenster.",
++  "$wholeImageLowResAsJpg": "Ganzes Bild {0} x {1}px (jpg)",
++  "$wholeImageLowResAsJpgExplanation": "Öffnet in einem neuen Fenster.",
++  "$wholeImagesHighRes": "Ganze Bilder ({0})",
++  "$wholeImagesHighResExplanation": "Öffnet in zwei neuen Fenstern.",
++  "$add_to_bookmarks": "Zu den Lesezeichen hinzufügen",
++  "$embed": "Einbetten",
++  "$exitFullScreen": "Vollansicht verlassen",
++  "$feedback": "Rückmeldung",
++  "$fullScreen": "Vollansicht",
++  "$moreInfo": "Weitere Informationen",
++  "$openLeftPanel": "Navigationsfeld öffnen",
++  "$closeLeftPanel": "Navigationsfeld schliessen",
++  "$openRightPanel": "Weitere Informationen öffnen",
++  "$closeRightPanel": "Weitere Informationen schliessen",
++  "$open": "Öffnen",
++  "$share": "Teilen",
++  "$emptyValue": "Bitte geben Sie einen Wert ein.",
++  "$invalidNumber": "Bitte eine gültige Zahl eingeben.",
++  "$noMatches": "Keine Treffer gefunden.",
++  "$ok": "OK",
++  "$pageNotFound": "Dieser Inhalt enthält keine Seite mit der von Ihnen eingegebenen Nummer. Versuchen Sie, den Nummerierungsmodus auf 'Bild' umzustellen.",
++  "$refresh": "Aktualisieren",
++  "$placeholder_text": "Platzhaltertext",
++  "$help": "Hilfe",
++  "$attribution": "Zuschreibung",
++  "$aboutTheImage": "Über das Bild",
++  "$collapseInformation": "Informationen verbergen",
++  "$collapseGallery": "Galerie verbergen",
++  "$copiedToClipboard": "In die Zwischenablage kopiert",
++  "$copyToClipboard": "In die Zwischenablage kopieren",
++  "$copyBtn": "Kopieren",
++  "$description": "Beschreibung",
++  "$expandInformation": "Informationen anzeigen",
++  "$moduleGoesHere": "Ihr Modul kommt hierher!",
++  "$less": "weniger",
++  "$lessAriaLabelTemplate": "Weniger Informationen: {0} verbergen",
++  "$license": "Lizenz",
++  "$logo": "Logo",
++  "$aboutTheItem": "Über das Exemplar",
++  "$more": "mehr",
++  "$moreAriaLabelTemplate": "Mehr Informationen: {0} anzeigen",
++  "$noDataToDisplay": "Keine Daten vorhanden",
++  "$page": "Seite",
++  "$aboutThisSection": "Über diesen Bereich",
++  "$moreInformation": "Weitere Informationen",
++  "$selectAll": "Alle auswählen",
++  "$selectPagesForDownload": "Seiten zum Download auswählen",
++  "$first": "Anfang",
++  "$firstImage": "Erstes Bild",
++  "$firstPage": "Erste Seite",
++  "$folio": "Folio",
++  "$gallery": "Galerie",
++  "$go": "Weiter",
++  "$image": "Bild",
++  "$last": "Ende",
++  "$lastImage": "Letztes Bild",
++  "$lastPage": "Letzte Seite",
++  "$next": "Weiter",
++  "$nextImage": "Nächstes Bild",
++  "$nextPage": "Nächste Seite",
++  "$of": "von {0}",
++  "$singlePageView": "Einseitige Ansicht",
++  "$searchByPageNumber": "Nach Seitennummer suchen",
++  "$previous": "Zurück",
++  "$previousImage": "Vorheriges Bild",
++  "$previousPage": "Vorherige Seite",
++  "$settings": "Einstellungen",
++  "$twoPageView": "Zweiseitige Ansicht",
++  "$goHome": "Zur Startseite",
++  "$imageUnavailable": "Bild nicht verfügbar",
++  "$rotateRight": "Nach rechts rotieren",
++  "$zoomIn": "Vergrössern",
++  "$zoomOut": "Verkleinern",
++  "$adjustImage": "Bild anpassen",
++  "$clearSearch": "Löschen",
++  "$displaying_A_of_B": "{0} {1} von {2}",
++  "$enterKeyword": "Suchbegriff eingeben",
++  "$imageLowercase": "Bild",
++  "$instanceFound": "1 Treffer für '{0}' gefunden",
++  "$instancesFound": "{0} Treffer für '{1}' gefunden",
++  "$nextResult": "Nächstes Resultat",
++  "$pageLowercase": "Seite",
++  "$previousResult": "Vorheriges Resultat",
++  "$print": "Drucken",
++  "$resultFoundFor": "Treffer gefunden für",
++  "$resultsFoundFor": "Treffer gefunden für",
++  "$searchWithinItem": "In diesem Objekt suchen:",
++  "$locale": "Sprache",
++  "$navigatorEnabled": "Navigator aktiviert",
++  "$clickToZoomEnabled": "Mausklick zum Zoomen",
++  "$reducedMotion": "Animationen reduzieren",
++  "$truncateThumbnailLabels": "Miniaturbildbeschriftungen kürzen",
++  "$preserveViewport": "Zoom beibehalten",
++  "$uvWebsite": "<a href='https://github.com/UniversalViewer/universalviewer/wiki/About'>Mehr über den Universal Viewer</a>",
++  "$custom": "Benutzerdefiniert",
++  "$embedInstructions": "Um dieses Objekt in Ihre eigene Website einzubetten, kopieren Sie den folgenden Code.",
++  "$height": "Höhe",
++  "$iiifManifest": "IIIF Manifest",
++  "$shareLink": "Link zu dieser Seite",
++  "$shareInstructions": "Um dieses Objekt zu teilen, kopieren Sie die folgende URL.",
++  "$size": "Grösse:",
++  "$width": "Breite",
++  "$cancel": "Abbrechen",
++  "$confirm": "Bestätigen",
++  "$viewTerms": "Nutzungsbedingungen lesen",
++  "$login": "Anmelden",
++  "$log_in": "anmelden",
++  "$logout": "Abmelden",
++  "$authCORSError": "Ihr Browser unterstützt CORS nicht. Bitte aktualisieren Sie Ihren Browser, um diese Inhalte anzuzeigen.",
++  "$authorisationFailedMessage": "Anmeldung fehlgeschlagen. Versuchen Sie es bitte erneut.",
++  "$canvasIndexOutOfRange": "Der Bildbereich liegt ausserhalb der gültigen Werte.",
++  "$fallbackDegradedLabel": "Anmelden",
++  "$fallbackDegradedMessage": "Bitte anmelden, um den Inhalt in voller Auflösung zu sehen.",
++  "$forbiddenResourceMessage": "Ihre gegenwärtigen Zugriffsrechte reichen nicht aus, um das Bild anzusehen",
++  "$mediaViewer": "Medien-Viewer",
++  "$skipToDownload": "Weiter zu den Downloads und den alternativen Formaten",
++  "$pleaseEnterValue": "Bitte geben Sie einen Wert ein",
++  "$pleaseLogInToViewAtFullQuality": "Bitte melden Sie sich an, um in voller Qualität anzuzeigen.",
++  "$vr": "VR",
++  "$currentTime": "Aktuelle Zeit",
++  "$duration": "Dauer",
++  "$mute": "Stumm",
++  "$pause": "Pause",
++  "$play": "Abspielen",
++  "$brightness": "Helligkeit",
++  "$contrast": "Kontrast",
++  "$saturation": "Sättigung",
++  "$reset": "Zurücksetzen",
++  "$remember": "Einstellungen merken"
++}
+diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/ja-JP.json universalviewer-4.2.1/src/locales/ja-JP.json
+--- universalviewer-4.2.1-clean/src/locales/ja-JP.json	1970-01-01 00:00:00.000000000 +0000
++++ universalviewer-4.2.1/src/locales/ja-JP.json	2026-02-23 00:00:00.000000000 +0000
+@@ -0,0 +1,164 @@
++{
++  "$collapse": "目次を閉じる",
++  "$collapseFull": "ギャラリーを閉じる",
++  "$date": "日付",
++  "$expandContents": "目次を開く",
++  "$expandGallery": "ギャラリーを開く",
++  "$index": "索引",
++  "$manifestRanges": "マニフェスト範囲",
++  "$searchResult": "{0} 件の検索結果",
++  "$searchResults": "{0} 件の検索結果",
++  "$sortBy": "並べ替え：",
++  "$thumbnails": "サムネイル",
++  "$contents": "目次",
++  "$volume": "巻",
++  "$close": "閉じる",
++  "$closeAttribution": "帰属情報パネルを閉じる",
++  "$allPages": "全ページ",
++  "$currentViewAsJpg": "現在の表示 {0} x {1}px (jpg)",
++  "$openNewWindow": "新しいウィンドウで開く",
++  "$download": "ダウンロード",
++  "$downloadSelection": "選択してダウンロード",
++  "$downloadSelectionExplanation": "ダウンロードするページを選択するダイアログを開きます。",
++  "$editSettings": "設定を編集",
++  "$entireDocument": "文書全体 ({0})",
++  "$entireFileX": "ファイル全体 ({0})",
++  "$entireFile": "ファイル全体",
++  "$individualPages": "個別ページ",
++  "$noDownloadOptionsAvailable": "ダウンロードオプションはありません。",
++  "$pagingNote": "追加オプションを表示するには、見開き表示をオフにしてください。",
++  "$preview": "プレビュー",
++  "$selection": "選択",
++  "$termsOfUse": "利用規約",
++  "$wholeImageHighRes": "画像全体 {0} x {1}px ({2})",
++  "$wholeImageHighResExplanation": "新しいウィンドウで開きます。",
++  "$wholeImageLowResAsJpg": "画像全体 {0} x {1}px (jpg)",
++  "$wholeImageLowResAsJpgExplanation": "新しいウィンドウで開きます。",
++  "$wholeImagesHighRes": "画像全体 ({0})",
++  "$wholeImagesHighResExplanation": "2つの新しいウィンドウで開きます。",
++  "$add_to_bookmarks": "ブックマークに追加",
++  "$embed": "埋め込み",
++  "$exitFullScreen": "全画面表示を終了",
++  "$feedback": "フィードバック",
++  "$fullScreen": "全画面表示",
++  "$moreInfo": "詳細情報",
++  "$openLeftPanel": "ナビゲーションパネルを開く",
++  "$closeLeftPanel": "ナビゲーションパネルを閉じる",
++  "$openRightPanel": "詳細情報を開く",
++  "$closeRightPanel": "詳細情報を閉じる",
++  "$open": "開く",
++  "$share": "共有",
++  "$emptyValue": "値を入力してください。",
++  "$invalidNumber": "有効な数値を入力してください。",
++  "$noMatches": "一致するものが見つかりませんでした。",
++  "$ok": "OK",
++  "$pageNotFound": "入力された番号のページはありません。番号モードを「画像」に切り替えてみてください。",
++  "$refresh": "更新",
++  "$placeholder_text": "プレースホルダーテキスト",
++  "$help": "ヘルプ",
++  "$attribution": "帰属情報",
++  "$aboutTheImage": "画像について",
++  "$collapseInformation": "情報を閉じる",
++  "$collapseGallery": "ギャラリーを閉じる",
++  "$copiedToClipboard": "クリップボードにコピーしました",
++  "$copyToClipboard": "クリップボードにコピー",
++  "$copyBtn": "コピー",
++  "$description": "説明",
++  "$expandInformation": "情報を開く",
++  "$moduleGoesHere": "モジュールはここに配置されます",
++  "$less": "閉じる",
++  "$lessAriaLabelTemplate": "詳細を隠す：{0}",
++  "$license": "ライセンス",
++  "$logo": "ロゴ",
++  "$aboutTheItem": "アイテムについて",
++  "$more": "もっと見る",
++  "$moreAriaLabelTemplate": "詳細を表示：{0}",
++  "$noDataToDisplay": "表示するデータがありません",
++  "$page": "ページ",
++  "$aboutThisSection": "このセクションについて",
++  "$moreInformation": "詳細情報",
++  "$selectAll": "すべて選択",
++  "$selectPagesForDownload": "ダウンロードするページを選択",
++  "$first": "最初",
++  "$firstImage": "最初の画像",
++  "$firstPage": "最初のページ",
++  "$folio": "フォリオ",
++  "$gallery": "ギャラリー",
++  "$go": "移動",
++  "$image": "画像",
++  "$last": "最後",
++  "$lastImage": "最後の画像",
++  "$lastPage": "最後のページ",
++  "$next": "次へ",
++  "$nextImage": "次の画像",
++  "$nextPage": "次のページ",
++  "$of": "{0} 中",
++  "$singlePageView": "単ページ表示",
++  "$searchByPageNumber": "ページ番号で検索",
++  "$previous": "前へ",
++  "$previousImage": "前の画像",
++  "$previousPage": "前のページ",
++  "$settings": "設定",
++  "$twoPageView": "見開き表示",
++  "$goHome": "ホームに戻る",
++  "$imageUnavailable": "画像を利用できません",
++  "$rotateRight": "右に回転",
++  "$zoomIn": "拡大",
++  "$zoomOut": "縮小",
++  "$adjustImage": "画像を調整",
++  "$clearSearch": "クリア",
++  "$displaying_A_of_B": "{0} {1} / {2}",
++  "$enterKeyword": "キーワードを入力",
++  "$imageLowercase": "画像",
++  "$instanceFound": "'{0}' が1件見つかりました",
++  "$instancesFound": "'{1}' が {0} 件見つかりました",
++  "$nextResult": "次の結果",
++  "$pageLowercase": "ページ",
++  "$previousResult": "前の結果",
++  "$print": "印刷",
++  "$resultFoundFor": "の検索結果",
++  "$resultsFoundFor": "の検索結果",
++  "$searchWithinItem": "このアイテム内を検索：",
++  "$locale": "言語",
++  "$navigatorEnabled": "ナビゲーター有効",
++  "$clickToZoomEnabled": "クリックでズーム",
++  "$reducedMotion": "アニメーションを軽減",
++  "$truncateThumbnailLabels": "サムネイルラベルを省略",
++  "$preserveViewport": "ズームを維持",
++  "$uvWebsite": "<a href='https://github.com/UniversalViewer/universalviewer/wiki/About'>Universal Viewer について</a>",
++  "$custom": "カスタム",
++  "$embedInstructions": "このアイテムをウェブサイトに埋め込むには、以下のコードをコピーしてください。",
++  "$height": "高さ",
++  "$iiifManifest": "IIIF マニフェスト",
++  "$shareLink": "このページへのリンク",
++  "$shareInstructions": "このアイテムを共有するには、以下のURLをコピーしてください。",
++  "$size": "サイズ：",
++  "$width": "幅",
++  "$cancel": "キャンセル",
++  "$confirm": "確認",
++  "$viewTerms": "利用規約全文を読む",
++  "$login": "ログイン",
++  "$log_in": "ログイン",
++  "$logout": "ログアウト",
++  "$authCORSError": "お使いのブラウザはCORSに対応していません。このコンテンツを表示するにはブラウザを更新してください。",
++  "$authorisationFailedMessage": "ログインに失敗しました。もう一度お試しください。",
++  "$canvasIndexOutOfRange": "キャンバスインデックスが範囲外です。",
++  "$fallbackDegradedLabel": "ログイン",
++  "$fallbackDegradedMessage": "フル解像度で表示するにはログインしてください。",
++  "$forbiddenResourceMessage": "現在のアクセス権限ではこの画像を表示できません",
++  "$mediaViewer": "メディアビューアー",
++  "$skipToDownload": "ダウンロードと代替フォーマットへスキップ",
++  "$pleaseEnterValue": "値を入力してください",
++  "$pleaseLogInToViewAtFullQuality": "フル画質で表示するにはログインしてください。",
++  "$vr": "VR",
++  "$currentTime": "現在の時間",
++  "$duration": "再生時間",
++  "$mute": "ミュート",
++  "$pause": "一時停止",
++  "$play": "再生",
++  "$brightness": "明るさ",
++  "$contrast": "コントラスト",
++  "$saturation": "彩度",
++  "$reset": "リセット",
++  "$remember": "設定を記憶"
++}

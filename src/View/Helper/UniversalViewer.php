@@ -308,8 +308,10 @@ class UniversalViewer extends AbstractHelper
        if (empty($config['locales'])) {
            $locales = [
                'cy-CY' => 'cy-GB',
+               'de-DE' => 'de-DE',
                'en-EN' => 'en-GB',
                'fr-FR' => 'fr-FR',
+               'ja-JP' => 'ja-JP',
                'pl-PL' => 'pl-PL',
                'sv-SE' => 'sv-SE',
                'sv-SV' => 'sv-SE',
