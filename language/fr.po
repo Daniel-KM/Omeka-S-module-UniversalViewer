@@ -7,33 +7,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-28 00:00+0000\n"
-"PO-Revision-Date: 2025-04-28 00:00+0000\n"
+"POT-Creation-Date: 2026-02-16 00:00+0000\n"
+"PO-Revision-Date: 2026-02-16 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.6\n"
 
-#: data/scripts/upgrade.php:40 Module.php:64
+#: data/scripts/upgrade.php:40 Module.php:66
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
 "Le module « %1$s » doit être mis à niveau à la version « %2$s » ou "
 "supérieure."
 
-#: Module.php:76
+#: data/scripts/upgrade.php:44
+msgid "Missing requirement. Unable to upgrade."
+msgstr "Prérequis absent. Impossible de mettre à jour."
+
+#: Module.php:78
 #, php-format
 msgid "The library \"%s\" should be installed."
 msgstr "La bibliothèque \"%s\" doit être installée."
 
-#: Module.php:79
+#: Module.php:81
 msgid "See module’s installation documentation."
 msgstr "Voir la documentation d’installation du module."
 
-#: data/scripts/upgrade.php:199
+#: data/scripts/upgrade.php:200
 msgid ""
 "Last version of Universal Viewer (v4) has been integrated. Check if it works "
 "fine with your documents."
@@ -41,7 +45,7 @@ msgstr ""
 "La dernière version d’Universal Viewer (v4) a été intégrée. Vérifiez si elle "
 "fonctionne bien avec vos documents."
 
-#: data/scripts/upgrade.php:216
+#: data/scripts/upgrade.php:217
 msgid ""
 "A param in settings (default) and in site settings allows to set the config "
 "of Universal Viewer version 4. See {link}documentation{link_end}."
@@ -101,12 +105,12 @@ msgstr "Propriété fournissant un manifeste tiers"
 #: src/Form/ConfigForm.php:20
 msgid ""
 "External or static manifests can be more customized and may be quicker to be "
-"loaded. Usually, the property is \"dcterms:hasFormat\" or \"dcterms:"
-"isFormatOf\"."
+"loaded. Usually, the property is \"dcterms:hasFormat\" or "
+"\"dcterms:isFormatOf\"."
 msgstr ""
 "Les manifestes externes ou statiques peuvent être personnalisés et sont plus "
-"rapides à charger. Généralement, la propriété utilisée est « dcterms:"
-"hasFormat » ou « dcterms:isFormatOf »."
+"rapides à charger. Généralement, la propriété utilisée est "
+"« dcterms:hasFormat » ou « dcterms:isFormatOf »."
 
 #: src/Form/ConfigForm.php:28
 msgid "Select a property…"

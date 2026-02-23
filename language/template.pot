@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-28 00:00+0000\n"
+"POT-Creation-Date: 2026-02-16 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/scripts/upgrade.php:40 Module.php:64
+#: data/scripts/upgrade.php:40 Module.php:66
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
 
-#: Module.php:76
+#: data/scripts/upgrade.php:44
+msgid "Missing requirement. Unable to upgrade."
+msgstr ""
+
+#: Module.php:78
 #, php-format
 msgid "The library \"%s\" should be installed."
 msgstr ""
 
-#: Module.php:79
+#: Module.php:81
 msgid "See module’s installation documentation."
 msgstr ""
 
-#: data/scripts/upgrade.php:199
+#: data/scripts/upgrade.php:200
 msgid ""
 "Last version of Universal Viewer (v4) has been integrated. Check if it works "
 "fine with your documents."
 msgstr ""
 
-#: data/scripts/upgrade.php:216
+#: data/scripts/upgrade.php:217
 msgid ""
 "A param in settings (default) and in site settings allows to set the config "
 "of Universal Viewer version 4. See {link}documentation{link_end}."
@@ -90,8 +94,8 @@ msgstr ""
 #: src/Form/ConfigForm.php:20
 msgid ""
 "External or static manifests can be more customized and may be quicker to be "
-"loaded. Usually, the property is \"dcterms:hasFormat\" or \"dcterms:"
-"isFormatOf\"."
+"loaded. Usually, the property is \"dcterms:hasFormat\" or "
+"\"dcterms:isFormatOf\"."
 msgstr ""
 
 #: src/Form/ConfigForm.php:28
