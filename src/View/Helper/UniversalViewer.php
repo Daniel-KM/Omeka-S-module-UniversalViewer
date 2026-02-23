@@ -311,6 +311,7 @@ class UniversalViewer extends AbstractHelper
                'de-DE' => 'de-DE',
                'en-EN' => 'en-GB',
                'fr-FR' => 'fr-FR',
+               'hr-HR' => 'hr-HR',
                'ja-JP' => 'ja-JP',
                'pl-PL' => 'pl-PL',
                'sv-SE' => 'sv-SE',
