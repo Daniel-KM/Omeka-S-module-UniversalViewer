@@ -1,96 +1,41 @@
 {
     "name": "daniel-km/omeka-s-module-universalviewer",
-    "description": "Integrates the Universal Viewer in order to create carousels of virtual books from image files and to display any media file (pdf, audio, video, 3D…) in a unified player.",
-    "type": "library",
-    "license": "CECILL-2.1",
-    "authors": [
-        {
-            "name": "Daniel Berthereau",
-            "email": "Daniel.git@Berthereau.net"
-        }
-    ],
-    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer",
-    "support": {
-        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewerViewer/-/issues",
-        "forum": "https://forum.omeka.org/"
-    },
+    "type": "omeka-s-module",
+    "description": "Module for Omeka S: Integrates the Universal Viewer in order to create carousels of virtual books from image files and to display any media file (pdf, audio, video, 3D…) in a unified player.",
     "keywords": [
         "Omeka S",
         "Omeka S module",
         "viewer",
-        "iiif",
-        "audio",
-        "video",
-        "model",
-        "pdf"
+        "book",
+        "digital library"
     ],
-    "repositories": [
+    "license": "CECILL-2.1",
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer",
+    "authors": [
         {
-            "type": "package",
-            "package": {
-                "name": "asset/uv2",
-                "type": "omeka-addon-asset",
-                "version": "2.0.2",
-                "dist": {
-                    "type": "tar",
-                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.4.4/uv-2.0.2.tar.gz",
-                    "reference": "2.0.2"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "asset/uv3",
-                "type": "omeka-addon-asset",
-                "version": "3.1.2",
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-3.1.2.zip",
-                    "reference": "3.1.2"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "asset/uv",
-                "type": "omeka-addon-asset",
-                "version": "4.2.1",
-                "dist": {
-                    "type": "tar",
-                    "url": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.11-4.2.1/uv-4.2.1.tar.gz",
-                    "reference": "4.2.1"
-                }
-            }
+            "name": "Daniel Berthereau",
+            "email": "Daniel.packagist@Berthereau.net"
         }
     ],
-    "require": {
-        "oomphinc/composer-installers-extender": "^2.0",
-        "asset/uv2": "2.0.2",
-        "asset/uv3": "3.1.2",
-        "asset/uv": "4.2.1"
+    "support": {
+        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/issues",
+        "forum": "https://forum.omeka.org/"
     },
-    "require-dev": {
-        "biblibre/omeka-s-test-helper": "dev-master"
+    "_require (not set until Omeka S merges PR #2412)": {
+        "omeka/omeka-s": "^4.1",
+        "daniel-km/omeka-s-module-common": "*"
+    },
+    "require": {
+        "sempia/external-assets": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "UniversalViewer\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "UniversalViewerTest\\": "test/UniversalViewerTest/"
-        }
-    },
-    "extra": {
-        "installer-types": ["omeka-addon-asset"],
-        "installer-paths": {
-            "asset/vendor/{$name}/": [
-                "type:omeka-addon-asset"
-            ]
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "composer/installers": true,
-            "oomphinc/composer-installers-extender": true
+            "UniversalViewerTest\\": "tests/UniversalViewerTest/"
         }
     },
     "scripts": {
@@ -100,5 +45,19 @@
             "# Update css file for French in uv2.",
             "sed -i -e 's~113px~124px~' asset/vendor/uv2/themes/uv-fr-FR-theme/css/uv-seadragon-extension/theme.css"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "sempia/external-assets": true
+        }
+    },
+    "extra": {
+        "installer-name": "UniversalViewer",
+        "configurable": true,
+        "external-assets": {
+            "asset/vendor/uv2/": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.4.4/uv-2.0.2.tar.gz",
+            "asset/vendor/uv3/": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-3.1.2.zip",
+            "asset/vendor/uv/": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.12-4.2.1/uv-4.2.1.tar.gz"
+        }
     }
 }
