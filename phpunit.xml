@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE phpunit>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.3/phpunit.xsd"
-    bootstrap="test/bootstrap.php"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+    bootstrap="tests/bootstrap.php"
     backupGlobals="false"
     colors="true"
-    verbose="true"
-    forceCoversAnnotation="true"
-    beStrictAboutCoversAnnotation="true"
-    beStrictAboutOutputDuringTests="true"
-    beStrictAboutTodoAnnotatedTests="true"
     >
     <testsuites>
         <testsuite name="UniversalViewer">
-            <directory suffix="Test.php">test/UniversalViewerTest</directory>
+            <directory suffix="Test.php">tests/UniversalViewerTest</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>
