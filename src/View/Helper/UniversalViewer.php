@@ -138,7 +138,7 @@ class UniversalViewer extends AbstractHelper
         // Determine the url of the manifest from a field in the metadata.
         $externalManifest = $view->iiifManifestExternal($resource, $iiifServerIsActive);
         if ($externalManifest) {
-            return $this->render($externalManifest, $options, $resourceName, true);
+            return $this->render($externalManifest, $options, $resourceName);
         }
 
         // If the manifest is not provided in metadata, point to the manifest
@@ -245,7 +245,7 @@ class UniversalViewer extends AbstractHelper
         ]);
     }
 
-    protected function renderUv3($urlManifest, array $options = [], $resourceName = null, $isSite = false)
+    protected function renderUv3($urlManifest, array $options = [], $resourceName = null)
     {
         static $id = 0;
 
@@ -285,7 +285,7 @@ class UniversalViewer extends AbstractHelper
         ]);
     }
 
-    protected function renderUv4($urlManifest, array $options = [], $resourceName = null, $isSite = false)
+    protected function renderUv4($urlManifest, array $options = [], $resourceName = null)
     {
         static $id = 0;
 
@@ -351,7 +351,7 @@ class UniversalViewer extends AbstractHelper
            $locale = mb_strlen($locale) === 2
                ? mb_strtolower($locale) . '-' . mb_strtoupper($locale)
                : str_replace('_', '-', $locale);
-           $locale = $locales[$locale] ??'en-GB';
+           $locale = $locales[$locale] ?? 'en-GB';
            $config['locales'] = [
                ['name' => $locale],
            ];

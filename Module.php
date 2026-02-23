@@ -69,7 +69,6 @@ class Module extends AbstractModule
 
         $js = __DIR__ . '/asset/vendor/uv/umd/UV.js';
         if (!file_exists($js)) {
-            $services = $this->getServiceLocator();
             $t = $services->get('MvcTranslator');
             throw new ModuleCannotInstallException(
                 sprintf(
