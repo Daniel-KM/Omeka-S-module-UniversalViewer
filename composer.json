@@ -1,5 +1,5 @@
 {
-    "name": "daniel-km/omeka-s-module-universalviewer",
+    "name": "daniel-km/omeka-s-module-universal-viewer",
     "type": "omeka-s-module",
     "description": "Module for Omeka S: Integrates the Universal Viewer in order to create carousels of virtual books from image files and to display any media file (pdf, audio, video, 3D…) in a unified player.",
     "keywords": [
