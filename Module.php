@@ -83,6 +83,14 @@ class Module extends AbstractModule
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
     {
+        // Display viewer in resource pages for old themes (before v4.1
+        // resource page blocks). The site is not set yet, so checks are
+        // done in method.
+        $sharedEventManager->attach(
+            'Omeka\Controller\Site\Item',
+            'view.show.after',
+            [$this, 'handleViewShowAfterItem']
+        );
         $sharedEventManager->attach(
             'Omeka\Controller\Site\Item',
             'view.browse.after',
@@ -92,11 +100,6 @@ class Module extends AbstractModule
             'Omeka\Controller\Site\ItemSet',
             'view.browse.after',
             [$this, 'handleViewBrowseAfterItemSet']
-        );
-        $sharedEventManager->attach(
-            'Omeka\Controller\Site\Item',
-            'view.show.after',
-            [$this, 'handleViewShowAfterItem']
         );
         $sharedEventManager->attach(
             \Omeka\Form\SettingForm::class,
@@ -114,13 +117,13 @@ class Module extends AbstractModule
     {
         $view = $event->getTarget();
         $services = $this->getServiceLocator();
-        
+
         // Check if viewer should be shown on browse pages
         $showOnBrowse = $view->siteSetting('universalviewer_show_browse', true);
         if (!$showOnBrowse) {
             return;
         }
-        
+
         // Note: there is no item-set show, but a special case for items browse.
         $isItemSetShow = (bool) $services->get('Application')
             ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
@@ -138,29 +141,81 @@ class Module extends AbstractModule
         }
 
         $view = $event->getTarget();
-        
+
         // Check if viewer should be shown on browse pages
         $showOnBrowse = $view->siteSetting('universalviewer_show_browse', true);
         if (!$showOnBrowse) {
             return;
         }
-        
+
         echo $view->universalViewer($view->itemSets);
     }
 
     public function handleViewShowAfterItem(Event $event): void
     {
-        // In Omeka S v4, if the player is set in the view, don't add it.
-        $view = $event->getTarget();
         $services = $this->getServiceLocator();
-        $currentTheme = $services->get('Omeka\Site\ThemeManager')->getCurrentTheme();
-        $blockLayoutManager = $services->get('Omeka\ResourcePageBlockLayoutManager');
-        $resourcePageBlocks = $blockLayoutManager->getResourcePageBlocks($currentTheme);
-        foreach ($resourcePageBlocks['items'] ?? [] as $blocks) {
-            if (in_array('universalViewer', $blocks)) {
-                return;
+        $siteSettings = $services->get('Omeka\Settings\Site');
+        $placements = $siteSettings->get('universalviewer_placement', ['after/items']);
+        if (!in_array('after/items', $placements)) {
+            return;
+        }
+
+        // In Omeka S v4.0+, if the player is set in the resource page
+        // blocks of the current theme, don't add it a second time.
+        if ($services->has('Omeka\ResourcePageBlockLayoutManager')) {
+            $currentTheme = $services->get('Omeka\Site\ThemeManager')
+                ->getCurrentTheme();
+            $blockLayoutManager = $services
+                ->get('Omeka\ResourcePageBlockLayoutManager');
+            $resourcePageBlocks = $blockLayoutManager
+                ->getResourcePageBlocks($currentTheme);
+            foreach ($resourcePageBlocks['items'] ?? [] as $blocks) {
+                if (in_array('universalViewer', $blocks)) {
+                    return;
+                }
             }
         }
+
+        $view = $event->getTarget();
         echo $view->universalViewer($view->item);
+    }
+
+    public function handleViewBrowseAfterItem(Event $event): void
+    {
+        $services = $this->getServiceLocator();
+        $siteSettings = $services->get('Omeka\Settings\Site');
+        $placements = $siteSettings->get('universalviewer_placement', ['after/items']);
+        if (!in_array('browse/items', $placements)) {
+            return;
+        }
+
+        $view = $event->getTarget();
+
+        // Note: there is no item-set show, but a special case for items
+        // browse inside an item set.
+        $isItemSetShow = (bool) $services->get('Application')
+            ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
+        if ($isItemSetShow) {
+            echo $view->universalViewer($view->itemSet);
+        } elseif ($this->isModuleActive('IiifServer')) {
+            echo $view->universalViewer($view->items);
+        }
+    }
+
+    public function handleViewBrowseAfterItemSet(Event $event): void
+    {
+        $services = $this->getServiceLocator();
+        $siteSettings = $services->get('Omeka\Settings\Site');
+        $placements = $siteSettings->get('universalviewer_placement', ['after/items']);
+        if (!in_array('browse/item_sets', $placements)) {
+            return;
+        }
+
+        if (!$this->isModuleActive('IiifServer')) {
+            return;
+        }
+
+        $view = $event->getTarget();
+        echo $view->universalViewer($view->itemSets);
     }
 }

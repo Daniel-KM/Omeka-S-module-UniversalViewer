@@ -2,6 +2,9 @@
 
 namespace UniversalViewer;
 
+// Resource page block layouts require Omeka S v4+.
+$isBeforeV4 = !interface_exists('Omeka\Site\ResourcePageBlockLayout\ResourcePageBlockLayoutInterface');
+
 return [
     'view_manager' => [
         'template_path_stack' => [
@@ -27,7 +30,7 @@ return [
             'universalViewer' => Site\BlockLayout\UniversalViewer::class,
         ],
     ],
-    'resource_page_block_layouts' => [
+    'resource_page_block_layouts' => $isBeforeV4 ? [] : [
         'invokables' => [
             'universalViewer' => Site\ResourcePageBlockLayout\UniversalViewer::class,
         ],
@@ -151,7 +154,9 @@ return [
         'site_settings' => [
             'universalviewer_version' => '4',
             'universalviewer_config' => '{}',
-            'universalviewer_show_browse' => false,
+            'universalviewer_placement' => [
+                'after/items',
+            ],
             'universalviewer_config_theme' => false,
         ],
     ],

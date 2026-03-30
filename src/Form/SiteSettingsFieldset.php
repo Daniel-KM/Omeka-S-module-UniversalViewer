@@ -2,6 +2,7 @@
 
 namespace UniversalViewer\Form;
 
+use Common\Form\Element as CommonElement;
 use Laminas\Form\Element;
 
 class SiteSettingsFieldset extends SettingsFieldset
@@ -11,15 +12,20 @@ class SiteSettingsFieldset extends SettingsFieldset
         parent::init();
         $this
             ->add([
-                'name' => 'universalviewer_show_browse',
-                'type' => Element\Checkbox::class,
+                'name' => 'universalviewer_placement',
+                'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'player',
-                    'label' => 'Show Universal Viewer on item browse pages', // @translate
-                    'info' => 'Display Universal Viewer for collection items on browse pages (requires IIIF Server module for collections)', // @translate
+                    'label' => 'Display Universal Viewer (old themes)', // @translate
+                    'value_options' => [
+                        'after/items' => 'Item show', // @translate
+                        'browse/items' => 'Item browse', // @translate
+                        'browse/item_sets' => 'Item set browse', // @translate
+                    ],
                 ],
                 'attributes' => [
-                    'id' => 'universalviewer_show_browse',
+                    'id' => 'universalviewer_placement',
+                    'required' => false,
                 ],
             ])
             ->add([

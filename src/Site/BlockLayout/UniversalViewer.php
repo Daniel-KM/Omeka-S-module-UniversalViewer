@@ -34,9 +34,21 @@ use Omeka\Api\Representation\SitePageBlockRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
 use Omeka\Site\BlockLayout\AbstractBlockLayout;
-use Omeka\Site\BlockLayout\TemplateableBlockLayoutInterface;
 
-class UniversalViewer extends AbstractBlockLayout implements TemplateableBlockLayoutInterface
+// Block templates require Omeka S v4.1+.
+if (interface_exists('Omeka\Site\BlockLayout\TemplateableBlockLayoutInterface')) {
+    class UniversalViewer extends AbstractBlockLayout implements \Omeka\Site\BlockLayout\TemplateableBlockLayoutInterface
+    {
+        use UniversalViewerTrait;
+    }
+} else {
+    class UniversalViewer extends AbstractBlockLayout
+    {
+        use UniversalViewerTrait;
+    }
+}
+
+trait UniversalViewerTrait
 {
     /**
      * The default partial view script.
