@@ -376,7 +376,8 @@ class UniversalViewer extends AbstractHelper
     {
         // Check the path in the theme.
         if ($this->currentTheme) {
-            $filepath = OMEKA_PATH . '/themes/' . $this->currentTheme->getId() . '/asset/' . $path;
+            $themeId = $this->currentTheme->getId();
+            $filepath = (is_dir(OMEKA_PATH . '/themes/' . $themeId) ? OMEKA_PATH . '/themes/' : OMEKA_PATH . '/composer-addons/themes/') . $themeId . '/asset/' . $path;
             if (file_exists($filepath)) {
                 return $this->view->assetUrl($path, null, false, false);
             }
