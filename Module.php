@@ -113,67 +113,18 @@ class Module extends AbstractModule
         );
     }
 
-    public function handleViewBrowseAfterItem(Event $event): void
-    {
-        $view = $event->getTarget();
-        $services = $this->getServiceLocator();
-
-        // Check if viewer should be shown on browse pages
-        $showOnBrowse = $view->siteSetting('universalviewer_show_browse', true);
-        if (!$showOnBrowse) {
-            return;
-        }
-
-        // Note: there is no item-set show, but a special case for items browse.
-        $isItemSetShow = (bool) $services->get('Application')
-            ->getMvcEvent()->getRouteMatch()->getParam('item-set-id');
-        if ($isItemSetShow) {
-            echo $view->universalViewer($view->itemSet);
-        } elseif ($this->isModuleActive('IiifServer')) {
-            echo $view->universalViewer($view->items);
-        }
-    }
-
-    public function handleViewBrowseAfterItemSet(Event $event): void
-    {
-        if (!$this->isModuleActive('IiifServer')) {
-            return;
-        }
-
-        $view = $event->getTarget();
-
-        // Check if viewer should be shown on browse pages
-        $showOnBrowse = $view->siteSetting('universalviewer_show_browse', true);
-        if (!$showOnBrowse) {
-            return;
-        }
-
-        echo $view->universalViewer($view->itemSets);
-    }
-
     public function handleViewShowAfterItem(Event $event): void
     {
         $services = $this->getServiceLocator();
+        $currentTheme = $services->get('Omeka\Site\ThemeManager')->getCurrentTheme();
+        if (method_exists($currentTheme, 'isConfigurableResourcePageBlocks') && $currentTheme->isConfigurableResourcePageBlocks()) {
+            return;
+        }
+
         $siteSettings = $services->get('Omeka\Settings\Site');
         $placements = $siteSettings->get('universalviewer_placement', ['after/items']);
         if (!in_array('after/items', $placements)) {
             return;
-        }
-
-        // In Omeka S v4.0+, if the player is set in the resource page
-        // blocks of the current theme, don't add it a second time.
-        if ($services->has('Omeka\ResourcePageBlockLayoutManager')) {
-            $currentTheme = $services->get('Omeka\Site\ThemeManager')
-                ->getCurrentTheme();
-            $blockLayoutManager = $services
-                ->get('Omeka\ResourcePageBlockLayoutManager');
-            $resourcePageBlocks = $blockLayoutManager
-                ->getResourcePageBlocks($currentTheme);
-            foreach ($resourcePageBlocks['items'] ?? [] as $blocks) {
-                if (in_array('universalViewer', $blocks)) {
-                    return;
-                }
-            }
         }
 
         $view = $event->getTarget();
@@ -183,6 +134,11 @@ class Module extends AbstractModule
     public function handleViewBrowseAfterItem(Event $event): void
     {
         $services = $this->getServiceLocator();
+        $currentTheme = $services->get('Omeka\Site\ThemeManager')->getCurrentTheme();
+        if (method_exists($currentTheme, 'isConfigurableResourcePageBlocks') && $currentTheme->isConfigurableResourcePageBlocks()) {
+            return;
+        }
+
         $siteSettings = $services->get('Omeka\Settings\Site');
         $placements = $siteSettings->get('universalviewer_placement', ['after/items']);
         if (!in_array('browse/items', $placements)) {
@@ -205,6 +161,11 @@ class Module extends AbstractModule
     public function handleViewBrowseAfterItemSet(Event $event): void
     {
         $services = $this->getServiceLocator();
+        $currentTheme = $services->get('Omeka\Site\ThemeManager')->getCurrentTheme();
+        if (method_exists($currentTheme, 'isConfigurableResourcePageBlocks') && $currentTheme->isConfigurableResourcePageBlocks()) {
+            return;
+        }
+
         $siteSettings = $services->get('Omeka\Settings\Site');
         $placements = $siteSettings->get('universalviewer_placement', ['after/items']);
         if (!in_array('browse/item_sets', $placements)) {

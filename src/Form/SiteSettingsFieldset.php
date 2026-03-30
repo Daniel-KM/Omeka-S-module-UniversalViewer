@@ -7,6 +7,11 @@ use Laminas\Form\Element;
 
 class SiteSettingsFieldset extends SettingsFieldset
 {
+    protected $elementGroups = [
+        'player' => 'Players', // @translate
+        'themes_old' => 'Old themes', // @translate
+    ];
+
     public function init(): void
     {
         parent::init();
@@ -15,7 +20,7 @@ class SiteSettingsFieldset extends SettingsFieldset
                 'name' => 'universalviewer_placement',
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
-                    'element_group' => 'player',
+                    'element_group' => 'themes_old',
                     'label' => 'Display Universal Viewer (old themes)', // @translate
                     'value_options' => [
                         'after/items' => 'Item show', // @translate
