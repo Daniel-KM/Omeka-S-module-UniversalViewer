@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-16 00:00+0000\n"
+"POT-Creation-Date: 2026-03-09 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/scripts/upgrade.php:40 Module.php:66
+#: data/scripts/upgrade.php:40 Module.php:68
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
@@ -28,11 +28,9 @@ msgstr ""
 
 #: Module.php:78
 #, php-format
-msgid "The library \"%s\" should be installed."
-msgstr ""
-
-#: Module.php:81
-msgid "See module’s installation documentation."
+msgid ""
+"The library \"%s\" should be installed. See module’s installation "
+"documentation."
 msgstr ""
 
 #: data/scripts/upgrade.php:200
@@ -47,7 +45,29 @@ msgid ""
 "of Universal Viewer version 4. See {link}documentation{link_end}."
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:18
+#: data/scripts/upgrade.php:241
+msgid ""
+"The option \"Show on browse\" has been replaced by a placement option with "
+"more granularity."
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:19
+msgid "Display Universal Viewer (old themes)"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:21
+msgid "Item show"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:22
+msgid "Item browse"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:23
+msgid "Item set browse"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:36
 msgid "Universal Viewer: Use config file from the theme for v4 (deprecated)"
 msgstr ""
 

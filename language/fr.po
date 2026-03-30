@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-16 00:00+0000\n"
-"PO-Revision-Date: 2026-02-16 00:00+0000\n"
+"POT-Creation-Date: 2026-03-09 00:00+0000\n"
+"PO-Revision-Date: 2026-03-09 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
-#: data/scripts/upgrade.php:40 Module.php:66
+#: data/scripts/upgrade.php:40 Module.php:68
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
@@ -30,12 +30,12 @@ msgstr "Prérequis absent. Impossible de mettre à jour."
 
 #: Module.php:78
 #, php-format
-msgid "The library \"%s\" should be installed."
-msgstr "La bibliothèque \"%s\" doit être installée."
-
-#: Module.php:81
-msgid "See module’s installation documentation."
-msgstr "Voir la documentation d’installation du module."
+msgid ""
+"The library \"%s\" should be installed. See module’s installation "
+"documentation."
+msgstr ""
+"La dépendance \"%s\" doit être installée. Consulter la documentation "
+"d’installation du module."
 
 #: data/scripts/upgrade.php:200
 msgid ""
@@ -54,7 +54,31 @@ msgstr ""
 "personnaliser la config d’Universal Viewer version 4. Consulter la {link}"
 "documentation{link_end}."
 
-#: src/Form/SiteSettingsFieldset.php:18
+#: data/scripts/upgrade.php:241
+msgid ""
+"The option \"Show on browse\" has been replaced by a placement option with "
+"more granularity."
+msgstr ""
+"L’option \"Voir sur les listes\" a été remplacée par une option de placement "
+"avec plus de possibilités.."
+
+#: src/Form/SiteSettingsFieldset.php:19
+msgid "Display Universal Viewer (old themes)"
+msgstr "Afficher Universal Viewer (ancien thèmes)"
+
+#: src/Form/SiteSettingsFieldset.php:21
+msgid "Item show"
+msgstr "Contenu / vue"
+
+#: src/Form/SiteSettingsFieldset.php:22
+msgid "Item browse"
+msgstr "Contenu / liste"
+
+#: src/Form/SiteSettingsFieldset.php:23
+msgid "Item set browse"
+msgstr "Collection / liste"
+
+#: src/Form/SiteSettingsFieldset.php:36
 msgid "Universal Viewer: Use config file from the theme for v4 (deprecated)"
 msgstr "Universal Viewer : Utiliser la config du thème pour v4 (obsolète)"
 
@@ -115,6 +139,10 @@ msgstr ""
 #: src/Form/ConfigForm.php:28
 msgid "Select a property…"
 msgstr "Choisir une propriété…"
+
+#, php-format
+#~ msgid "The library \"%s\" should be installed."
+#~ msgstr "La bibliothèque \"%s\" doit être installée."
 
 #~ msgid "Version of Universal viewer"
 #~ msgstr "Version of Universal viewer"
