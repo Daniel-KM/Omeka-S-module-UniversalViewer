@@ -2,8 +2,8 @@
 
 namespace UniversalViewer\Service\ViewHelper;
 
-use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 use UniversalViewer\View\Helper\UniversalViewer;
 
 /**
