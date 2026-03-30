@@ -1,12 +1,11 @@
 // Prepare multiple uv3.
-document.addEventListener('DOMContentLoaded', function(event) {
+(function () {
 
-    // The config is defined inside the html.
-    if (typeof uv === 'undefined') {
-        return;
-    }
-
-    window.addEventListener('uvLoaded', function (e) {
+    function initUV() {
+        // The config is defined inside the html.
+        if (typeof uv === 'undefined') {
+            return;
+        }
         var uvElement;
         uv.forEach(function (config, index) {
             var urlDataProvider = new UV.URLDataProvider();
@@ -16,14 +15,19 @@ document.addEventListener('DOMContentLoaded', function(event) {
             config['canvasIndex'] = Number(urlDataProvider.get('cv', 0));
             config['xywh'] = Number(urlDataProvider.get('xywh', ''));
             uvElement = createUV('#' + config.id, config, urlDataProvider);
-            /*
-            // Check uv loading.
-            uvElement.on('created', function(obj) {
-                console.log('parsed metadata', uvElement.extension.helper.manifest.getMetadata());
-                console.log('raw jsonld', uvElement.extension.helper.manifest.__jsonld);
-            });
-            */
         });
-    }, false);
+    }
 
-});
+    // Handle race condition: uvLoaded may fire before this
+    // deferred script registers its listener.
+    if (typeof UV !== 'undefined' && typeof createUV === 'function') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initUV);
+        } else {
+            initUV();
+        }
+    } else {
+        window.addEventListener('uvLoaded', initUV, false);
+    }
+
+})();

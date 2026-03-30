@@ -1,14 +1,15 @@
 'use strict';
 
 // Prepare multiple uv4.
-document.addEventListener('DOMContentLoaded', function (event) {
+(function () {
 
-    // The config is defined inside the html.
-    if (typeof uvConfigs === 'undefined') {
-        return;
-    }
+    function initUV4() {
+        // The config is defined inside the html.
+        if (typeof uvConfigs === 'undefined') {
+            return;
+        }
 
-    uvConfigs.forEach(function (uvConfig) {
+        uvConfigs.forEach(function (uvConfig) {
         var uv;
         const urlAdapter = new UV.IIIFURLAdapter(true);
 
@@ -103,4 +104,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
         resize();
     });
 
-});
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initUV4);
+    } else {
+        initUV4();
+    }
+
+})();
