@@ -1,7 +1,8 @@
 /* Universal viewer custom and fixes for common Omeka themes */
 @media all {
     .universal-viewer {
-        height: 600px;
+        height: 70vh;
+        min-height: 600px;
     }
     .universal-viewer .headerPanel .centerOptions .mode label {
         width: auto;
