@@ -220,3 +220,68 @@ if (version_compare($oldVersion, '3.6.9', '<')) {
     $message->setEscapeHtml(false);
     $messenger->addSuccess($message);
 }
+
+if (version_compare($oldVersion, '3.6.14', '<')) {
+    /** @var \Omeka\Settings\SiteSettings $siteSettings */
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    $sites = $api->search('sites')->getContent();
+    foreach ($sites as $site) {
+        $siteSettings->setTargetId($site->id());
+        $placement = ['after/items'];
+        $showBrowse = $siteSettings->get('universalviewer_show_browse');
+        if ($showBrowse) {
+            $placement[] = 'browse/items';
+            $placement[] = 'browse/item_sets';
+        }
+        $siteSettings->set('universalviewer_placement', $placement);
+        $siteSettings->delete('universalviewer_show_browse');
+    }
+
+    $message = new PsrMessage(
+        'The option "Show on browse" has been replaced by a placement option with more granularity.' // @translate
+    );
+    $messenger->addSuccess($message);
+
+    // Force version to 4 when config is default (empty or '{}').
+    $isDefaultConfig = function ($settingsService) {
+        $version = $settingsService->get('universalviewer_version', '4');
+        if ($version === '4') {
+            return true;
+        }
+        $config = trim((string) $settingsService->get('universalviewer_config', '{}'));
+        return $config === '' || $config === '{}';
+    };
+
+    $skipped = [];
+
+    if ($isDefaultConfig($settings)) {
+        $settings->set('universalviewer_version', '4');
+    } else {
+        $skipped[] = 'settings';
+    }
+
+    /** @var \Omeka\Settings\SiteSettings $siteSettings */
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    $sites = $api->search('sites')->getContent();
+    foreach ($sites as $site) {
+        $siteSettings->setTargetId($site->id());
+        if ($isDefaultConfig($siteSettings)) {
+            $siteSettings->set('universalviewer_version', '4');
+        } else {
+            $skipped[] = $site->slug();
+        }
+    }
+
+    if ($skipped) {
+        $message = new PsrMessage(
+            'Universal Viewer version was not updated to v4 for {list} because custom config was found. Please check and update manually.', // @translate
+            ['list' => implode(', ', $skipped)]
+        );
+        $messenger->addWarning($message);
+    } else {
+        $message = new PsrMessage(
+            'Universal Viewer version has been set to v4 for all settings and sites.' // @translate
+        );
+        $messenger->addSuccess($message);
+    }
+}

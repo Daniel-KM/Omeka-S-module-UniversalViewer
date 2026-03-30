@@ -59,25 +59,37 @@ class Module extends AbstractModule
     protected function preInstall(): void
     {
         $services = $this->getServiceLocator();
-        $translate = $services->get('ControllerPluginManager')->get('translate');
+        $translator = $services->get('MvcTranslator');
+
+        $errors = [];
 
         if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.82')) {
             $message = new \Omeka\Stdlib\Message(
-                $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
+                $translator->translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
                 'Common', '3.4.82'
             );
-            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+            $errors[] = (string) $message;
         }
 
         $js = __DIR__ . '/asset/vendor/uv/umd/UV.js';
         if (!file_exists($js)) {
             $t = $services->get('MvcTranslator');
-            throw new ModuleCannotInstallException(
-                sprintf(
-                    $t->translate('The library "%s" should be installed.'), // @translate
-                    'Universal Viewer'
-                ) . ' '
-                . $t->translate('See module’s installation documentation.')); // @translate
+            $errors[] = sprintf(
+                $t->translate('The library "%s" should be installed. See module’s installation documentation.'), // @translate
+                'Universal Viewer'
+            );
+        }
+
+        if ($errors) {
+            throw new ModuleCannotInstallException(implode("\n", $errors));
+        }
+    }
+
+    protected function postInstall(): void
+    {
+        $settings = $this->getServiceLocator()->get('Omeka\Settings');
+        if ($settings->get('iiifserver_manifest_external_property') === null) {
+            $settings->set('iiifserver_manifest_external_property', 'dcterms:hasFormat');
         }
     }
 
