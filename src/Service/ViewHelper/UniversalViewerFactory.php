@@ -16,7 +16,7 @@ class UniversalViewerFactory implements FactoryInterface
      *
      * @return UniversalViewer
      */
-    public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $services, $requestedName, ?array $options = null)
     {
         $currentTheme = $services->get('Omeka\Site\ThemeManager')
             ->getCurrentTheme();

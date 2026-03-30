@@ -60,7 +60,7 @@ class UniversalViewer extends AbstractHelper
      *
      * @param Theme|null $currentTheme
      */
-    public function __construct(Theme $currentTheme = null)
+    public function __construct(?Theme $currentTheme = null)
     {
         $this->currentTheme = $currentTheme;
     }
