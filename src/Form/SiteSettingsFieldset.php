@@ -21,7 +21,7 @@ class SiteSettingsFieldset extends SettingsFieldset
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'themes_old',
-                    'label' => 'Display Universal Viewer (old themes)', // @translate
+                    'label' => 'Display Universal Viewer', // @translate
                     'value_options' => [
                         'after/items' => 'Item show', // @translate
                         'browse/items' => 'Item browse', // @translate
