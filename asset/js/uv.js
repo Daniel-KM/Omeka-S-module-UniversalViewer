@@ -78,10 +78,24 @@
             */
             uv = UV.init(uvConfig.id, data);
             urlAdapter.bindTo(uv);
-            if (uvConfig.config && Object.keys(uvConfig.config).length) {
-                // Override config using an inline json object.
-                uv.on("configure", function ({ config, cb }) {
-                    cb(uvConfig.config);
+
+            // Build the config override deep-merged with the UV default config.
+            // Accept overrides under "config", or directly under "modules" /
+            // "options" at the top level of uvConfig (the module form stores
+            // them at the top level).
+            var overrides = {};
+            if (uvConfig.config && typeof uvConfig.config === 'object') {
+                overrides = arrayMerge(overrides, uvConfig.config);
+            }
+            if (uvConfig.modules && typeof uvConfig.modules === 'object') {
+                overrides = arrayMerge(overrides, { modules: uvConfig.modules });
+            }
+            if (uvConfig.options && typeof uvConfig.options === 'object') {
+                overrides = arrayMerge(overrides, { options: uvConfig.options });
+            }
+            if (Object.keys(overrides).length) {
+                uv.on('configure', function ({ config, cb }) {
+                    cb(arrayMerge(config, overrides));
                 });
             }
        }
