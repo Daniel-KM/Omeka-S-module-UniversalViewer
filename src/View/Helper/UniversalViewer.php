@@ -135,6 +135,22 @@ class UniversalViewer extends AbstractHelper
             return '';
         }
 
+        switch ($resourceName) {
+            case 'items':
+                /** @var \Omeka\Api\Representation\ItemRepresentation $resource */
+                $medias = $resource->media();
+                if (!count($medias)) {
+                    return '';
+                }
+                break;
+            case 'item_sets':
+                /** @var \Omeka\Api\Representation\ItemSetRepresentation $resource */
+                if (!$resource->itemCount()) {
+                    return '';
+                }
+                break;
+        }
+
         // Determine the url of the manifest from a field in the metadata.
         $externalManifest = $view->iiifManifestExternal($resource, $iiifServerIsActive);
         if ($externalManifest) {
@@ -145,26 +161,6 @@ class UniversalViewer extends AbstractHelper
         // created from Omeka files if the module Iiif Server is enabled.
         if (!$iiifServerIsActive) {
             return '';
-        }
-
-        // Some specific checks.
-        switch ($resourceName) {
-            case 'items':
-                /** @var \Omeka\Api\Representation\ItemRepresentation $resource */
-                // Currently, an item without files is unprocessable.
-                $medias = $resource->media();
-                if (!count($medias)) {
-                    // return $view->translate('This item has no files and is not displayable.');
-                    return '';
-                }
-                break;
-            case 'item_sets':
-                /** @var \Omeka\Api\Representation\ItemSetRepresentation $resource */
-                if (!$resource->itemCount()) {
-                    // return $view->translate('This collection has no item and is not displayable.');
-                    return '';
-                }
-                break;
         }
 
         $urlManifest = $view->iiifUrl($resource);
