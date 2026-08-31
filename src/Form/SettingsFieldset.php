@@ -29,8 +29,8 @@ class SettingsFieldset extends Fieldset
                     'element_group' => 'player',
                     'label' => 'Universal viewer: Version', // @translate
                     'value_options' => [
-                        '2' => 'Version 2.0.2 (better speed for some scanned pdf; require iiif v2)', // @translate
-                        '3' => 'Version 3.1.1 (more modern, but deprecated)', // @translate
+                        '2' => 'Version 2.0.2 (light, better speed for some scanned pdf; require iiif v2)', // @translate
+                        '3' => 'Version 3.1.1 (deprecated)', // @translate
                         '4' => 'Version 4 (up to date)', // @translate
                     ],
                 ],
