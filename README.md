@@ -63,20 +63,23 @@ with default options.
 
 So, you need to compile Universal Viewer only for development.
 
-For v4, in a temp directory (replace `v4.2.1` with the desired version tag):
+For v4, in a temp directory (replace `v4.4.4` with the desired version tag):
 
 ```sh
 cd /tmp
-git clone --branch v4.2.1 --depth 1 https://github.com/UniversalViewer/universalviewer
+git clone --branch v4.4.4 --depth 1 https://github.com/UniversalViewer/universalviewer
 cd universalviewer
 ```
 
-Apply the patch that adds extra locales (de-DE, ja-JP), registers them in all
+Apply the two patches stored in the `data/patches/` directory of this module.
+The first one adds extra locales (de-DE, hr-HR, ja-JP), registers them in all
 extension configs, and removes the global jQuery shim that conflicts with other
-modules. The patch file is stored in the `data/patches/` directory of this module:
+modules. The second one zooms the pdf with the wheel and pans it with the
+pointer, so a scanned pdf can be read like an image:
 
 ```sh
-patch -p1 < /path/to/modules/UniversalViewer/data/patches/uv-4.2.1.patch
+patch -p1 < /path/to/modules/UniversalViewer/data/patches/uv-4.4.4.patch
+patch -p1 < /path/to/modules/UniversalViewer/data/patches/uv-4.4.4-pdf-wheel-zoom-and-pan.patch
 ```
 
 Then build:
@@ -98,7 +101,7 @@ To prepare a tar for a release:
 
 ```sh
 mv dist uv
-tar -czvf uv-4.2.1.tar.gz -C /tmp/universalviewer ./uv
+tar -czvf uv-4.4.4.tar.gz -C /tmp/universalviewer ./uv
 ```
 
 For v3, an [external repository] was used in order to include the last version
