@@ -26,7 +26,7 @@
         "daniel-km/omeka-s-module-common": "*"
     },
     "require": {
-        "sempia/external-assets": "^1.0"
+        "sempia/external-assets": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -55,9 +55,9 @@
         "installer-name": "UniversalViewer",
         "configurable": true,
         "external-assets": {
-            "asset/vendor/uv2/": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.4.4/uv-2.0.2.tar.gz",
-            "asset/vendor/uv3/": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.6/uv-3.1.2.zip",
-            "asset/vendor/uv/": "https://github.com/Daniel-KM/Omeka-S-module-UniversalViewer/releases/download/3.6.12-4.2.1/uv-4.2.1.tar.gz"
+            "asset/vendor/uv2/": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases/3.6.4.4/downloads/uv-2.0.2.tar.gz",
+            "asset/vendor/uv3/": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases/3.6.6/downloads/uv-3.1.2.zip",
+            "asset/vendor/uv/": "https://gitlab.com/Daniel-KM/Omeka-S-module-UniversalViewer/-/releases/3.6.16-p4.4.4/downloads/uv-4.4.4.tar.gz"
         }
     }
 }
