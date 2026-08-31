@@ -1,10 +1,12 @@
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -362,8 +362,36 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json
+index 26e5710..70b3860 100644
+--- a/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-aleph-extension/config/config.json
+@@ -365,9 +365,37 @@
+   "localisation": {
      "label": "English (GB)",
      "locales": [
-       {
++      {
 +        "name": "cy-GB",
 +        "label": "Cymraeg"
 +      },
@@ -12,7 +14,7 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
 +      },
@@ -38,24 +40,26 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
        }
      ]
    },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -442,6 +442,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json
+index 0a31683..36225cb 100644
+--- a/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-av-extension/config/config.json
+@@ -444,6 +444,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -450,6 +454,14 @@
+@@ -452,6 +456,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -63,28 +67,29 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -365,6 +365,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json
+index 2b68b54..92ace59 100644
+--- a/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-default-extension/config/config.json
+@@ -368,6 +368,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -373,6 +377,14 @@
+@@ -376,6 +380,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -92,28 +97,29 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -361,6 +361,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json
+index 86ea5bd..684de23 100644
+--- a/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-ebook-extension/config/config.json
+@@ -364,6 +364,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -369,6 +373,14 @@
+@@ -372,6 +376,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -121,28 +127,29 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -360,6 +360,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json
+index 7234b38..78b8148 100644
+--- a/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-mediaelement-extension/config/config.json
+@@ -363,6 +363,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -368,6 +372,14 @@
+@@ -371,6 +375,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -150,28 +157,29 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -373,6 +373,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json
+index 2491963..7045645 100644
+--- a/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-model-viewer-extension/config/config.json
+@@ -375,6 +375,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -381,6 +385,14 @@
+@@ -383,6 +387,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -179,28 +187,29 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -580,6 +580,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json
+index 5b3eb21..4c4e8af 100644
+--- a/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-openseadragon-extension/config/config.json
+@@ -585,6 +585,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -588,6 +592,14 @@
+@@ -593,6 +597,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -208,28 +217,29 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json	2026-02-23 00:00:00.000000000 +0000
-@@ -422,6 +422,10 @@
+diff --git a/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json b/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json
+index e58d236..e3167ba 100644
+--- a/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json
++++ b/src/content-handlers/iiif/extensions/uv-pdf-extension/config/config.json
+@@ -428,6 +428,10 @@
+         "name": "cy-GB",
          "label": "Cymraeg"
        },
-       {
++      {
 +        "name": "de-DE",
 +        "label": "Deutsch"
 +      },
-+      {
+       {
          "name": "en-GB",
          "label": "English (GB)"
-       },
-@@ -430,6 +434,14 @@
+@@ -436,6 +440,14 @@
+         "name": "fr-FR",
          "label": "Français (FR)"
        },
-       {
++      {
 +        "name": "hr-HR",
 +        "label": "Hrvatski"
 +      },
@@ -237,14 +247,14 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
 +        "name": "ja-JP",
 +        "label": "日本語"
 +      },
-+      {
+       {
          "name": "pl-PL",
          "label": "Polski"
-       },
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts universalviewer-4.2.1/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts
---- universalviewer-4.2.1-clean/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts	2026-02-23 00:00:00.000000000 +0000
-@@ -83,7 +83,10 @@
+diff --git a/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts b/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts
+index 34ac17f..e4921bd 100644
+--- a/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts
++++ b/src/content-handlers/iiif/modules/uv-shared-module/BaseExtension.ts
+@@ -82,7 +82,10 @@ export class BaseExtension<T extends BaseConfig> implements IExtension {
    localeLoaders: Record<string, () => Promise<any>> = {
      "en-GB": () => import("../../../../locales/en-GB.json"),
      "cy-GB": () => import("../../../../locales/cy-GB.json"),
@@ -255,9 +265,11 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/content-handlers/iii
      "pl-PL": () => import("../../../../locales/pl-PL.json"),
      "sv-SE": () => import("../../../../locales/sv-SE.json"),
    };
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/de-DE.json universalviewer-4.2.1/src/locales/de-DE.json
---- universalviewer-4.2.1-clean/src/locales/de-DE.json	1970-01-01 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/locales/de-DE.json	2026-02-23 00:00:00.000000000 +0000
+diff --git a/src/locales/de-DE.json b/src/locales/de-DE.json
+new file mode 100644
+index 0000000..f6901b8
+--- /dev/null
++++ b/src/locales/de-DE.json
 @@ -0,0 +1,164 @@
 +{
 +  "$collapse": "Inhalt verbergen",
@@ -423,9 +435,11 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/de-DE.json u
 +  "$reset": "Zurücksetzen",
 +  "$remember": "Einstellungen merken"
 +}
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/hr-HR.json universalviewer-4.2.1/src/locales/hr-HR.json
---- universalviewer-4.2.1-clean/src/locales/hr-HR.json	1970-01-01 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/locales/hr-HR.json	2026-02-23 00:00:00.000000000 +0000
+diff --git a/src/locales/hr-HR.json b/src/locales/hr-HR.json
+new file mode 100644
+index 0000000..bcf17cf
+--- /dev/null
++++ b/src/locales/hr-HR.json
 @@ -0,0 +1,164 @@
 +{
 +  "$collapse": "Sakrij sadržaj",
@@ -591,9 +605,11 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/hr-HR.json u
 +  "$reset": "Poništi",
 +  "$remember": "Zapamti moje postavke"
 +}
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/ja-JP.json universalviewer-4.2.1/src/locales/ja-JP.json
---- universalviewer-4.2.1-clean/src/locales/ja-JP.json	1970-01-01 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/locales/ja-JP.json	2026-02-23 00:00:00.000000000 +0000
+diff --git a/src/locales/ja-JP.json b/src/locales/ja-JP.json
+new file mode 100644
+index 0000000..9b54472
+--- /dev/null
++++ b/src/locales/ja-JP.json
 @@ -0,0 +1,164 @@
 +{
 +  "$collapse": "目次を閉じる",
@@ -759,9 +775,10 @@ diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/locales/ja-JP.json u
 +  "$reset": "リセット",
 +  "$remember": "設定を記憶"
 +}
-diff -ruN '--exclude=*.map' universalviewer-4.2.1-clean/src/shim-jquery.ts universalviewer-4.2.1/src/shim-jquery.ts
---- universalviewer-4.2.1-clean/src/shim-jquery.ts	2026-02-23 00:00:00.000000000 +0000
-+++ universalviewer-4.2.1/src/shim-jquery.ts	2026-02-23 00:00:00.000000000 +0000
+diff --git a/src/shim-jquery.ts b/src/shim-jquery.ts
+index d0ff4b0..7bd4218 100644
+--- a/src/shim-jquery.ts
++++ b/src/shim-jquery.ts
 @@ -1,3 +1,3 @@
 -import $ from "jquery";
 -window.$ = $;

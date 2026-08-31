@@ -39,3 +39,9 @@
     height: 100%;
     width: 100%;
 }
+
+/* The content of the center panel of the viewer has the id "content", like the
+   main div of most themes. */
+.uv #content {
+    padding: 0;
+}

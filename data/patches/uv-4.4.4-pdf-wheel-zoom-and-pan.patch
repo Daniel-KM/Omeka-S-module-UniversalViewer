@@ -1,0 +1,199 @@
+diff --git a/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/PDFCenterPanel.ts b/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/PDFCenterPanel.ts
+index 916ad45..a2a529c 100644
+--- a/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/PDFCenterPanel.ts
++++ b/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/PDFCenterPanel.ts
+@@ -34,6 +34,20 @@ export class PDFCenterPanel extends CenterPanel<
+   private _renderTask: any;
+   private _scale: number = 0.7;
+   private _viewport: any;
++  private _pendingScale: number | null = null;
++  private _pendingRender: number | null = null;
++  private _pan: {
++    x: number;
++    y: number;
++    left: number;
++    top: number;
++  } | null = null;
++
++  // Zoom applied for a wheel event, before the page is rendered again.
++  private static readonly WHEEL_ZOOM_FACTOR: number = 0.0015;
++
++  // The page is rendered again when the wheel stops, since it is expensive.
++  private static readonly WHEEL_RENDER_DELAY: number = 250;
+ 
+   constructor($element: JQuery) {
+     super($element);
+@@ -101,6 +115,7 @@ export class PDFCenterPanel extends CenterPanel<
+       this.$content.append(this._$nextButton);
+       this.$content.append(this._$zoomInButton);
+       this.$content.append(this._$zoomOutButton);
++      this._bindGestures();
+     }
+ 
+     this._$pdfContainer.append(this._$canvas);
+@@ -416,6 +431,10 @@ export class PDFCenterPanel extends CenterPanel<
+       // Wait for rendering to finish
+       this._renderTask.promise
+         .then(() => {
++          // The canvas is rendered at the current scale: the preview of the
++          // zoom with the wheel is no longer needed.
++          this._$canvas.css({ width: "", height: "" });
++
+           this.extensionHost.publish(
+             PDFExtensionEvents.PAGE_INDEX_CHANGE,
+             this._pageIndex
+@@ -447,6 +466,137 @@ export class PDFCenterPanel extends CenterPanel<
+     });
+   }
+ 
++  /**
++   * Zoom with the wheel and pan with the pointer, like the image extension.
++   */
++  private _bindGestures(): void {
++    const container: HTMLElement = <HTMLElement>this._$pdfContainer[0];
++
++    container.addEventListener(
++      "wheel",
++      (e: WheelEvent) => {
++        this._onWheel(e);
++      },
++      { passive: false }
++    );
++
++    container.addEventListener("pointerdown", (e: PointerEvent) => {
++      this._onPointerDown(e);
++    });
++
++    window.addEventListener("pointermove", (e: PointerEvent) => {
++      this._onPointerMove(e);
++    });
++
++    const end = () => {
++      this._onPointerUp();
++    };
++
++    window.addEventListener("pointerup", end);
++    window.addEventListener("pointercancel", end);
++  }
++
++  private _onWheel(e: WheelEvent): void {
++    if (!this._pdfDoc || !this._viewport) {
++      return;
++    }
++
++    // The page is not scrolled when the pdf is zoomed.
++    e.preventDefault();
++
++    const scale: number = this._pendingScale ?? this._scale;
++    const wanted: number =
++      scale * Math.exp(-e.deltaY * PDFCenterPanel.WHEEL_ZOOM_FACTOR);
++    const next: number = Math.min(
++      Math.max(wanted, this._getMinScale()),
++      this._getMaxScale()
++    );
++    if (next === scale) {
++      return;
++    }
++
++    this._previewScale(next, e.clientX, e.clientY);
++
++    // Rendering a page is expensive, so it is done when the wheel stops: the
++    // canvas is only resized until then.
++    if (this._pendingRender !== null) {
++      window.clearTimeout(this._pendingRender);
++    }
++    this._pendingRender = window.setTimeout(() => {
++      this._pendingRender = null;
++      this._pendingScale = null;
++      this._scale = next;
++      this._queueRenderPage(this._pageIndex);
++    }, PDFCenterPanel.WHEEL_RENDER_DELAY);
++  }
++
++  /**
++   * Resize the canvas without rendering it, keeping the point under the pointer.
++   */
++  private _previewScale(scale: number, clientX: number, clientY: number): void {
++    const container: HTMLElement = <HTMLElement>this._$pdfContainer[0];
++    const previous: number = this._pendingScale ?? this._scale;
++    const ratio: number = scale / previous;
++    const rect: DOMRect = container.getBoundingClientRect();
++    const pointX: number = clientX - rect.left;
++    const pointY: number = clientY - rect.top;
++    const left: number = container.scrollLeft;
++    const top: number = container.scrollTop;
++
++    this._pendingScale = scale;
++    this._$canvas.css({
++      width: (this._canvas.width * scale) / this._scale + "px",
++      height: (this._canvas.height * scale) / this._scale + "px",
++    });
++
++    container.scrollLeft = (left + pointX) * ratio - pointX;
++    container.scrollTop = (top + pointY) * ratio - pointY;
++  }
++
++  private _onPointerDown(e: PointerEvent): void {
++    const container: HTMLElement = <HTMLElement>this._$pdfContainer[0];
++
++    // Nothing to pan when the page fits the container.
++    if (
++      e.button !== 0 ||
++      (container.scrollWidth <= container.clientWidth &&
++        container.scrollHeight <= container.clientHeight)
++    ) {
++      return;
++    }
++
++    this._pan = {
++      x: e.clientX,
++      y: e.clientY,
++      left: container.scrollLeft,
++      top: container.scrollTop,
++    };
++
++    this._$pdfContainer.addClass("panning");
++
++    // The default drag of the canvas is not wanted.
++    e.preventDefault();
++  }
++
++  private _onPointerMove(e: PointerEvent): void {
++    if (!this._pan) {
++      return;
++    }
++
++    const container: HTMLElement = <HTMLElement>this._$pdfContainer[0];
++    container.scrollLeft = this._pan.left - (e.clientX - this._pan.x);
++    container.scrollTop = this._pan.top - (e.clientY - this._pan.y);
++  }
++
++  private _onPointerUp(): void {
++    if (!this._pan) {
++      return;
++    }
++
++    this._pan = null;
++    this._$pdfContainer.removeClass("panning");
++  }
++
+   private _queueRenderPage(num: number) {
+     if (this._pageRendering) {
+       this._pageIndexPending = num;
+diff --git a/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/css/styles.less b/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/css/styles.less
+index 14f22a2..c4fcd94 100644
+--- a/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/css/styles.less
++++ b/src/content-handlers/iiif/modules/uv-pdfcenterpanel-module/css/styles.less
+@@ -6,6 +6,12 @@
+       .pdfContainer {
+         overflow: auto;
+         text-align: center;
++        cursor: grab;
++
++        &.panning {
++          cursor: grabbing;
++          user-select: none;
++        }
+ 
+         canvas {
+           display: inline;
