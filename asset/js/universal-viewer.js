@@ -2,12 +2,14 @@
 (function () {
 
     function initUV() {
-        // The config is defined inside the html.
-        if (typeof uv === 'undefined') {
-            return;
-        }
+        // The config is set in the data attribute of each viewer, or in a
+        // global variable by the templates of old themes.
+        var configs = typeof uv === 'undefined' ? [] : uv.slice();
+        document.querySelectorAll('[data-uv-config]').forEach(function (element) {
+            configs.push(JSON.parse(element.dataset.uvConfig));
+        });
         var uvElement;
-        uv.forEach(function (config, index) {
+        configs.forEach(function (config, index) {
             var urlDataProvider = new UV.URLDataProvider();
             config['collectionIndex'] = Number(urlDataProvider.get('c', 0)),
             config['manifestIndex'] = Number(urlDataProvider.get('m', 0)),

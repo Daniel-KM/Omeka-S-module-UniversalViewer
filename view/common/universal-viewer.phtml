@@ -20,36 +20,20 @@ if ($version === '2'):
 <?php elseif ($version === '3'):
 
 $config['id'] = $config['id'] ?? 'uv';
-$configJson = json_encode($config, 448);
-$script = <<<JS
-if (typeof uv === 'undefined') {
-    var uv = [];
-}
-uv.push($configJson);
-JS;
 $this->headScript()
-    ->appendFile($this->assetUrl('js/universal-viewer.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
-    ->appendScript($script);
+    ->appendFile($this->assetUrl('js/universal-viewer.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
 ?>
 
-<div id="<?= $config['id'] ?>" class="uv universal-viewer viewer"></div>
+<div id="<?= $this->escapeHtmlAttr($config['id']) ?>" class="uv universal-viewer viewer" data-uv-config="<?= $this->escapeHtmlAttr(json_encode($config, 320)) ?>"></div>
 
 <?php else: // Version 4.
 
 $config['id'] = $config['id'] ?? 'uv';
-$configJson = json_encode($config, 448);
-$script = <<<JS
-if (typeof uvConfigs === 'undefined') {
-    var uvConfigs = [];
-}
-uvConfigs.push($configJson);
-JS;
 $this->headScript()
-    ->appendFile($this->assetUrl('js/uv.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer'])
-    ->appendScript($script);
+    ->appendFile($this->assetUrl('js/uv.js', 'UniversalViewer'), 'text/javascript', ['defer' => 'defer']);
 ?>
 
-<div id="<?= $config['id'] ?>" class="uv universal-viewer viewer"></div>
+<div id="<?= $this->escapeHtmlAttr($config['id']) ?>" class="uv universal-viewer viewer" data-uv-config="<?= $this->escapeHtmlAttr(json_encode($config, 320)) ?>"></div>
 
 <?php
 endif;

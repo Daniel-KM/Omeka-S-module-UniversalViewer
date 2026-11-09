@@ -4,12 +4,14 @@
 (function () {
 
     function initUV4() {
-        // The config is defined inside the html.
-        if (typeof uvConfigs === 'undefined') {
-            return;
-        }
+        // The config is set in the data attribute of each viewer, or in a
+        // global variable by the templates of old themes.
+        const configs = typeof uvConfigs === 'undefined' ? [] : uvConfigs.slice();
+        document.querySelectorAll('[data-uv-config]').forEach(function (element) {
+            configs.push(JSON.parse(element.dataset.uvConfig));
+        });
 
-        uvConfigs.forEach(function (uvConfig) {
+        configs.forEach(function (uvConfig) {
         var uv;
         const urlAdapter = new UV.IIIFURLAdapter(true);
 
