@@ -261,10 +261,10 @@ class UniversalViewer extends AbstractHelper
             $locale = mb_strtolower($locale) . '-' . mb_strtoupper($locale);
         }
         $config['locale'] = in_array($locale, [
-                'cy-GB',
-                'en-GB',
-                'fr-FR',
-            ])
+            'cy-GB',
+            'en-GB',
+            'fr-FR',
+        ])
             ? $locale
             : 'en-GB';
 
