@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 00:00+0000\n"
-"PO-Revision-Date: 2026-03-09 00:00+0000\n"
+"POT-Creation-Date: 2026-09-28 00:00+0000\n"
+"PO-Revision-Date: 2026-09-28 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -17,18 +17,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
-#: data/scripts/upgrade.php:40 Module.php:68
+#: data/scripts/upgrade.php:44
+msgid "Missing requirement. Unable to upgrade."
+msgstr "Prérequis absent. Impossible de mettre à jour."
+
+#: Module.php:85
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
 "Le module « %1$s » doit être mis à niveau à la version « %2$s » ou "
 "supérieure."
 
-#: data/scripts/upgrade.php:44
-msgid "Missing requirement. Unable to upgrade."
-msgstr "Prérequis absent. Impossible de mettre à jour."
-
-#: Module.php:78
+#: Module.php:95
 #, php-format
 msgid ""
 "The library \"%s\" should be installed. See module’s installation "
@@ -62,33 +62,25 @@ msgstr ""
 "L’option \"Voir sur les listes\" a été remplacée par une option de placement "
 "avec plus de possibilités.."
 
-#: src/Form/SiteSettingsFieldset.php:19
-msgid "Display Universal Viewer (old themes)"
-msgstr "Afficher Universal Viewer (ancien thèmes)"
+#: data/scripts/upgrade.php:277
+msgid ""
+"Universal Viewer version was not updated to v4 for {list} because custom "
+"config was found. Please check and update manually."
+msgstr ""
+"La version d’Universal Viewer n’a pas été mise à la version 4 pour {list} en "
+"raison de paramètres personnalisés. Merci de vérifier et de mettre à jour "
+"manuellement."
 
-#: src/Form/SiteSettingsFieldset.php:21
-msgid "Item show"
-msgstr "Contenu / vue"
+#: data/scripts/upgrade.php:283
+msgid "Universal Viewer version has been set to v4 for all settings and sites."
+msgstr "La version 4 d’Universal Viewer a été définie dans tous les sites."
 
-#: src/Form/SiteSettingsFieldset.php:22
-msgid "Item browse"
-msgstr "Contenu / liste"
-
-#: src/Form/SiteSettingsFieldset.php:23
-msgid "Item set browse"
-msgstr "Collection / liste"
-
-#: src/Form/SiteSettingsFieldset.php:36
-msgid "Universal Viewer: Use config file from the theme for v4 (deprecated)"
-msgstr "Universal Viewer : Utiliser la config du thème pour v4 (obsolète)"
-
-#: src/Form/SettingsFieldset.php:10
+#: src/Form/SettingsFieldset.php:10 src/Site/BlockLayout/UniversalViewer.php:60
 #: src/Site/ResourcePageBlockLayout/UniversalViewer.php:13
-#: src/Site/BlockLayout/UniversalViewer.php:48
 msgid "Universal Viewer"
 msgstr "Universal Viewer"
 
-#: src/Form/SettingsFieldset.php:17
+#: src/Form/SettingsFieldset.php:17 src/Form/SiteSettingsFieldset.php:11
 msgid "Players"
 msgstr "Lecteurs"
 
@@ -97,14 +89,15 @@ msgid "Universal viewer: Version"
 msgstr "Universal Viewer : Version"
 
 #: src/Form/SettingsFieldset.php:32
-msgid "Version 2.0.2 (better speed for some scanned pdf; require iiif v2)"
+msgid ""
+"Version 2.0.2 (light, better speed for some scanned pdf; require iiif v2)"
 msgstr ""
-"Version 2.0.2 (plus rapide pour certains fichiers pdf scannés ; requiert "
-"iiif v2)"
+"Version 2.0.2 (léger, plus rapide pour certains fichiers pdf scannés ; "
+"requiert iiif v2)"
 
 #: src/Form/SettingsFieldset.php:33
-msgid "Version 3.1.1 (more modern, but deprecated)"
-msgstr "Version 3.1.1 (plus moderne, mais obsolète)"
+msgid "Version 3.1.1 (deprecated)"
+msgstr "Version 3.1.1 (obsolète)"
 
 #: src/Form/SettingsFieldset.php:34
 msgid "Version 4 (up to date)"
@@ -139,6 +132,33 @@ msgstr ""
 #: src/Form/ConfigForm.php:28
 msgid "Select a property…"
 msgstr "Choisir une propriété…"
+
+#: src/Form/SiteSettingsFieldset.php:12
+msgid "Old themes"
+msgstr "Anciens thèmes"
+
+#: src/Form/SiteSettingsFieldset.php:24
+msgid "Display Universal Viewer"
+msgstr "Afficher Universal Viewer"
+
+#: src/Form/SiteSettingsFieldset.php:26
+msgid "Item show"
+msgstr "Contenu / vue"
+
+#: src/Form/SiteSettingsFieldset.php:27
+msgid "Item browse"
+msgstr "Contenu / liste"
+
+#: src/Form/SiteSettingsFieldset.php:28
+msgid "Item set browse"
+msgstr "Collection / liste"
+
+#: src/Form/SiteSettingsFieldset.php:41
+msgid "Universal Viewer: Use config file from the theme for v4 (deprecated)"
+msgstr "Universal Viewer : Utiliser la config du thème pour v4 (obsolète)"
+
+#~ msgid "Display Universal Viewer (old themes)"
+#~ msgstr "Afficher Universal Viewer (ancien thèmes)"
 
 #, php-format
 #~ msgid "The library \"%s\" should be installed."
