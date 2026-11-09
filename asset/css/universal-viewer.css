@@ -3,39 +3,39 @@
     .universal-viewer {
         height: 70vh;
         min-height: 600px;
-    }
-    .universal-viewer .headerPanel .centerOptions .mode label {
-        width: auto;
-        min-width: 31px;
-    }
-    /* The viewer sets a fixed width (425px) on the search box, so fix long label. */
-    /* In uv3 the element ".uv" is inside ".universal-viewer", but in uv4 both
-       classes are set on the same element, so two selectors are needed. */
-    .universal-viewer .uv .footerPanel .searchOptions,
-    .universal-viewer.uv .footerPanel .searchOptions {
-        width: min(480px, 100%) !important;
-        box-sizing: border-box;
-    }
-    .universal-viewer .uv .footerPanel .searchOptions .searchTextContainer,
-    .universal-viewer.uv .footerPanel .searchOptions .searchTextContainer,
-    .universal-viewer .uv .footerPanel .searchOptions .searchText,
-    .universal-viewer.uv .footerPanel .searchOptions .searchText {
-        max-width: 100% !important;
-        box-sizing: border-box;
+        & .headerPanel .centerOptions .mode label {
+            width: auto;
+            min-width: 31px;
+        }
+        /* The viewer sets a fixed width (425px) on the search box, so fix long label. */
+        /* In uv3 the element ".uv" is inside ".universal-viewer", but in uv4 both
+           classes are set on the same element, so two selectors are needed. */
+        & .uv .footerPanel .searchOptions,
+        &.uv .footerPanel .searchOptions {
+            width: min(480px, 100%) !important;
+            box-sizing: border-box;
+        }
+        & .uv .footerPanel .searchOptions .searchTextContainer,
+        &.uv .footerPanel .searchOptions .searchTextContainer,
+        & .uv .footerPanel .searchOptions .searchText,
+        &.uv .footerPanel .searchOptions .searchText {
+            max-width: 100% !important;
+            box-sizing: border-box;
+        }
     }
     /* Fix for v4 when not embedded. */
     .uv {
         word-wrap: initial;
-    }
-    /* UV4 renders inline in the dom, not iframe or shadow dom,
-       so global theme selectors may override the uv ones, so reset them. */
-    .uv button,
-    .uv a,
-    .uv input,
-    .uv select,
-    .uv label,
-    .uv textarea {
-        all: revert;
+        /* UV4 renders inline in the dom, not iframe or shadow dom,
+           so global theme selectors may override the uv ones, so reset them. */
+        & button,
+        & a,
+        & input,
+        & select,
+        & label,
+        & textarea {
+            all: revert;
+        }
     }
 }
 .play.fullscreen,
