@@ -88,15 +88,6 @@ class Module extends AbstractModule
             $errors[] = (string) $message;
         }
 
-        $js = __DIR__ . '/asset/vendor/uv/umd/UV.js';
-        if (!file_exists($js)) {
-            $t = $services->get('MvcTranslator');
-            $errors[] = sprintf(
-                $t->translate('The library "%s" should be installed. See module’s installation documentation.'), // @translate
-                'Universal Viewer'
-            );
-        }
-
         if ($errors) {
             throw new ModuleCannotInstallException(implode("\n", $errors));
         }
